@@ -1,8 +1,70 @@
 <?php
 
+/**
+ * The Dialog class, defines api to open a dialog asking user
+ * 	for Name of Task, Category of Task and Time/ Limit for task
+ * Each Platform/ OS/ ... needs an own class implementing the abstract methods.
+ * 	Register Platform in Class Recorder::__construct()
+ */
 abstract class Dialog {
 
+	/**
+	 * Array of available categories
+	 */
+	protected array $categories = array();
 
+	/**
+	 * The values chosen by user
+	 */
+	protected int $chCategory;
+	protected string $chName;
+	protected string $chTime;
+
+	/**
+	 * Set an array of available categories [ID => CatName, ...]
+	 * @param $categories array of categories
+	 */
+	public function setCategories(array $categories){
+		$this->categories = $categories;
+	}
+
+	/**
+	 * Open the dialog for user and block until user gave input
+	 * 	=> different per Platform 
+	 */
+	public abstract function open() : void;
+
+	/**
+	 * Get chosen value for category.
+	 * @return the id (key of array)
+	 */
+	public function getChosenCategory() : int {
+		return $this->chCategory;
+	}
+
+	/**
+	 * Get the time input value from the user
+	 * @return the time value (no parsing done)
+	 */
+	public function getChosenName() : string {
+		return $this->chName;
+	}
+
+	/**
+	 * Get the time input value from the user
+	 * @return the time value (no parsing done)
+	 */
+	public function getChosenTime() : string {
+		return $this->chTime;
+	}
+
+
+	/**
+	 * Check if all necessary packages are installed on sytem
+	 *	=> echo message and die() if not
+	 *	=> different per Platform 
+	 */
+	public abstract static function checkOSPackages() : void;
 }
 
 ?>

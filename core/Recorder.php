@@ -6,9 +6,11 @@ class Recorder {
 	public function __construct() {
 		$os = php_uname('s');
 		if( stripos($os, 'darwin') !== false ){
+			MacDialog::checkOSPackages();
 			$this->dialog = new MacDialog();
 		}
 		else if( stripos($os, 'linux') !== false ){
+			MacDialog::checkOSPackages();
 			$this->dialog = new LinuxDialog();
 		}
 		else{
@@ -17,7 +19,8 @@ class Recorder {
 	}
 
 	public function record() {
-		echo "Record" . PHP_EOL;
+		
+		$this->dialog->setCategories(array(1 => 'a', 2 => 'b'));
 		$this->dialog->open();
 	}
 }

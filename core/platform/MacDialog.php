@@ -2,8 +2,18 @@
 
 class MacDialog extends Dialog {
 	
-	public function open(){
-		echo "Mac";
+	public function open() : void {
+
+		$d = new InTerminalDialog();
+		$d->setCategories($this->categories);
+		$d->open();
+		$this->chCategory = $d->getChosenCategory();	
+		$this->chName = $d->getChosenName();
+		$this->chTime = $d->getChosenTime();
+
+	}
+
+	public static function checkOSPackages() : void {
 	}
 }
 

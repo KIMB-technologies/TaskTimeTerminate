@@ -6,6 +6,6 @@ $recorder = new Recorder();
 
 while( true ){
 	$recorder->record();
-	sleep(60);
+	sleep(Config::getSleepTime());
 }
 ?>

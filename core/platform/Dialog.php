@@ -16,9 +16,10 @@ abstract class Dialog {
 	/**
 	 * The values chosen by user
 	 */
-	protected int $chCategory;
-	protected string $chName;
-	protected string $chTime;
+	protected ?int $chCategory = null;
+	protected ?string $chName = null;
+	protected ?string $chTime = null;
+	protected bool $shortBreak = false;
 
 	/**
 	 * Set an array of available categories [ID => CatName, ...]
@@ -43,8 +44,8 @@ abstract class Dialog {
 	}
 
 	/**
-	 * Get the time input value from the user
-	 * @return the time value (no parsing done)
+	 * Get the name input value from the user
+	 * @return the name value (just validated)
 	 */
 	public function getChosenName() : string {
 		return $this->chName;
@@ -52,10 +53,18 @@ abstract class Dialog {
 
 	/**
 	 * Get the time input value from the user
-	 * @return the time value (no parsing done)
+	 * @return the time value (no parsing done, but validated)
 	 */
 	public function getChosenTime() : string {
 		return $this->chTime;
+	}
+
+	/**
+	 * A Short break means, that the user closed the dialog without filling something in
+	 * 
+	 */
+	public function doesShortBreak() : bool {
+		return $this->shortBreak();
 	}
 
 

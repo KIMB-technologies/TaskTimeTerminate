@@ -14,7 +14,7 @@ class LinuxDialog extends Dialog {
 			'--form',
 			'--item-separator=,',
 			'--separator=" "',
-			'--field="Category:CB" "'. implode(',', $this->categories) .',ss"',
+			'--field="Category:CB" "'. implode(',', $this->categories) .'"',
 			'--field="Task:TEXT"',
 			'--field="Time:TEXT"',
 			'--field="Time can be a duration like 2h, 2h10m, 25m or time like 12:00.:LBL"',

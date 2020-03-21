@@ -4,6 +4,10 @@ require_once(__DIR__ . '/core/load.php');
 
 $recorder = new Recorder();
 
+if( !Config::getStorageReader('config')->isValue(['status']) ){
+	Config::getStorageReader('config')->setValue(['status'], true);
+}
+
 while( true ){
 	if( Config::getStorageReader('config')->getValue(['status']) ){
 		$recorder->record();

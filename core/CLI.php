@@ -25,6 +25,9 @@ class CLI {
 				break;
 			case CLIParser::TASK_RECORD:
 				(new Recorder())->record(true);
+				if( Config::getStorageReader('config')->isValue(['status']) && !Config::getStorageReader('config')->getValue(['status']) ){
+					$this->togglePause(); // make sure to enable
+				}
 				break;
 			case CLIParser::TASK_PAUSE:
 				$this->togglePause();

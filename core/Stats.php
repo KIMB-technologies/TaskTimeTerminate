@@ -4,6 +4,8 @@ class Stats {
 	private CLIParser $parser;
 	private CLIOutput $output;
 
+	private bool $todayview = false;
+
 	public function __construct(CLIParser $parser, CLIOutput $output) {
 		$this->parser = $parser;
 		$this->output = $output;
@@ -23,15 +25,19 @@ class Stats {
 		switch( $commands[0] ) {
 			case "day":
 				$this->backUntil(time() - 86400, array_slice($commands, 1));
+				break;
 			case "week":
 				$this->backUntil(time() - 604800, array_slice($commands, 1));
+				break;
 			case "month":
 				$this->backUntil(time() - 2628000, array_slice($commands, 1));
+				break;
 			case "all":
 				$this->backUntil(0, array_slice($commands, 1));
 				break;
 			case "today":
 			default:
+				$this->todayview = true;
 				$this->backUntil(strtotime("today"), array_slice($commands, 1));
 		}
 	}
@@ -74,11 +80,95 @@ class Stats {
 		$this->printDataset($s->getAllDatasets());
 	}
 
-	private function printDataset(array $data){
-		print_r($data);
-		/**
-		 * ToDo
-		 */
+	private function printDataset(array $data) : void {
+		$combi = array();
+		foreach( $data as $d ){
+			$key = $d['category'] . '++' . $d['name'];
+			if( !isset($combi[$key])){
+				$combi[$key] = array(
+					'category' => $d['category'],
+					'name' => $d['name'],
+					'duration' => 0,
+					'times' => 0
+				);
+			}
+			$combi[$key]['times']++;
+			$combi[$key]['duration'] += $d['duration'];
+		}
+		$combi = array_values($combi);
+
+		$table = array();
+		foreach( $combi as $d ){
+			$table[] = array(
+				'Category' => $d['category'],
+				'Name' => $d['name'],
+				'Time' => $d['duration'],
+				'Work Items' => str_pad($d['times'], 4, " ", STR_PAD_LEFT)
+			);
+		}
+
+		array_multisort(
+			array_column( $table, 'Category' ), SORT_ASC,
+			array_column( $table, 'Time' ), SORT_DESC,
+			array_column( $table, 'Name' ), SORT_ASC,
+			$table
+		);
+
+		foreach( $table as &$d ){
+			$d['Time'] = $this->secToTime($d['Time']);
+		}
+
+		$this->output->table($table);
+
+		if( $this->todayview ){
+			$this->printTodayView($data);
+		}
+	}
+
+	private function secToTime(int $t) : string {
+		return str_pad(
+				($t >= 3600 ? intval($t/3600) . 'h ' : '' ) .
+				str_pad(
+					intval(($t % 3600) / 60) . 'm',
+					3,
+					" ",
+					STR_PAD_LEFT
+				),
+				8,
+				" ",
+				STR_PAD_LEFT
+			);
+	}
+
+	private function printTodayView(array $data) : void {
+		array_multisort(
+			array_column( $data, 'begin' ), SORT_ASC,
+			$data
+		);
+
+		$table = array();
+		$i = 0;
+		$lastval = null;
+		foreach( $data as $d ){
+			if( $lastval === $d['category'] . '++' . $d['name'] ){
+				$table[$i-1]['Time'] += $d['duration'];
+			}
+			else{
+				$table[$i++] = array(
+					'Begin' => date('H:i', $d['begin']),
+					'Category' => $d['category'],
+					'Name' => $d['name'],
+					'Time' => $d['duration']
+				);
+			}
+			$lastval = $d['category'] . '++' . $d['name'];
+		}
+
+		foreach( $table as &$d ){
+			$d['Time'] = $this->secToTime($d['Time']);
+		}
+
+		$this->output->table($table);
 	}
 
 }

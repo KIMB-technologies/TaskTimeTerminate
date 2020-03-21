@@ -1,4 +1,4 @@
-> UNDER DEVELOPMENT!!
+> Alpha Version, only works for Linux until now!
 # TaskTimeTerminate
 
 > A Tool to record timings for tasks per category and rembering to terminate work sessions.

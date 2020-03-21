@@ -4,7 +4,7 @@
  */
 class Utilities {
 
-	const VERSION = 'v0.0.0';
+	const VERSION = 'v0.5.0 alpha';
 
 	/**
 	 * Possible chars for:

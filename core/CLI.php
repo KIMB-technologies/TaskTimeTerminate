@@ -24,7 +24,7 @@ class CLI {
 				new Settings($this->parser, $this->output);
 				break;
 			case CLIParser::TASK_RECORD:
-				(new Recorder())->record();
+				(new Recorder())->record(true);
 				break;
 			case CLIParser::TASK_PAUSE:
 				$this->togglePause();

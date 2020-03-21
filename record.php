@@ -4,13 +4,10 @@ require_once(__DIR__ . '/core/load.php');
 
 $recorder = new Recorder();
 
-/**
- * ToDo 
- * Record/ Enabled&Disabled
- */
-
 while( true ){
-	$recorder->record();
+	if( Config::getStorageReader('config')->getValue(['status']) ){
+		$recorder->record();
+	}
 	sleep(Config::getSleepTime());
 }
 ?>

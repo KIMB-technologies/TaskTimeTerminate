@@ -64,7 +64,7 @@ abstract class Dialog {
 	 * 
 	 */
 	public function doesShortBreak() : bool {
-		return $this->shortBreak();
+		return $this->shortBreak;
 	}
 
 

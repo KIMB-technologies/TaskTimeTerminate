@@ -32,11 +32,12 @@ class Recorder {
 			$this->recordNew($r);
 		}
 		else{
+			$wasIncative = time() > $r->getValue(['lastopend']) + Config::getSleepTime() * 3; // pc was shut down (no work!!)
 			$end = $r->getValue(['end']);
 			if( $end === -1 ){ // short break enabled
 				$this->recordNew($r);
 			}
-			else if(time() < $end && !$forcenew ){
+			else if(time() < $end && !$forcenew && !$wasIncative ){
 				// sleep (no limit reached)
 			}
 			else{

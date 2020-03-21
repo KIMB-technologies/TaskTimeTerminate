@@ -28,6 +28,8 @@ This tool tries to solve both problems at once:
     - Sync. stats and categories about multiple computers
 
 ## Setup
+Use the [`install.sh`](https://raw.githubusercontent.com/KIMB-technologies/TaskTimeTerminate/master/install.sh) or follow the steps:
+
 1. Install PHP 7.4 (only the CLI component is needed)
     - On Linux install `yad` for dialog windows
     - On Mac OS install `xxxxx` for dialog windows

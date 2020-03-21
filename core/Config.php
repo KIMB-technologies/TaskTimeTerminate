@@ -58,6 +58,11 @@ class Config {
 		return new JSONReader($name, false, self::$instance->savedir);
 	}
 
+	public static function getStorageDir() : string {
+		self::init();
+		return self::$instance->savedir;
+	}
+
 	private static function parseUnixPath(string $path) : string {
 		$path = ltrim($path);
 		if( $path[0] === '~' ){ // home shortcut

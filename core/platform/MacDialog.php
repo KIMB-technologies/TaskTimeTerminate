@@ -4,6 +4,10 @@ class MacDialog extends Dialog {
 	
 	public function open() : void {
 
+		/**
+		 * ToDo
+		 */
+
 		$d = new InTerminalDialog();
 		$d->setCategories($this->categories);
 		$d->open();

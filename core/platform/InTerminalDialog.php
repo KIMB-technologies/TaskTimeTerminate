@@ -37,7 +37,7 @@ class InTerminalDialog extends Dialog {
 		echo "Give a time limit for the task:" . PHP_EOL;
 		do {
 			$time = readline("Time: ");
-		} while( !TimeParser::checkTimeInput($time) );
+		} while( !InputParser::checkTimeInput($time) );
 		$this->chTime = $time;
 
 		echo "===================================" . PHP_EOL;

@@ -47,5 +47,12 @@ class CLIOutput {
 	private function echo( string $s, ?string $color = null, int $ind = 0) : void {
 		echo str_repeat("\t", $ind) . ($color === null ? '' : $color ) . $s . ($color === null ? '' : self::RESET ) . PHP_EOL;
 	}
+
+	public function readline(string $question, ?string $color = null, int $ind = 0) : string {
+		echo str_repeat("\t", $ind) . ($color === null ? '' : $color );
+		$r = readline($question . ' ');
+		echo self::RESET;
+		return $r;
+	}
 }
 ?>

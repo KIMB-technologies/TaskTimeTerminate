@@ -4,6 +4,10 @@ class LinuxDialog extends Dialog {
 	
 	public function open() : void {
 		
+		/**
+		 * ToDo
+		 */
+
 		$this->chCategory = 0; /*key of $this->categories */
 		$this->chName = "Test";
 		$this->chTime = "1h";

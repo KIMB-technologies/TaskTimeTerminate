@@ -10,7 +10,7 @@ class CLIParser {
 		'v' => array('version', 'v'),
 		'h' => array('help', 'h'),
 		's' => array('stats', 's'),
-		'p' => array('settings', 'preferences', 'p', 'conf'),
+		'p' => array('settings', 'preferences', 'p', 'conf', 'c'),
 		'r' => array('record', 'r', 'change', 'new'),
 		'e' => array('end', 'begin', 'pause', 'stop', 'e', 'start', 't', 'toggle')
 	);
@@ -19,8 +19,7 @@ class CLIParser {
 		if( $argc > 0){
 			$this->args = array_slice($argv, 1);
 			$this->args = array_map('trim', $this->args);
-			$this->args = array_map('strtolower', $this->args);
-			$this->args = preg_replace('/[^a-z]/', '', $this->args);
+			$this->args = preg_replace('/[^A-Za-z0-9\_\-,]/', '', $this->args);
 			$this->args = array_values(array_filter($this->args, function ($e){
 				return !empty($e);
 			}));
@@ -33,7 +32,7 @@ class CLIParser {
 
 	public function getTask() : string {
 		if( !$this->empty ){
-			$t = $this->args[0];
+			$t = strtolower($this->args[0]);
 			foreach($this->tasks as $key => $vals ){
 				if( in_array( $t, $vals ) ){
 					return $key;
@@ -58,6 +57,13 @@ class CLIParser {
 			$o[] = array( CLIOutput::colorString( $texts[$key], CLIOutput::BLUE) );
 		}
 		return $o;
+	}
+
+	public function getCommands() : array {
+		if( !$this->empty && count($this->args) > 1){
+			return array_slice($this->args, 1);
+		}
+		return array('');
 	}
 }
 ?>

@@ -19,6 +19,10 @@ class Recorder {
 	}
 
 	public function record() {
+
+		/**
+		 * ToDo
+		 */
 		
 		$this->dialog->setCategories(array(1 => 'a', 2 => 'b'));
 		$this->dialog->open();

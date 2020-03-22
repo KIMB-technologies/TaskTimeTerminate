@@ -6,23 +6,38 @@ class WindowsDialog extends Dialog {
 	const PHP_GTK_SHA1 = "7a9436f5e768ee20364e7cbc1210b798742a97dc";
 
 	const PHP_GTK_TEST = __DIR__ . '/php-gtk/PHP55-GTK2/php.exe -v';
-	const PHP_GTK_DIALOG = __DIR__ . '/php-gtk/PHP55-GTK2/php.exe -v "'.__DIR__.'/windows/dialog.php"';
+	const PHP_GTK_DIALOG = __DIR__ . '/php-gtk/PHP55-GTK2/php.exe "'.__DIR__.'/windows/dialog.php"';
 	
 	public function open() : void {
+		$cmd = array(
+			self::PHP_GTK_DIALOG,
+			'-cats',
+			'"'. implode(',', $this->categories) .'"'
+		);
 
-		exec(self::PHP_GTK_DIALOG, $o, $return);
+		exec(implode(' ', $cmd), $stdout);
 
-		/**
-		 * ToDo
-		 */
+		if( !empty($stdout) ){
+			$stdout = json_decode($stdout[0], true);
 
-		$d = new InTerminalDialog();
-		$d->setCategories($this->categories);
-		$d->open();
-		$this->chCategory = $d->getChosenCategory();	
-		$this->chName = $d->getChosenName();
-		$this->chTime = $d->getChosenTime();
+			if( $stdout['pause'] ){
+				$this->shortBreak = true;
+			}
+			else{
+				$this->chCategory = in_array($stdout['cat'], $this->categories) ? array_search($stdout['cat'], $this->categories) : null; // category id
+				$this->chName = InputParser::checkNameInput($stdout['name']) ? $stdout['name'] : null;
+				$this->chTime = InputParser::checkTimeInput($stdout['time']) ? $stdout['time'] : null;
 
+				if( is_null($this->chCategory) || is_null( $this->chTime ) || is_null($this->chName)){
+					$this->open();
+					return;
+				}
+			}
+		}
+		else { // error
+			$this->open();
+			return;
+		}
 	}
 
 	public static function checkOSPackages() : void {
@@ -38,8 +53,8 @@ class WindowsDialog extends Dialog {
 
 					unlink(__DIR__ . '/d.zip');
 
-					exec(self::PHP_GTK_TEST, $o, $return);
-					if( $return !== 0){
+					exec(self::PHP_GTK_TEST, $output);
+					if( empty($output) || strpos($output[0], 'PHP 5.5.10') === false){
 						die( PHP_EOL . 'Seems like PHP-GTK has errors :( !!' . PHP_EOL . PHP_EOL);
 					}
 				}
@@ -52,10 +67,6 @@ class WindowsDialog extends Dialog {
 				die( PHP_EOL . 'Error downloading PHP-GTK!!' . PHP_EOL . PHP_EOL);
 			}
 		}
-		/**
-		 * ToDo
-		 */
-		// Download PHP GTK!!
 	}
 }
 

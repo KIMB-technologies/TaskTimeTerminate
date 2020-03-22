@@ -20,14 +20,9 @@ function sendInput( $cat, $name, $time, $pause = false ){
  */
 function getInput(){
 	global $argc, $argv;
-	if( $argc >= 3){
-		$cats = $argv;
-		do {
-			$cats = array_slice($cats, 1);
-		} while( trim($cats[0]) !== '-cats' );
-		$catlist = array_slice($cats, 1);
-		if( !empty($catlist)){
-			return explode(",", $catlist);
+	if( $argc === 3 && $argv[1] === '-cats'){
+		if( !empty($argv[2]) ){
+			return explode(",", $argv[2]);
 		}
 	}
 }
@@ -46,38 +41,42 @@ $fixed = new GtkFixed();
 $label = new GtkLabel("It is time for a new task!");
 $fixed->put($label, 10, 10);
 
+$fixed->put(new GtkLabel("Category"), 10, 40);
 $dropdown = GtkComboBox::new_text();
 foreach( getInput() as $c ){
 	$dropdown->append_text($c);
 }
-$fixed->put($dropdown, 10, 30);
+$fixed->put($dropdown, 90, 40);
 
-$task = new GtkEntry("Task");
-$fixed->put($task, 10, 50);
+$fixed->put(new GtkLabel("Task"), 10, 70);
+$task = new GtkEntry();
+$fixed->put($task, 90, 70);
 
-$time = new GtkEntry("Time");
-$fixed->put($time, 10, 70);
+$fixed->put(new GtkLabel("Time"), 10, 100);
+$time = new GtkEntry();
+$fixed->put($time, 90, 100);
 
 $timelI = new GtkLabel("Time can be a duration like 2h, 2h10m, 25m or time like 12:00.");
-$fixed->put($timelI, 10, 90);
+$fixed->put($timelI, 10, 130);
+
 $timelII = new GtkLabel("The time is seen as a limit, if reached this dialog will show up again.");
-$fixed->put($timelII, 10, 110);
+$fixed->put($timelII, 10, 150);
 
 $start = new GtkButton('Start');
-$fixed->put($start, 10, 120);
-$start->connect_simple('clicked', function (){
+$fixed->put($start, 10, 180);
+$start->connect_simple('clicked', function () use (&$dropdown, &$task, &$time ){
 	sendInput( $dropdown->get_active_text(), $task->get_text(), $time->get_text() );
 });
 
 $pause = new GtkButton('Pause');
-$fixed->put($pause, 100, 120);
+$fixed->put($pause, 100, 180);
 $pause->connect_simple('clicked', function (){
 	sendInput( "", "", "", true );
 });
 
 $window->add($fixed); 
-$window->set_default_size(200, 200); 
+$window->set_default_size(400, 220); 
 $window->set_position(GTK::WIN_POS_CENTER);
-$window->show_all();      
+$window->show_all(); 
 Gtk::main();
 ?>

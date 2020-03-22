@@ -1,4 +1,5 @@
-> Alpha Version, only works for Linux until now!
+> Alpha Version, only works for Linux until now!  
+> MacOS and Windows will be added soon
 # TaskTimeTerminate
 
 > A Tool to record timings for tasks per category and rembering to terminate work sessions.
@@ -21,14 +22,14 @@ This tool tries to solve both problems at once:
     - Also the tools limits the time per task and reminds to do other things
 3. And so on ....
 
-- Of course:
+- Of course
     - One can continue the same task after the limit (the next dialog is just a reminder)
     - One can pause the tool
 - Planned
     - Sync. stats and categories about multiple computers
 
 ## Setup
-Use the [`install.sh`](https://raw.githubusercontent.com/KIMB-technologies/TaskTimeTerminate/master/install.sh) or follow the steps:
+Use the [`install.sh`](https://raw.githubusercontent.com/KIMB-technologies/TaskTimeTerminate/master/install.sh) (for linux and mac) or follow the steps:
 
 1. Install PHP 7.4 (only the CLI component is needed)
     - On Linux install `yad` for dialog windows

@@ -1,5 +1,5 @@
 > Alpha Version  
-> SUpport for **Linux**, **macOS** and **Windows**
+> Support for **Linux**, **macOS** and **Windows**
 
 # TaskTimeTerminate
 

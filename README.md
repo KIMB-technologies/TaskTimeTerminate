@@ -1,5 +1,6 @@
-> Alpha Version, only works for **Linux** and **Windows** until now!  
-> MacOS will be added soon
+> Alpha Version  
+> SUpport for **Linux**, **macOS** and **Windows**
+
 # TaskTimeTerminate
 
 > A Tool to record timings for tasks per category and rembering to terminate work sessions.

@@ -8,6 +8,12 @@
 
 import Cocoa
 
+extension FileHandle : TextOutputStream {
+    public func write(_ string: String) {
+        self.write(string.data(using: .utf8) ?? Data());
+    }
+}
+
 class ViewController: NSViewController {
     
     @IBOutlet weak var categoryDropdown: NSPopUpButtonCell!
@@ -18,19 +24,22 @@ class ViewController: NSViewController {
     
     
     @IBAction func startClicked(_ sender: NSButton) {
-        var output = "{ pause : false, ";
-        output += " cat: \"" + (categoryDropdown.titleOfSelectedItem ?? "").replacingOccurrences(of: "\"", with: "") + "\", ";
-        output += " name: \"" + nameInput.stringValue.replacingOccurrences(of: "\"", with: "") + "\", ";
-        output += " time: \"" + timeInput.stringValue.replacingOccurrences(of: "\"", with: "") + "\" ";
+        var output = "{ \"pause\" : false, ";
+        output += " \"cat\": \"" + (categoryDropdown.titleOfSelectedItem ?? "").replacingOccurrences(of: "\"", with: "") + "\", ";
+        output += " \"name\": \"" + nameInput.stringValue.replacingOccurrences(of: "\"", with: "") + "\", ";
+        output += " \"time\": \"" + timeInput.stringValue.replacingOccurrences(of: "\"", with: "") + "\" ";
         output += "}";
         
-        print(output);
+        var stdOut = FileHandle.standardOutput;
+        print(output, to:&stdOut);
         
         NSApplication.shared.terminate(self);
     }
     
     @IBAction func pauseClicked(_ sender: NSButton) {
-        print("{ pause : true, cat: \"\", name: \"\", time: \"\" }");
+        var stdOut = FileHandle.standardOutput;
+        print("{ \"pause\" : true, \"cat\": \"\", \"name\": \"\", \"time\": \"\" }", to:&stdOut);
+        
         NSApplication.shared.terminate(self);
     }
     
@@ -44,6 +53,11 @@ class ViewController: NSViewController {
         
         categoryDropdown.removeAllItems();
         categoryDropdown.addItems(withTitles: catList);
+    }
+    
+    override func viewWillAppear() {
+        NSApplication.shared.activate(ignoringOtherApps: true);
+        view.window?.level = .floating;
     }
 
     override var representedObject: Any? {

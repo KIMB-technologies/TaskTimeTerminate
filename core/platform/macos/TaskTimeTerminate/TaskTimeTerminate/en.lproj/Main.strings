@@ -1,0 +1,60 @@
+
+/* Class = "NSMenuItem"; title = "TaskTimeTerminate"; ObjectID = "1Xt-HY-uBw"; */
+"1Xt-HY-uBw.title" = "TaskTimeTerminate";
+
+/* Class = "NSMenuItem"; title = "Quit TaskTimeTerminate"; ObjectID = "4sb-4s-VLi"; */
+"4sb-4s-VLi.title" = "Quit TaskTimeTerminate";
+
+/* Class = "NSMenuItem"; title = "About TaskTimeTerminate"; ObjectID = "5kV-Vb-QxS"; */
+"5kV-Vb-QxS.title" = "About TaskTimeTerminate";
+
+/* Class = "NSTextFieldCell"; title = "Time can be a duration like 2h, 2h10m, 25m or time like 12:00. The time is seen as a limit, if reached this dialog will show up again."; ObjectID = "6Of-hn-bh6"; */
+"6Of-hn-bh6.title" = "Time can be a duration like 2h, 2h10m, 25m or time like 12:00. The time is seen as a limit, if reached this dialog will show up again.";
+
+/* Class = "NSMenu"; title = "Main Menu"; ObjectID = "AYu-sK-qS6"; */
+"AYu-sK-qS6.title" = "Main Menu";
+
+/* Class = "NSComboBoxCell"; BOZ-07-V55.ibShadowedObjectValues[0] = "Item 1"; ObjectID = "BOZ-07-V55"; */
+"BOZ-07-V55.ibShadowedObjectValues[0]" = "Item 1";
+
+/* Class = "NSComboBoxCell"; BOZ-07-V55.ibShadowedObjectValues[1] = "Item 2"; ObjectID = "BOZ-07-V55"; */
+"BOZ-07-V55.ibShadowedObjectValues[1]" = "Item 2";
+
+/* Class = "NSComboBoxCell"; BOZ-07-V55.ibShadowedObjectValues[2] = "Item 3"; ObjectID = "BOZ-07-V55"; */
+"BOZ-07-V55.ibShadowedObjectValues[2]" = "Item 3";
+
+/* Class = "NSTextFieldCell"; title = "Category"; ObjectID = "DJJ-q7-Vqi"; */
+"DJJ-q7-Vqi.title" = "Category";
+
+/* Class = "NSTextFieldCell"; title = "Task"; ObjectID = "GWP-1D-WMJ"; */
+"GWP-1D-WMJ.title" = "Task";
+
+/* Class = "NSWindow"; title = "TaskTimeTerminate"; ObjectID = "IQv-IB-iLA"; */
+"IQv-IB-iLA.title" = "TaskTimeTerminate";
+
+/* Class = "NSMenuItem"; title = "Minimize"; ObjectID = "OY7-WF-poV"; */
+"OY7-WF-poV.title" = "Minimize";
+
+/* Class = "NSMenuItem"; title = "Zoom"; ObjectID = "R4o-n2-Eq4"; */
+"R4o-n2-Eq4.title" = "Zoom";
+
+/* Class = "NSMenu"; title = "Window"; ObjectID = "Td7-aD-5lo"; */
+"Td7-aD-5lo.title" = "Window";
+
+/* Class = "NSMenuItem"; title = "Window"; ObjectID = "aUF-d1-5bR"; */
+"aUF-d1-5bR.title" = "Window";
+
+/* Class = "NSButtonCell"; title = "Pause"; ObjectID = "hnC-DH-rVW"; */
+"hnC-DH-rVW.title" = "Pause";
+
+/* Class = "NSTextFieldCell"; title = "It is time for a new task!"; ObjectID = "jW2-4W-qfU"; */
+"jW2-4W-qfU.title" = "It is time for a new task!";
+
+/* Class = "NSTextFieldCell"; title = "Time"; ObjectID = "k46-07-8Wn"; */
+"k46-07-8Wn.title" = "Time";
+
+/* Class = "NSButtonCell"; title = "Start"; ObjectID = "l3k-Zs-DNW"; */
+"l3k-Zs-DNW.title" = "Start";
+
+/* Class = "NSMenu"; title = "TaskTimeTerminate"; ObjectID = "uQy-DD-JDr"; */
+"uQy-DD-JDr.title" = "TaskTimeTerminate";

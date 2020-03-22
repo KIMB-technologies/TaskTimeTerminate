@@ -1,2 +1,7 @@
 *.lock
 /core/platform/php-gtk/*
+
+*.xcuserstate
+
+project.xcworkspace/
+xcuserdata/

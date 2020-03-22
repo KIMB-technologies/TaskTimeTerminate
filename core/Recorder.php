@@ -3,18 +3,27 @@ class Recorder {
 
 	public Dialog $dialog;
 
-	public function __construct() {
-		$os = php_uname('s');
-		if( stripos($os, 'darwin') !== false ){
-			MacDialog::checkOSPackages();
-			$this->dialog = new MacDialog();
-		}
-		else if( stripos($os, 'linux') !== false ){
-			MacDialog::checkOSPackages();
-			$this->dialog = new LinuxDialog();
+	public function __construct(bool $inTerminal = false) {
+		if($inTerminal){
+			$this->dialog = new InTerminalDialog();
 		}
 		else{
-			die('Plattform not supported!!');
+			$os = php_uname('s');
+			if( stripos($os, 'darwin') !== false ){
+				MacDialog::checkOSPackages();
+				$this->dialog = new MacDialog();
+			}
+			else if( stripos($os, 'linux') !== false ){
+				MacDialog::checkOSPackages();
+				$this->dialog = new LinuxDialog();
+			}
+			else if( stripos($os, 'windows') !== false ){
+				WindowsDialog::checkOSPackages();
+				$this->dialog = new WindowsDialog();
+			}
+			else{
+				die( PHP_EOL . 'Plattform not supported!!' . PHP_EOL . PHP_EOL);
+			}
 		}
 	}
 

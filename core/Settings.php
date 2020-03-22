@@ -38,7 +38,7 @@ class Settings {
 						if( $color == CLIOutput::RED){
 							$this->output->print(array("Please check input, can't create categories twice, check allowed chars!"), $color ,1);
 						}
-						$newcat = CLIOutput::readline("Name of category to add [Only A-Z, a-z and -]:", $color, 1);
+						$newcat = $this->output->readline("Name of category to add [Only A-Z, a-z and -]:", $color, 1);
 						$color = CLIOutput::RED;
 					} while (!InputParser::checkCategoryInput($newcat) || in_array($newcat, $cats));
 					$cats[] = $newcat;
@@ -56,7 +56,7 @@ class Settings {
 					}
 					$this->output->print($clist, null, 2);
 					
-					$delid = CLIOutput::readline("Type ID to delete category, else abort:", CLIOutput::RED, 1);
+					$delid = $this->output->readline("Type ID to delete category, else abort:", CLIOutput::RED, 1);
 					if( isset($cats[$delid]) ){
 						$delcat = $cats[$delid];
 						unset($cats[$delid]);
@@ -101,7 +101,7 @@ class Settings {
 			if( $color == CLIOutput::RED){
 				$this->output->print(array("Please check input, only used names are allowed!"), $color ,1);
 			}
-			$merge = CLIOutput::readline("Name of data to merge into another (the one to rename):", $color, 1);
+			$merge = $this->output->readline("Name of data to merge into another (the one to rename):", $color, 1);
 			$color = CLIOutput::RED;
 		} while ( empty($merge) || !in_array($merge, $allnames));
 
@@ -110,7 +110,7 @@ class Settings {
 			if( $color == CLIOutput::RED){
 				$this->output->print(array("Please check input, only used names are allowed!"), $color ,1);
 			}
-			$mergeTo = CLIOutput::readline("Name of data to merge into (the new name):", $color, 1);
+			$mergeTo = $this->output->readline("Name of data to merge into (the new name):", $color, 1);
 			$color = CLIOutput::RED;
 		} while ( empty($mergeTo) || !in_array($mergeTo, $allnames));
 		

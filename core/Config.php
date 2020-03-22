@@ -1,9 +1,10 @@
 <?php
 class Config {
 
-	private const DEFAULT_CONF = '{"sleep":60,"savedir":"~/.tasktimeterminate"}';
+	private const DEFAULT_CONF = '{"sleep":60,"savedir":"~/.tasktimeterminate","timezone":"Europe\/Berlin"}';
 	private const DEFAULT_SLEEP = 60;
 	private const DEFAULT_SAVEDIR = '~/.tasktimeterminate';
+	private const DEFAULT_TIMEZONE = 'Europe/Berlin';
 
 	private static ?Config $instance = null;
 
@@ -38,9 +39,15 @@ class Config {
 		if( !is_numeric($this->sleeptime) ){
 			$this->sleeptime = self::DEFAULT_SLEEP;
 		}
+
+		//date timezone
+		if( !$this->json->isValue(['timezone'])){
+			$this->json->setValue(['timezone'], self::DEFAULT_TIMEZONE);
+		}
+		date_default_timezone_set( $this->json->getValue(['timezone']) );
 	}
 
-	private static function init(){
+	public static function init(){
 		if(self::$instance == null){
 			self::$instance = new Config();
 		}

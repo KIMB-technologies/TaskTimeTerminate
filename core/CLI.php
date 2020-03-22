@@ -24,9 +24,18 @@ class CLI {
 				new Settings($this->parser, $this->output);
 				break;
 			case CLIParser::TASK_RECORD:
-				(new Recorder())->record(true);
-				if( Config::getStorageReader('config')->isValue(['status']) && !Config::getStorageReader('config')->getValue(['status']) ){
-					$this->togglePause(); // make sure to enable
+				if( isset($this->parser->getCommands()[0]) && $this->parser->getCommands()[0] == 'inTerminalDialog' ){
+					(new Recorder(true))->record();
+				}
+				else{
+					$this->output->print(array(
+						'Force new record',
+						array('Add command '. CLIOutput::colorString('inTerminalDialog', CLIOutput::BLUE) . ' to do a normal record using the InTerminalDialog.')
+					));
+					(new Recorder())->record(true);
+					if( Config::getStorageReader('config')->isValue(['status']) && !Config::getStorageReader('config')->getValue(['status']) ){
+						$this->togglePause(); // make sure to enable
+					}
 				}
 				break;
 			case CLIParser::TASK_PAUSE:

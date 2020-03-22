@@ -2,6 +2,7 @@
 <?php
 require_once(__DIR__ . '/core/load.php');
 
+Config::init();
 $recorder = new Recorder();
 
 if( !Config::getStorageReader('config')->isValue(['status']) ){

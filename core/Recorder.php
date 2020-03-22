@@ -8,21 +8,21 @@ class Recorder {
 			$this->dialog = new InTerminalDialog();
 		}
 		else{
-			$os = php_uname('s');
-			if( stripos($os, 'darwin') !== false ){
-				MacDialog::checkOSPackages();
-				$this->dialog = new MacDialog();
-			}
-			else if( stripos($os, 'linux') !== false ){
-				MacDialog::checkOSPackages();
-				$this->dialog = new LinuxDialog();
-			}
-			else if( stripos($os, 'windows') !== false ){
-				WindowsDialog::checkOSPackages();
-				$this->dialog = new WindowsDialog();
-			}
-			else{
-				die( PHP_EOL . 'Plattform not supported!!' . PHP_EOL . PHP_EOL);
+			switch (Utilities::getOS()){
+				case Utilities::OS_MAC:
+					MacDialog::checkOSPackages();
+					$this->dialog = new MacDialog();
+					break;
+				case Utilities::OS_LINUX:
+					MacDialog::checkOSPackages();
+					$this->dialog = new LinuxDialog();
+					break;
+				case Utilities::OS_WIN:
+					WindowsDialog::checkOSPackages();
+					$this->dialog = new WindowsDialog();
+					break;
+				default:
+					die( PHP_EOL . 'Plattform not supported!!' . PHP_EOL . PHP_EOL);
 			}
 		}
 	}

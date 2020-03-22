@@ -24,7 +24,7 @@ class Config {
 		if( !$this->json->isValue(['savedir'])){
 			$this->json->setValue(['savedir'], self::DEFAULT_SAVEDIR);
 		}
-		$this->savedir = self::parseUnixPath($this->json->getValue(['savedir']));
+		$this->savedir = self::parsePath($this->json->getValue(['savedir']));
 		if( !is_dir($this->savedir) ){
 			if( !mkdir($this->savedir, 0740 , true) ){
 				die('Unable to create storage directory at "'. $this->savedir .'"');
@@ -45,6 +45,9 @@ class Config {
 			$this->json->setValue(['timezone'], self::DEFAULT_TIMEZONE);
 		}
 		date_default_timezone_set( $this->json->getValue(['timezone']) );
+
+		//INI Setup
+		ini_set('memory_limit','256M');
 	}
 
 	public static function init(){
@@ -70,8 +73,26 @@ class Config {
 		return self::$instance->savedir;
 	}
 
-	private static function parseUnixPath(string $path) : string {
+	private static function parsePath(string $path) : string {
 		$path = ltrim($path);
+		if( Utilities::getOS() === Utilities::OS_WIN){
+			if( $path[0] === '~' ){ // home shortcut
+				$home = getenv('USERPROFILE');
+				return $home . '/AppData/Roaming/' . substr($path, 1);
+			}
+			else if( $path[0] !== '/' && preg_match( '/^[A-Z]:/', $path[0]) !== 1 ){ // relative path
+				return __DIR__ . '/../' . $path;
+			}
+			else { // absolute path
+				return $path;
+			}
+		}
+		else{
+			return self::parseUnixPath($path);
+		}
+	}
+
+	private static function parseUnixPath(string $path) : string {
 		if( $path[0] === '~' ){ // home shortcut
 			$home = posix_getpwuid(posix_getuid())['dir'];
 			return $home . '/' . substr($path, 1);

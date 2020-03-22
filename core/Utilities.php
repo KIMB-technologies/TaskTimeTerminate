@@ -7,6 +7,14 @@ class Utilities {
 	const VERSION = 'v0.5.0 alpha';
 
 	/**
+	 * OS Consts
+	 */
+	const OS_MAC = "mac";
+	const OS_WIN = "win";
+	const OS_LINUX = "lin";
+	const OS_OTHER = "oth";
+
+	/**
 	 * Possible chars for:
 	 */
 	const ID = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890';
@@ -58,6 +66,22 @@ class Utilities {
 			$r .= $chars[random_int(0, $charAnz-1)];
 		}
 		return $r;
+	}
+
+	public static function getOS() : string {
+		$os = php_uname('s');
+		if( stripos($os, 'darwin') !== false ){
+			return self::OS_MAC;
+		}
+		else if( stripos($os, 'linux') !== false ){
+			return self::OS_LINUX;
+		}
+		else if( stripos($os, 'windows') !== false ){
+			return self::OS_WIN;
+		}
+		else{
+			return self::OS_OTHER;
+		}
 	}
 }
 

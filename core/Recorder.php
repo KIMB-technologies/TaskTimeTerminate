@@ -1,6 +1,8 @@
 <?php
 class Recorder {
 
+	const PID_FILE = '/run/lock/TaskTimeTerminate';
+
 	public Dialog $dialog;
 
 	public function __construct(bool $inTerminal = false) {
@@ -89,6 +91,32 @@ class Recorder {
 			$r->setValue(['category'], '');
 			$r->setValue(['begin'], -1);
 			$r->setValue(['end'], -1 );
+		}
+	}
+
+	public static function runOnlyOnce() : void {
+		if( Utilities::getOS() === Utilities::OS_LINUX ){
+			$pid = getmypid();
+			if( $pid !== false ){
+				// check if other running
+				if( is_file( self::PID_FILE ) ){
+					$otherPid = file_get_contents(self::PID_FILE);
+					if( is_numeric($otherPid) ){
+						if( !posix_kill( intval($otherPid), SIGQUIT ) ){
+							posix_kill( intval($otherPid), SIGKILL );
+						}
+					}
+				}
+				// set yourself running
+				file_put_contents( self::PID_FILE, $pid, LOCK_EX );
+
+				// delete run file on exit
+				register_shutdown_function( function ($pid) {
+					if( is_file( self::PID_FILE ) && file_get_contents(self::PID_FILE) == $pid ){
+						unlink(self::PID_FILE);
+					}
+				}, $pid);
+			}
 		}
 	}
 }

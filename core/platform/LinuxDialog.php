@@ -24,10 +24,12 @@ class LinuxDialog extends Dialog {
 			'2> /dev/null'
 		);
 
-		exec(implode(' ', $cmd), $stdout, $return);
+		$handle = popen(implode(' ', $cmd), 'r');
+		$stdout = fgets($handle);
+		pclose($handle);
 
-		if( $return === 0 && !empty($stdout) ){
-			$stdout = explode(' ', $stdout[0]);
+		if( !empty($stdout) ){
+			$stdout = explode(' ', trim($stdout));
 
 			if( count($stdout) !== 3 ){
 				$this->open();

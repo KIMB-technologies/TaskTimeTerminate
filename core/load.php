@@ -15,4 +15,7 @@ spl_autoload_register(function ($class) {
 		}
 	}
 });
+
+// Inits
+Config::init();
 ?>

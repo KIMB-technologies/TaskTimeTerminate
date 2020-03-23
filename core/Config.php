@@ -7,8 +7,8 @@ class Config {
 	private const DEFAULT_TIMEZONE = 'Europe/Berlin';
 
 	private static ?Config $instance = null;
+	private static bool $statusSetup = false;
 
-	private JSONReader $json;
 	private int $sleeptime;
 	private string $savedir;
 
@@ -18,13 +18,13 @@ class Config {
 			file_put_contents(__DIR__ . '/../config.json', self::DEFAULT_CONF);
 		}
 		// load config json
-		$this->json = new JSONReader( 'config', false, __DIR__ . '/../');
+		$json = new JSONReader( 'config', false, __DIR__ . '/../');
 
 		// check for storage dir
-		if( !$this->json->isValue(['savedir'])){
-			$this->json->setValue(['savedir'], self::DEFAULT_SAVEDIR);
+		if( !$json->isValue(['savedir'])){
+			$json->setValue(['savedir'], self::DEFAULT_SAVEDIR);
 		}
-		$this->savedir = self::parsePath($this->json->getValue(['savedir']));
+		$this->savedir = self::parsePath($json->getValue(['savedir']));
 		if( !is_dir($this->savedir) ){
 			if( !mkdir($this->savedir, 0740 , true) ){
 				die('Unable to create storage directory at "'. $this->savedir .'"');
@@ -35,19 +35,22 @@ class Config {
 		}
 
 		// load sleeptime
-		$this->sleeptime = $this->json->getValue(['sleep']);
+		$this->sleeptime = $json->getValue(['sleep']);
 		if( !is_numeric($this->sleeptime) ){
 			$this->sleeptime = self::DEFAULT_SLEEP;
 		}
 
 		//date timezone
-		if( !$this->json->isValue(['timezone'])){
-			$this->json->setValue(['timezone'], self::DEFAULT_TIMEZONE);
+		if( !$json->isValue(['timezone'])){
+			$json->setValue(['timezone'], self::DEFAULT_TIMEZONE);
 		}
-		date_default_timezone_set( $this->json->getValue(['timezone']) );
+		date_default_timezone_set( $json->getValue(['timezone']) );
 
 		//INI Setup
 		ini_set('memory_limit','256M');
+
+		// close JSONReader
+		unset($json);
 	}
 
 	public static function init(){
@@ -56,15 +59,15 @@ class Config {
 		}
 	}
 
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 	public static function getSleepTime() : int {
 		self::init();
-
 		return self::$instance->sleeptime;
 	}
 
 	public static function getStorageReader(string $name) : JSONReader {
 		self::init();
-
 		return new JSONReader($name, false, self::$instance->savedir);
 	}
 
@@ -72,6 +75,17 @@ class Config {
 		self::init();
 		return self::$instance->savedir;
 	}
+
+	public static function getRecordStatus() : bool {
+		$c = self::getStorageReader('config');
+		if( !self::$statusSetup && !$c->isValue(['status']) ){
+			$s->setValue(['status'], true);
+			self::$statusSetup = true;
+		}
+		return $c->getValue(['status']);
+	}
+
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 	private static function parsePath(string $path) : string {
 		$path = ltrim($path);

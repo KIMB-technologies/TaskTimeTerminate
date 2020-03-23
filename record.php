@@ -2,17 +2,13 @@
 <?php
 require_once(__DIR__ . '/core/load.php');
 
-Config::init();
 $recorder = new Recorder();
 
-if( !Config::getStorageReader('config')->isValue(['status']) ){
-	Config::getStorageReader('config')->setValue(['status'], true);
-}
-
 while( true ){
-	if( Config::getStorageReader('config')->getValue(['status']) ){
+	if( Config::getRecordStatus() ) {
 		$recorder->record();
 	}
+	ReaderManager::clearAll(); // write JSON to disk -- force
 	sleep(Config::getSleepTime());
 }
 ?>

@@ -58,7 +58,12 @@ class Recorder {
 	}
 
 	private function saveTaskTime(JSONReader $r) : void {
-		$data = Config::getStorageReader(date('Y-m-d'));
+		$data = Config::getStorageReader(
+				date(
+					'Y-m-d',
+					is_int($r->getValue(['begin'])) ? $r->getValue(['begin']) : time()
+				)
+			);
 		$data->setValue([null], array(
 			"begin" => $r->getValue(['begin']),
 			"end" => $r->getValue(['lastopend']) + Config::getSleepTime(),

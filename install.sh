@@ -36,7 +36,7 @@ if [ ! -f ./record.php ]; then
 		installpath="$HOME/.tasktimeterminateSrc";
 		
 	elif [ $(uname) = "Darwin" ]; then
-		installpath="$HOME/Applications/TaskTimeTerminate/";
+		installpath="$HOME/Applications/TaskTimeTerminate";
 	else
 		echo "Only Linux and macOS supported!"
 		exit;

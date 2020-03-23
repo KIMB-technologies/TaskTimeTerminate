@@ -1,7 +1,8 @@
 <?php
 class Recorder {
 
-	const PID_FILE = '/run/lock/TaskTimeTerminate';
+	const PID_FILE_LINUX = '/run/lock/TaskTimeTerminate';
+	const PID_FILE_MAC = '/private/tmp/TaskTimeTerminate';
 
 	public Dialog $dialog;
 
@@ -95,12 +96,13 @@ class Recorder {
 	}
 
 	public static function runOnlyOnce() : void {
-		if( Utilities::getOS() === Utilities::OS_LINUX ){
+		if( Utilities::getOS() === Utilities::OS_LINUX || Utilities::getOS() === Utilities::OS_MAC ){
+			$osPidFile = Utilities::getOS() === Utilities::OS_LINUX ? self::PID_FILE_LINUX : self::PID_FILE_MAC;
 			$pid = getmypid();
 			if( $pid !== false ){
 				// check if other running
-				if( is_file( self::PID_FILE ) ){
-					$otherPid = file_get_contents(self::PID_FILE);
+				if( is_file( $osPidFile ) ){
+					$otherPid = file_get_contents($osPidFile);
 					if( is_numeric($otherPid) ){
 						if( !posix_kill( intval($otherPid), SIGQUIT ) ){
 							posix_kill( intval($otherPid), SIGKILL );
@@ -108,14 +110,14 @@ class Recorder {
 					}
 				}
 				// set yourself running
-				file_put_contents( self::PID_FILE, $pid, LOCK_EX );
+				file_put_contents( $osPidFile, $pid, LOCK_EX );
 
 				// delete run file on exit
-				register_shutdown_function( function ($pid) {
-					if( is_file( self::PID_FILE ) && file_get_contents(self::PID_FILE) == $pid ){
-						unlink(self::PID_FILE);
+				register_shutdown_function( function ($pid, $osPidFile) {
+					if( is_file( $osPidFile ) && file_get_contents($osPidFile) == $pid ){
+						unlink($osPidFile);
 					}
-				}, $pid);
+				}, $pid, $osPidFile);
 			}
 		}
 	}

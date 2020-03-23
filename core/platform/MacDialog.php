@@ -10,10 +10,12 @@ class MacDialog extends Dialog {
 			'-cats',
 			'"'. implode(',', $this->categories) .'"'
 		);
-		exec(implode(' ', $cmd), $stdout, $return);
+		$handle = popen(implode(' ', $cmd), 'r');
+		$stdout = fgets($handle);
+		pclose($handle);
 
-		if( $return === 0 && !empty($stdout) ){
-			$stdout = json_decode($stdout[0], true);
+		if( !empty($stdout) ){
+			$stdout = json_decode(trim($stdout), true);
 
 			if( $stdout['pause'] ){
 				$this->shortBreak = true;

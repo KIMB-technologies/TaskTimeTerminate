@@ -16,12 +16,4 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationWillTerminate(_ aNotification: Notification) {
     }
-    
-    private func tapplicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
-        return true;
-    }
-    
-    func windowShouldClose(_ sender: Any) {
-        NSApplication.shared.terminate(self)
-    }
 }

@@ -58,6 +58,10 @@ class ViewController: NSViewController {
     override func viewWillAppear() {
         NSApplication.shared.activate(ignoringOtherApps: true);
         view.window?.level = .floating;
+        
+        view.window!.standardWindowButton(NSWindow.ButtonType.closeButton)!.isHidden = true;
+        view.window!.standardWindowButton(NSWindow.ButtonType.miniaturizeButton)!.isHidden = true;
+        view.window!.standardWindowButton(NSWindow.ButtonType.zoomButton)!.isHidden = true;
     }
 
     override var representedObject: Any? {

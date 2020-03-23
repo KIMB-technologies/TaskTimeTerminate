@@ -118,10 +118,11 @@ The program folder (not the data folder) can be deleted and replaced by a newer 
 		- Select your created `.app`
 		- But first we need an `.app`, because only Applications can be *Login Objects*
 	- Use Automator
-		- Open Automator.app and select *Execute Shell Command*
+		- Open Automator.app and open a new Program
+		- Select *Execute Shell Command* and `/bin/sh` as Shell
 		- Add a command like this in the textbox on the right
 		- `/usr/local/Cellar/php/7.4.3/bin/php /Users/<me>/Applications/TaskTimeTerminate/record.php &> /dev/null &`
-		- Save the Applications as `.app`
+		- Save the Application as `.app`
 	- Add `.app` to *Login Object*
 ### Windows
 - PHP 7.4

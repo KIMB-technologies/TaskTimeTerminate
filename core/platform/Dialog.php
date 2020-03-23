@@ -23,9 +23,11 @@ abstract class Dialog {
 
 	/**
 	 * Set an array of available categories [ID => CatName, ...]
+	 * 	No short break now, will be set in open().
 	 * @param $categories array of categories
 	 */
 	public function setCategories(array $categories){
+		$this->shortBreak = false;
 		$this->categories = $categories;
 	}
 

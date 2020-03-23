@@ -78,6 +78,7 @@ class Config {
 
 	public static function getRecordStatus() : bool {
 		$c = self::getStorageReader('config');
+		ReaderManager::addReader($c);
 		if( !self::$statusSetup && !$c->isValue(['status']) ){
 			$s->setValue(['status'], true);
 			self::$statusSetup = true;

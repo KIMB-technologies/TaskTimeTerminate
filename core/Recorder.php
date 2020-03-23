@@ -29,6 +29,7 @@ class Recorder {
 
 	public function record(bool $forcenew = false) : void {
 		$r = Config::getStorageReader('current');
+		ReaderManager::addReader($r);
 		if( empty($r->getArray())){ // first start etc.
 			$r->setArray(array(
 				'name' => '',
@@ -64,6 +65,7 @@ class Recorder {
 					is_int($r->getValue(['begin'])) ? $r->getValue(['begin']) : time()
 				)
 			);
+		ReaderManager::addReader($data);
 		$data->setValue([null], array(
 			"begin" => $r->getValue(['begin']),
 			"end" => $r->getValue(['lastopend']) + Config::getSleepTime(),

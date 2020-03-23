@@ -84,9 +84,6 @@ class JSONReader extends Reader {
 		if( is_file( $this->filepath ) && is_writeable( $this->filepath ) ){
 			$this->writeable = true;
 		}
-
-		// add to ReaderManager
-		ReaderManager::addReader($this);
 	}
 
 	/**

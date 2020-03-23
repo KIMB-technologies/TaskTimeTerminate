@@ -73,18 +73,23 @@ class StatsData {
 	}
 	
 	public function merge($merge, $mergeTo) : bool {
-		$this->loadContents();
 		if( $merge === $mergeTo){
-			
-			/**
-			 * ToDo
-			 */
-			
 			return true;
 		}
 
+		$ret = true;
+		foreach( $this->filelist as $f ){
+			$r = Config::getStorageReader($f);
+			foreach( $r->getArray() as $k => $a ){
+				if( $a['name'] === $merge ){
+					$ret &= $r->setValue([$k, 'name'], $mergeTo);
+				}
+			}
+			unset($r);
+		}
+
 		$this->loadContents(true); //force reload
-		return false;
+		return $ret;
 	}
 }
 ?>

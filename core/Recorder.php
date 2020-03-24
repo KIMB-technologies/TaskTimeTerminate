@@ -75,6 +75,11 @@ class Recorder {
 			"name" => $r->getValue(['name']),
 			"category" => $r->getValue(['category'])
 		));
+		$this->dialog->setLastTask(
+			$r->getValue(['name']),
+			in_array($r->getValue(['category']), StatsData::getAllCategories()) ?
+				array_search($r->getValue(['category']), StatsData::getAllCategories()) : null
+		);
 	}
 
 	private function recordNew(JSONReader $r) : void {

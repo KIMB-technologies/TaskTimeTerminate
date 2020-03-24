@@ -22,6 +22,16 @@ abstract class Dialog {
 	protected bool $shortBreak = false;
 
 	/**
+	 * Set the last tasks name and category
+	 * 	User can enter +5m to get five minutes more
+	 * 	for last task.
+	 */
+	public function setLastTask(?string $name, ?int $category){
+		$this->chName = $name;
+		$this->chCategory = $category;
+	}
+
+	/**
 	 * Set an array of available categories [ID => CatName, ...]
 	 * 	No short break now, will be set in open().
 	 * @param $categories array of categories

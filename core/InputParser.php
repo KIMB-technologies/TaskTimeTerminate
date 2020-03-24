@@ -1,7 +1,7 @@
 <?php
 class InputParser {
 
-	private const TIME_INPUT_PREG = '/^(((\d+h)?(\d+m)?)|(\d+:\d+))$/';
+	private const TIME_INPUT_PREG = '/^((\+?(\d+h)?(\d+m)?)|(\d+:\d+))$/';
 
 	private const CATEGORY_INPUT_PREG = '/^[A-Za-z\-]+$/';
 

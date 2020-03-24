@@ -30,14 +30,14 @@ class InTerminalDialog extends Dialog {
 		echo "Give a name for the task:" . PHP_EOL;
 		do {
 			$name = readline("Name: ");
-		} while( empty($name) );
+		} while( !InputParser::checkNameInput($name) );
 		$this->chName = $name;
 
 		echo "-----------------------------------" . PHP_EOL;
 		echo "Give a time limit for the task:" . PHP_EOL;
 		do {
 			$time = readline("Time: ");
-		} while( !InputParser::checkTimeInput($time) );
+		} while( !InputParser::checkTimeInput($time) || strpos($time, '+') !== false );
 		$this->chTime = $time;
 
 		echo "===================================" . PHP_EOL;

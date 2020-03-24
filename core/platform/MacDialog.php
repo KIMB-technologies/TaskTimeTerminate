@@ -21,8 +21,10 @@ class MacDialog extends Dialog {
 				$this->shortBreak = true;
 			}
 			else{
-				$this->chCategory = in_array($stdout['cat'], $this->categories) ? array_search($stdout['cat'], $this->categories) : null; // category id
-				$this->chName = InputParser::checkNameInput($stdout['name']) ? $stdout['name'] : null;
+				if( strpos($stdout['time'], '+' ) === false ){ // not additional time for last task/ else values are set
+					$this->chCategory = in_array($stdout['cat'], $this->categories) ? array_search($stdout['cat'], $this->categories) : null; // category id
+					$this->chName = InputParser::checkNameInput($stdout['name']) ? $stdout['name'] : null;
+				}
 				$this->chTime = InputParser::checkTimeInput($stdout['time']) ? $stdout['time'] : null;
 
 				if( is_null($this->chCategory) || is_null( $this->chTime ) || is_null($this->chName)){

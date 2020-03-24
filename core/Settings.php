@@ -27,6 +27,9 @@ class Settings {
 	}
 
 	private function categories(array $commands) : void {
+		$this->output->print(array(
+			'Settings -> Categories'
+		));
 		if( isset($commands[0])){
 			$cmd = $commands[0];
 			if( in_array($cmd, ['add', 'del', 'list'])){
@@ -50,11 +53,14 @@ class Settings {
 					}
 				}
 				else if ($cmd == 'del'){
-					$clist = array("ID\t:\tCategory");
+					$clist = array();
 					foreach( $cats as $id => $cat ){
-						$clist[] = $id . "\t:\t" . $cat;
+						$clist[] = array(
+							'ID' => strval($id), 
+							'Category' => $cat
+						);
 					}
-					$this->output->print($clist, null, 2);
+					$this->output->table($clist);
 					
 					$delid = $this->output->readline("Type ID to delete category, else abort:", CLIOutput::RED, 1);
 					if( isset($cats[$delid]) ){
@@ -72,17 +78,19 @@ class Settings {
 					}
 				}
 				else {
-					$clist = array("ID\t:\tCategory");
+					$clist = array();
 					foreach( $cats as $id => $cat ){
-						$clist[] = $id . "\t:\t" . $cat;
+						$clist[] = array(
+							'ID' => strval($id), 
+							'Category' => $cat
+						);
 					}
-					$this->output->print($clist, null, 1);
+					$this->output->table($clist);
 				}
 				return;
 			}
 		}
 		$this->output->print(array(
-			'Settings -> Categories',
 			array(
 				'There are more commands for categories',
 				array(
@@ -94,6 +102,10 @@ class Settings {
 	}
 
 	private function merge() : void {
+		$this->output->print(array(
+			'Settings -> Merge'
+		));
+			
 		$s = new StatsData();
 		$allnames = $s->getAllNames();
 		$color = null;
@@ -136,8 +148,5 @@ class Settings {
 			)
 		));
 	}
-
-
-
 }
 ?>

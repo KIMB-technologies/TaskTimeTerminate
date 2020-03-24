@@ -54,7 +54,7 @@ class CLI {
 		if( isset($this->parser->getCommands()[0]) && $this->parser->getCommands()[0] == 'inTerminalDialog' ){
 			(new Recorder(true))->record();
 		}
-		else{
+		else {
 			$this->output->print(array(
 				'Force new record',
 				array('Add command '. CLIOutput::colorString('inTerminalDialog', CLIOutput::BLUE) . ' to do a normal record using the InTerminalDialog.')

@@ -76,9 +76,11 @@ class Config {
 		return self::$instance->savedir;
 	}
 
-	public static function getRecordStatus() : bool {
+	public static function getRecordStatus(bool $useManager = true) : bool {
 		$c = self::getStorageReader('config');
-		ReaderManager::addReader($c);
+		if( $useManager ){
+			ReaderManager::addReader($c);
+		}
 		if( !self::$statusSetup && !$c->isValue(['status']) ){
 			$s->setValue(['status'], true);
 			self::$statusSetup = true;

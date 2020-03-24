@@ -5,14 +5,16 @@ class CLIParser {
 	private bool $empty = true;
 
 	const TASK_VERSION = 'v', TASK_HELP = 'h', TASK_STATS = 's',
-		TASK_SETTINGS = 'p', TASK_RECORD = 'r', TASK_PAUSE = 'e';
+		TASK_SETTINGS = 'p', TASK_RECORD = 'r', TASK_PAUSE = 'e',
+		TASK_OVERVIEW = 'o';
 	private $tasks = array(
 		'v' => array('version', 'v'),
 		'h' => array('help', 'h'),
 		's' => array('stats', 's'),
 		'p' => array('settings', 'preferences', 'p', 'conf', 'c'),
 		'r' => array('record', 'r', 'change', 'new'),
-		'e' => array('end', 'begin', 'pause', 'stop', 'e', 'start', 't', 'toggle')
+		'e' => array('end', 'begin', 'pause', 'stop', 'e', 'start', 't', 'toggle'),
+		'o' => array('overview', 'o')
 	);
 
 	public function __construct(int $argc, array $argv) {
@@ -49,7 +51,8 @@ class CLIParser {
 			's' => 'Show statistic of collected data',
 			'p' => 'Edit settings of program, e.g. categories',
 			'r' => 'Start a new task now, will stop the current and open task dialog',
-			'e' => 'Switch the program status, between enabled [collect data, ask for tasks] and disabled [dont do anything]'
+			'e' => 'Switch the program status, between enabled [collect data, ask for tasks] and disabled [do nothing]',
+			'o' => 'Get an overview about current task and program status'
 		);
 		$o = array();
 		foreach( $this->tasks as $key => $task ){

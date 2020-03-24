@@ -115,7 +115,7 @@ class Stats {
 		);
 
 		foreach( $table as &$d ){
-			$d['Time'] = $this->secToTime($d['Time']);
+			$d['Time'] = self::secToTime($d['Time']);
 		}
 
 		$this->output->table($table);
@@ -125,7 +125,7 @@ class Stats {
 		}
 	}
 
-	private function secToTime(int $t) : string {
+	public static function secToTime(int $t) : string {
 		return str_pad(
 				($t >= 3600 ? intval($t/3600) . 'h ' : '' ) .
 				str_pad(
@@ -165,7 +165,7 @@ class Stats {
 		}
 
 		foreach( $table as &$d ){
-			$d['Time'] = $this->secToTime($d['Time']);
+			$d['Time'] = self::secToTime($d['Time']);
 		}
 
 		$this->output->table($table);

@@ -1,6 +1,8 @@
 <?php
 class CLI {
 
+	const OVERVIEW_TIME = 'd.m. H:i';
+
 	private CLIParser $parser;
 	private CLIOutput $output;
 
@@ -14,9 +16,6 @@ class CLI {
 			case CLIParser::TASK_VERSION:
 				$this->version();
 				break;
-			case CLIParser::TASK_HELP:
-				$this->help();
-				break;
 			case CLIParser::TASK_STATS:
 				new Stats($this->parser, $this->output);
 				break;
@@ -24,23 +23,15 @@ class CLI {
 				new Settings($this->parser, $this->output);
 				break;
 			case CLIParser::TASK_RECORD:
-				if( isset($this->parser->getCommands()[0]) && $this->parser->getCommands()[0] == 'inTerminalDialog' ){
-					(new Recorder(true))->record();
-				}
-				else{
-					$this->output->print(array(
-						'Force new record',
-						array('Add command '. CLIOutput::colorString('inTerminalDialog', CLIOutput::BLUE) . ' to do a normal record using the InTerminalDialog.')
-					));
-					(new Recorder())->record(true);
-					if( Config::getStorageReader('config')->isValue(['status']) && !Config::getStorageReader('config')->getValue(['status']) ){
-						$this->togglePause(); // make sure to enable
-					}
-				}
+				$this->record();
+				break;
+			case CLIParser::TASK_OVERVIEW:
+				$this->overview();
 				break;
 			case CLIParser::TASK_PAUSE:
 				$this->togglePause();
 				break;
+			case CLIParser::TASK_HELP:
 			default:
 				$this->help();
 			break;
@@ -57,6 +48,70 @@ class CLI {
 			)
 		));
 		
+	}
+
+	private function record(){
+		if( isset($this->parser->getCommands()[0]) && $this->parser->getCommands()[0] == 'inTerminalDialog' ){
+			(new Recorder(true))->record();
+		}
+		else{
+			$this->output->print(array(
+				'Force new record',
+				array('Add command '. CLIOutput::colorString('inTerminalDialog', CLIOutput::BLUE) . ' to do a normal record using the InTerminalDialog.')
+			));
+			(new Recorder())->record(true);
+			if( !Config::getRecordStatus(false) ){
+				$this->togglePause(); // make sure to enable
+			}
+		}
+	}
+
+	private function overview(){
+		$enabled = Config::getRecordStatus(false);
+		$current = Config::getStorageReader('current');
+		$this->output->print(array(
+			'Overview',
+			array(
+				'TaskTimeTerminate is ' . ( $enabled ?
+					CLIOutput::colorString( 'enabled', CLIOutput::GREEN) : CLIOutput::colorString( 'disabled', CLIOutput::RED)
+				) . '!'
+			)
+		));
+		$this->output->print(array(''));
+		if( $enabled ){
+			if( $current->getValue(['end']) !== -1 ){
+				$this->output->print(array(
+					'Your current Task:'
+				), CLIOutput::BLUE);
+				$this->output->table(array(
+					array(
+						'' => 'Category',
+						'Value' => $current->getValue(['category'])
+					),
+					array(
+						'' => 'Name',
+						'Value' => $current->getValue(['name'])
+					),
+					array(
+						'' => 'Started',
+						'Value' => date( self::OVERVIEW_TIME, $current->getValue(['begin']))
+					),
+					array(
+						'' => 'Planned end',
+						'Value' => date( self::OVERVIEW_TIME, $current->getValue(['end']))
+					),
+					array(
+						'' => 'Worked until now',
+						'Value' => Stats::secToTime($current->getValue(['lastopend']) - $current->getValue(['begin']))
+					)
+				));
+			}
+			else{
+				$this->output->print(array(
+					'Currently you have a break.'
+				), CLIOutput::YELLOW, 1);
+			}
+		}
 	}
 
 	private function version(){
@@ -76,8 +131,8 @@ class CLI {
 	}
 
 	private function togglePause(){
+		$enabled = Config::getRecordStatus(false);
 		$c = Config::getStorageReader('config');
-		$enabled = !$c->isValue(['status']) ? true : $c->getValue(['status']);
 		$c->setValue(['status'], !$enabled);
 
 		if( $enabled ){ // not enabled

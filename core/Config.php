@@ -80,7 +80,7 @@ class Config {
 		$c = self::getStorageReader('config');
 		ReaderManager::addReader($c);
 		if( !self::$statusSetup && !$c->isValue(['status']) ){
-			$s->setValue(['status'], true);
+			$c->setValue(['status'], true);
 			self::$statusSetup = true;
 		}
 		return $c->getValue(['status']);

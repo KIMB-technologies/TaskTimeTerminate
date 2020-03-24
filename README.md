@@ -33,7 +33,12 @@ This tool tries to solve both problems at once:
 If a dialog opens, give a name for the current task and choose a category. Also give a time limit,
 this can be a absolute value like `12:00` or `22:30` or a relative one like `1h`, `20m` or 
 `1h10m`. The system will open the next dialog after the time limit was reached. 
+When the dialog opens and you need additional time for the last task, you can write a relative time value 
+like `5m` and prepend a `+` without giving a name. So only typing `+5m` will give you five minutes more
+for your last task.  
 You can also shutdown the PC (the task will end with the shutdown).
+
+If you don't know what your current task ist, try the overview at `ttt o`.
 
 If you need a short break, you can use the button `Pause` in the dialog (will be around 1 minute).
 If you need a longer break, you can disable the tool by executing `ttt t` and enable afterwards with

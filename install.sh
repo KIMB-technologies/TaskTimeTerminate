@@ -112,3 +112,21 @@ echo "                                                         "
 echo "Please add categories first 'ttt c cats add' afterwards  "
 echo "logout and login again to enable background job.         "
 echo "========================================================="
+
+echo ""
+echo "Try to (Re)Start background job? (y/n)"
+read restart
+if [ $restart = "y" ]; then 
+	if [ $(uname) = "Linux" ]; then 
+		php "$(pwd)/record.php" & # (re)start php background job
+		echo "	Started background job!"
+	elif [ $(uname) = "Darwin" ]; then
+		if [ -f ~/Applications/TaskTimeTerminate/TTTd.app ]; then 
+			open ~/Applications/TaskTimeTerminate/TTTd.app;
+			echo "	Started background job!"
+		else
+			echo "	Unable to find Starter at '~/Applications/TaskTimeTerminate/TTTd.app!"
+		fi;
+	fi;
+fi;
+echo ""

@@ -109,7 +109,7 @@ class Recorder {
 				if( is_file( $osPidFile ) ){
 					$otherPid = file_get_contents($osPidFile);
 					if( is_numeric($otherPid) ){
-						if( !posix_kill( intval($otherPid), SIGQUIT ) ){
+						if( Utilities::getOS() === Utilities::OS_MAC || !posix_kill( intval($otherPid), SIGQUIT ) ){
 							posix_kill( intval($otherPid), SIGKILL );
 						}
 					}

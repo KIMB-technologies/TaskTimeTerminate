@@ -98,7 +98,7 @@ root folder.
 
 The program folder (not the data folder) can be deleted and replaced by a newer version.
 - If downloaded via git `git pull` will do.
-- If used the install script, just rerun it.
+- If used the install script, just rerun it or use the `ttt-update` command.
 
 ### Installation per OS
 #### Linux
@@ -115,7 +115,7 @@ The program folder (not the data folder) can be deleted and replaced by a newer 
 	- Until now PHP 7.3. is part of macOS, so `/usr/bin/php` will not work!
 	- Install Homebrew https://brew.sh/index
 	- Install `brew install php` or `brew install php@7.4`
-	- PHP will be installed to `/usr/local/Cellar/php@7.4/<*>/bin/php` or `/usr/local/Cellar/php/<*>/bin/php`
+	- PHP will be installed to `/usr/local/Cellar/php@7.4/*/bin/php` or `/usr/local/Cellar/php/*/bin/php`
 		(so use something like this `alias ttt="/usr/local/Cellar/php/*/bin/php /Users/<me>/Applications/TaskTimeTerminate/cli.php`)
 - Background Job
 	- We will register as *Login Object* later
@@ -126,9 +126,9 @@ The program folder (not the data folder) can be deleted and replaced by a newer 
 		- Open Automator.app and open a new Program
 		- Select *Execute Shell Command* and `/bin/sh` as Shell
 		- Add a command like this in the textbox on the right
-		- `/usr/local/Cellar/php/7.4.3/bin/php /Users/<me>/Applications/TaskTimeTerminate/record.php &> /dev/null &`
-		- Save the Application as `.app`
-	- Add `.app` to *Login Object*
+		- `/usr/local/Cellar/php/*/bin/php /Users/<me>/Applications/TaskTimeTerminate/record.php &> /dev/null &`
+		- Save the Application as `TTTd.app` e.g. at `/Users/*/Applications/TaskTimeTerminate/TTTd.app`
+	- Add `TTTd.app` to *Login Object*
 ### Windows
 - PHP 7.4
 	- Download prebuilt version from https://windows.php.net/download/#php-7.4

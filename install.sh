@@ -71,17 +71,23 @@ fi;
 # download/ update
 git checkout -- . 
 git pull origin master 
-chmod +x ./cli.php ./record.php
+chmod +x ./cli.php ./record.php ./install.sh
 
 # add to shell
 if [ -f ~/.bashrc ]; then 
 	if ! grep -q "alias ttt" ~/.bashrc; then 
-		echo "alias ttt='$(pwd)/cli.php'" >> ~/.bashrc
+		echo "alias ttt='\"$(pwd)/cli.php\"'" >> ~/.bashrc
+	fi;
+	if ! grep -q "alias ttt-update" ~/.bashrc; then 
+		echo "alias ttt-update='cd \"$(pwd)\" && ./install.sh'" >> ~/.bashrc
 	fi;
 fi;
 if [ -f ~/.zshrc ]; then 
 	if ! grep -q "alias ttt" ~/.zshrc; then 
-		echo "alias ttt='$(pwd)/cli.php'" >> ~/.zshrc
+		echo "alias ttt='\"$(pwd)/cli.php\"'" >> ~/.zshrc
+	fi;
+	if ! grep -q "alias ttt-update" ~/.zshrc; then 
+		echo "alias ttt-update='cd \"$(pwd)\" && ./install.sh'" >> ~/.zshrc
 	fi;
 fi;
 
@@ -91,7 +97,7 @@ echo "	Installation/ Update successful!                   "
 echo "                                                         "
 echo "Please restart your shell, afterwards the 'ttt'          "
 echo "command can be used to acess TTT's cli interface.        "
-echo "	(Works only if bash or zsh shell used)             "
+echo "	(Works only if bash or zsh shell used.)             "
 echo "                                                         "
 
 if [ $(uname) = "Linux" ]; then 
@@ -121,7 +127,7 @@ if [ $restart = "y" ]; then
 		php "$(pwd)/record.php" & # (re)start php background job
 		echo "	Started background job!"
 	elif [ $(uname) = "Darwin" ]; then
-		if [ -f ~/Applications/TaskTimeTerminate/TTTd.app ]; then 
+		if [ -d ~/Applications/TaskTimeTerminate/TTTd.app ]; then 
 			open ~/Applications/TaskTimeTerminate/TTTd.app;
 			echo "	Started background job!"
 		else

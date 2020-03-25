@@ -118,17 +118,17 @@ The program folder (not the data folder) can be deleted and replaced by a newer 
 	- PHP will be installed to `/usr/local/Cellar/php@7.4/*/bin/php` or `/usr/local/Cellar/php/*/bin/php`
 		(so use something like this `alias ttt="/usr/local/Cellar/php/*/bin/php /Users/<me>/Applications/TaskTimeTerminate/cli.php`)
 - Background Job
-	- We will register as *Login Object* later
+	- We will register as *Login Object*
 		- Got to *System Preferences &rarr; Users and Groups &rarr; Username &rarr; Login Objects*
-		- Select your created `.app`
-		- But first we need an `.app`, because only Applications can be *Login Objects*
-	- Use Automator
+		- The repository contains an `TTTd.app` it will start `record.php` as background process
+			- `TTTd.app` will only work, if you use Homebrew for the PHP installation
+			- Also `TTTd.app` looks for TTT in at `~/Applications/TaskTimeTerminate/`
+	- Create own Automator Application
 		- Open Automator.app and open a new Program
 		- Select *Execute Shell Command* and `/bin/sh` as Shell
 		- Add a command like this in the textbox on the right
 		- `/usr/local/Cellar/php/*/bin/php /Users/<me>/Applications/TaskTimeTerminate/record.php &> /dev/null &`
-		- Save the Application as `TTTd.app` e.g. at `/Users/*/Applications/TaskTimeTerminate/TTTd.app`
-	- Add `TTTd.app` to *Login Object*
+		- Save the Application as `.app` and add to *Login Objects*
 ### Windows
 - PHP 7.4
 	- Download prebuilt version from https://windows.php.net/download/#php-7.4

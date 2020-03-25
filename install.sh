@@ -111,7 +111,8 @@ if [ $(uname) = "Linux" ]; then
 else
 	echo "Make sure to start the background job on login!          "
 	echo "    $(pwd)/record.php                                    "
-	echo "On macOS see the Readme.md for Automator instructions.   "
+	echo "On macOS see the Readme.md for instructions how to add   "
+	echo "TTTd.app to Login Objects.                               "
 fi;
 
 echo "                                                         "

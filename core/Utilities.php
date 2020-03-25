@@ -4,7 +4,7 @@
  */
 class Utilities {
 
-	const VERSION = 'v0.8.6 alpha';
+	const VERSION = 'v0.8.7 alpha';
 
 	/**
 	 * OS Consts

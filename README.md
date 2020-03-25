@@ -122,8 +122,8 @@ The program folder (not the data folder) can be deleted and replaced by a newer 
 		- Got to *System Preferences &rarr; Users and Groups &rarr; Username &rarr; Login Objects*
 		- The repository contains an `TTTd.app` it will start `record.php` as background process
 			- `TTTd.app` will only work, if you use Homebrew for the PHP installation
-			- Also `TTTd.app` looks for TTT in at `~/Applications/TaskTimeTerminate/`
-	- Create own Automator Application
+			- Also `TTTd.app` looks for TTT at `~/Applications/TaskTimeTerminate/`
+	- Create own Automator Application instead of `TTTd.app`
 		- Open Automator.app and open a new Program
 		- Select *Execute Shell Command* and `/bin/sh` as Shell
 		- Add a command like this in the textbox on the right

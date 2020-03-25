@@ -59,21 +59,32 @@
 				<key>ActionParameters</key>
 				<dict>
 					<key>COMMAND_STRING</key>
-					<string>PHP="php"
-if ! php -i | grep -q "7.4" ; then
-	if ! /usr/local/Cellar/php*/7.4*/bin/php -i | grep -q "7.4" ; then
-		PHP="/usr/local/Cellar/php*/7.4*/bin/php"
-	else
-		exit;
-	fi;
+					<string>#!/bin/sh
+
+NOW=$(date +"%d.%m.%Y %T")
+
+# brew path
+PHP=$(echo /usr/local/Cellar/php*/7.4*/bin/php);
+if ! "$PHP" -i | grep -q "7.4"; then
+	PHP="php"; # alternative
 fi;
+
+# final test
+if ! "$PHP" -i | grep -q "7.4" ; then
+	echo "Unable to find PHP 7.4 using '$PHP' at $NOW" &gt;&gt; /tmp/TaskTimeTerminateDeamon.log;
+	exit;
+fi;
+
+echo "Starting with '$PHP' at $NOW" &gt;&gt; /tmp/TaskTimeTerminateDeamon.log;
+
+# start background job
 "$PHP" ~/Applications/TaskTimeTerminate/record.php &amp;&gt; /dev/null &amp;</string>
 					<key>CheckedForUserDefaultShell</key>
 					<true/>
 					<key>inputMethod</key>
 					<integer>0</integer>
 					<key>shell</key>
-					<string>/bin/zsh</string>
+					<string>/bin/sh</string>
 					<key>source</key>
 					<string></string>
 				</dict>
@@ -177,12 +188,10 @@ fi;
 						<string>4</string>
 					</dict>
 				</dict>
-				<key>conversionLabel</key>
-				<integer>0</integer>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>467.500000:443.000000</string>
+				<string>467.500000:436.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run Shell Script.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>

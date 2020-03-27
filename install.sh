@@ -71,15 +71,10 @@ fi;
 # download/ update
 git checkout -- . 
 git fetch --tags --quiet
-latestTag=$(git describe --tags)
+latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
 git checkout "$latestTag" --quiet
 
 chmod +x ./cli.php ./record.php ./install.sh
-
-# ignore local config
-if ! grep -q "/config.json" ./.gitignore; then 
-	echo "/config.json" >> ./.gitignore
-fi;
 
 # add to shell
 if [ -f ~/.bashrc ]; then 

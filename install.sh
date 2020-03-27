@@ -70,9 +70,9 @@ fi;
 
 # download/ update
 git checkout -- . 
-git fetch --tags
+git fetch --tags --quiet
 latestTag=$(git describe --tags)
-git checkout "$latestTag"
+git checkout "$latestTag" --quiet
 
 chmod +x ./cli.php ./record.php ./install.sh
 

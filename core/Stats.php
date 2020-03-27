@@ -51,7 +51,7 @@ class Stats {
 
 	private function rangeStats(array $commands) {
 		$cmd = array_values(array_filter(array_slice($commands, 0, 2), function ($d) {
-			return preg_match('/^\d{4}-(0|1)\d-[0-3]\d$/', $d) === 1;
+			return preg_match( StatsData::DATE_PREG, $d) === 1;
 		})); // create array of range days
 
 		if( count($cmd) === 1){

@@ -2,6 +2,8 @@
 class StatsData {
 
 	const FORWARD_TO_NOW = -1;
+	const FILENAME_PREG = '/^\d{4}-(0|1)\d-[0-3]\d\.json$/';
+	const DATE_PREG = '/^\d{4}-(0|1)\d-[0-3]\d$/';
 
 	private int $until = 0;
 	private int $forward = -1;
@@ -16,7 +18,7 @@ class StatsData {
 
 	private function selectUntil() : void {
 		$datafiles = array_filter(scandir( Config::getStorageDir()), function ($f) {
-			return preg_match('/^\d{4}-(0|1)\d-[0-3]\d\.json$/', $f) === 1;
+			return preg_match(self::FILENAME_PREG, $f) === 1;
 		});
 		foreach( $datafiles as $f ){
 			$timestamp = strtotime(substr($f, 0, -5));

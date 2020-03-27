@@ -36,9 +36,10 @@ class Stats {
 				$this->backUntil(0, array_slice($commands, 1));
 				break;
 			case "today":
+				$commands = array_slice($commands, 1);
 			default:
 				$this->todayview = true;
-				$this->backUntil(strtotime("today"), array_slice($commands, 1));
+				$this->backUntil(strtotime("today"), $commands);
 		}
 	}
 
@@ -67,12 +68,14 @@ class Stats {
 				$names = array_map('trim', $names);
 				$names = array_filter( $names, 'InputParser::checkNameInput');
 				$allNames = array_merge($allNames, $names);
+				$isNames = false;
 			}
 			if( $isCats ){
 				$cats = explode(',', $arg);
 				$cats = array_map('trim', $cats);
 				$cats = array_filter( $cats, 'InputParser::checkCategoryInput');
 				$allCats = array_merge($allCats, $cats);
+				$isCats = false;
 			}
 		}
 		$s->filterData($allNames, $allCats);

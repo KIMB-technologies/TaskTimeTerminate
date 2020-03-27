@@ -1,4 +1,3 @@
-> Alpha Version  
 > Support for **Linux**, **macOS** and **Windows**
 
 # TaskTimeTerminate
@@ -56,6 +55,17 @@ Other stat-commands for different periods and filters:
 - `ttt s all`
 - `ttt s range 2020-01-11 2020-01-15`
 - `ttt s range 2020-01-11`
+
+The available categories can be edited using `ttt conf cats add|del|list`,
+When deleting a category, the corresponding task won't be deleted too. The categories
+are used to display the values in the dropdown of the dialogs.
+
+If some typo has occurred there is are two possibilities to change finished tasks:
+1. `ttt conf merge` Merge tasks of different names into one single name. With other words e.g. rename
+	tasks called `ProectX` to `ProjectX`.
+2. `ttt conf edit 2020-01-21` Edit the finished tasks of a specified day. The system will show a list of all
+	tasks finished that day. Afterwards one can choose a task and either change or delete it.
+	While changing allows to change the name, category and duration.
 
 ## Setup
 The tool supports Linux (like Ubuntu, Linux Mint), macOS and Windows.

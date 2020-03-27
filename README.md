@@ -73,7 +73,7 @@ The script will follow these steps (for detailed information per operating syste
 1. Install PHP 7.4 (only the CLI component is needed)
     - On Linux install `yad` for dialogs
     - On Windows PHP-GTK will be used (and downloaded on first run of `./cli.php r`)
-    - On macOS the dialog is a native program bundle in this repository
+    - On macOS the dialog is a native program bundle shipped in this repository
 2. Download this repository, either via [git](https://github.com/KIMB-technologies/TaskTimeTerminate.git)
 	or as [zip](https://github.com/KIMB-technologies/TaskTimeTerminate/archive/master.zip) and save to a folder
 3. Make executable `chmod +x ./record.php ./cli.php`
@@ -90,15 +90,14 @@ The script will follow these steps (for detailed information per operating syste
 
 ### Collected Data and Update
 Per default all data is saved in `~/.tasktimeterminate/`. This can be changed by editing the
-`config.json` in the programs root folder.
+`config.json` in the programs root folder (will be created on first run of program).
 On Windows we will use `%AppData%/Roaming` for `~`.
 
 Per default all times use the timezone `Europe/Berlin`. This can be changed by editing the `config.json` in the programs 
 root folder.
 
 The program folder (not the data folder) can be deleted and replaced by a newer version.
-- If downloaded via git `git pull` will do.
-- If used the install script, just rerun it or use the `ttt-update` command.
+The install script registers the `ttt-update` command (which reruns `install.sh` under the hood).
 
 ### Installation per OS
 #### Linux

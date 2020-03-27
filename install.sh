@@ -70,8 +70,16 @@ fi;
 
 # download/ update
 git checkout -- . 
-git pull origin master 
+git fetch --tags
+latestTag=$(git describe --tags)
+git checkout "$latestTag"
+
 chmod +x ./cli.php ./record.php ./install.sh
+
+# ignore local config
+if ! grep -q "/config.json" ./.gitignore; then 
+	echo "/config.json" >> ./.gitignore
+fi;
 
 # add to shell
 if [ -f ~/.bashrc ]; then 

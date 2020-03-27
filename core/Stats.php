@@ -38,6 +38,9 @@ class Stats {
 			case "all":
 				$this->backUntil(0, array_slice($commands, 1));
 				break;
+			case "range":
+				$this->rangeStats(array_slice($commands, 1));
+				break;
 			case "today":
 				$commands = array_slice($commands, 1);
 			default:
@@ -46,8 +49,43 @@ class Stats {
 		}
 	}
 
-	private function backUntil(int $timestamp, array $f) : void {
-		$s = new StatsData($timestamp);
+	private function rangeStats(array $commands) {
+		$cmd = array_values(array_filter(array_slice($commands, 0, 2), function ($d) {
+			return preg_match('/^\d{4}-(0|1)\d-[0-3]\d$/', $d) === 1;
+		})); // create array of range days
+
+		if( count($cmd) === 1){
+			$until = strtotime($cmd[0]);
+			$forwardTo = $until + 86399;
+
+			$this->todayview = true;
+		}
+		else if( count($cmd) === 2 ){
+			sort( $cmd ); // change s.t. ('start of range', 'end of range')
+			$until = strtotime($cmd[0]);
+			$forwardTo = strtotime($cmd[1]) + 86399;
+		}
+		else{
+			$this->output->print(
+				array('Statistics -> Range',
+					array(
+						'Please give single day or range of two days',
+						array(
+							CLIOutput::colorString( 'range 2020-01-11', CLIOutput::BLUE ),
+							CLIOutput::colorString( 'range 2020-01-11 2020-01-13', CLIOutput::BLUE ),
+						)
+					)
+				));
+			return;
+		}
+
+		$this->backUntil($until,
+			array_slice($commands, count($cmd)), // shift number of range days
+			$forwardTo); 
+	}
+
+	private function backUntil(int $timestamp, array $f, int $forwardTo = StatsData::FORWARD_TO_NOW) : void {
+		$s = new StatsData($timestamp, $forwardTo);
 
 		// Name and Cat filtering
 		$isCats = false;

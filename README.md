@@ -54,6 +54,8 @@ Other stat-commands for different periods and filters:
 - `ttt s week -cats Work,Hobby`
 - `ttt s month -cats Hobby -names Website`
 - `ttt s all`
+- `ttt s range 2020-01-11 2020-01-15`
+- `ttt s range 2020-01-11`
 
 ## Setup
 The tool supports Linux (like Ubuntu, Linux Mint), macOS and Windows.

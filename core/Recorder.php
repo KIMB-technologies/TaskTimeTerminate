@@ -4,7 +4,8 @@ class Recorder {
 	const PID_FILE_LINUX = '/run/lock/TaskTimeTerminate';
 	const PID_FILE_MAC = '/private/tmp/TaskTimeTerminate';
 
-	public Dialog $dialog;
+	private Dialog $dialog;
+	private $lockfileHandle;
 
 	public function __construct(bool $inTerminal = false) {
 		if($inTerminal){
@@ -31,34 +32,37 @@ class Recorder {
 	}
 
 	public function record(bool $forcenew = false) : void {
-		$r = Config::getStorageReader('current');
-		ReaderManager::addReader($r);
-		if( empty($r->getArray())){ // first start etc.
-			$r->setArray(array(
-				'name' => '',
-				'category' => '',
-				'end' => -1,
-				'begin' => -1,
-				'lastopend' => time(),
+		if($this->waitForOpenedDialogs()){
+			$r = Config::getStorageReader('current');
+			ReaderManager::addReader($r);
+			if( empty($r->getArray())){ // first start etc.
+				$r->setArray(array(
+					'name' => '',
+					'category' => '',
+					'end' => -1,
+					'begin' => -1,
+					'lastopend' => time(),
 
-			));
-			$this->recordNew($r);
-		}
-		else{
-			$wasIncative = time() > $r->getValue(['lastopend']) + Config::getSleepTime() * 3; // pc was shut down (no work!!)
-			$end = $r->getValue(['end']);
-			if( $end === -1 ){ // short break enabled
+				));
 				$this->recordNew($r);
-			}
-			else if(time() < $end && !$forcenew && !$wasIncative ){
-				// sleep (no limit reached)
 			}
 			else{
-				$this->saveTaskTime($r);
-				$this->recordNew($r);
+				$wasIncative = time() > $r->getValue(['lastopend']) + Config::getSleepTime() * 3; // pc was shut down (no work!!)
+				$end = $r->getValue(['end']);
+				if( $end === -1 ){ // short break enabled
+					$this->recordNew($r);
+				}
+				else if(time() < $end && !$forcenew && !$wasIncative ){
+					// sleep (no limit reached)
+				}
+				else{
+					$this->saveTaskTime($r);
+					$this->recordNew($r);
+				}
+				$r->setValue(['lastopend'], time());
 			}
-			$r->setValue(['lastopend'], time());
 		}
+		$this->unlockDialogs();
 	}
 
 	private function saveTaskTime(JSONReader $r) : void {
@@ -98,6 +102,18 @@ class Recorder {
 			$r->setValue(['begin'], -1);
 			$r->setValue(['end'], -1 );
 		}
+	}
+
+	private function waitForOpenedDialogs() : bool {
+		$lockfile = Config::getStorageDir() . '/openedDialog.lock';
+		
+		$this->lockfileHandle = fopen( $lockfile, 'c' );
+		return flock( $this->lockfileHandle, LOCK_EX );
+	}
+
+	private function unlockDialogs() {
+		flock($this->lockfileHandle, LOCK_UN );
+		fclose($this->lockfileHandle);
 	}
 
 	public static function runOnlyOnce() : void {

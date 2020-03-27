@@ -1,6 +1,9 @@
 <?php
 class Stats {
 
+	const DAYS_DISPLAY = 'd.m';
+	const DAYS_MAXCOUNT = 5;
+
 	private CLIParser $parser;
 	private CLIOutput $output;
 
@@ -87,16 +90,22 @@ class Stats {
 		$combi = array();
 		foreach( $data as $d ){
 			$key = $d['category'] . '++' . $d['name'];
+			$day = date(self::DAYS_DISPLAY, $d['begin']);
 			if( !isset($combi[$key])){
 				$combi[$key] = array(
 					'category' => $d['category'],
 					'name' => $d['name'],
 					'duration' => 0,
-					'times' => 0
+					'times' => 0,
+					'days' => array( $day )
 				);
 			}
 			$combi[$key]['times']++;
 			$combi[$key]['duration'] += $d['duration'];
+
+			if( !in_array( $day, $combi[$key]['days'] ) ){
+				$combi[$key]['days'][] = $day;
+			}
 		}
 		$combi = array_values($combi);
 
@@ -106,7 +115,9 @@ class Stats {
 				'Category' => $d['category'],
 				'Name' => $d['name'],
 				'Time' => $d['duration'],
-				'Work Items' => str_pad($d['times'], 4, " ", STR_PAD_LEFT)
+				'Work Items' => str_pad($d['times'], 4, " ", STR_PAD_LEFT),
+				'Days' => implode(', ', array_slice(array_reverse($d['days']), 0, self::DAYS_MAXCOUNT))
+					. (count($d['days']) > self::DAYS_MAXCOUNT ? ', ...' : '' )
 			);
 		}
 
@@ -152,8 +163,10 @@ class Stats {
 		$table = array();
 		$i = 0;
 		$lastval = null;
+		$lastend = 0;
 		foreach( $data as $d ){
-			if( $lastval === $d['category'] . '++' . $d['name'] ){
+			if( $lastval === $d['category'] . '++' . $d['name']
+				&& $lastend + Config::getSleepTime() > $d['begin'] ){
 				$table[$i-1]['Time'] += $d['duration'];
 			}
 			else{
@@ -164,6 +177,7 @@ class Stats {
 					'Time' => $d['duration']
 				);
 			}
+			$lastend = $d['end'];
 			$lastval = $d['category'] . '++' . $d['name'];
 		}
 

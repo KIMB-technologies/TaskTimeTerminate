@@ -77,7 +77,7 @@ The script will follow these steps (for detailed information per operating syste
     - On Windows PHP-GTK will be used (and downloaded on first run of `./cli.php r`)
     - On macOS the dialog is a native program bundle shipped in this repository
 2. Download this repository, either via [git](https://github.com/KIMB-technologies/TaskTimeTerminate.git)
-	or as [zip](https://github.com/KIMB-technologies/TaskTimeTerminate/archive/master.zip) and save to a folder
+	or as archive from [Releases](https://github.com/KIMB-technologies/TaskTimeTerminate/releases/latest) and save to a folder
 3. Make executable `chmod +x ./record.php ./cli.php`
 4. Setup an autostart for `./record.php`
     - The system needs a background process to check for limits and timeouts and to open dialogs

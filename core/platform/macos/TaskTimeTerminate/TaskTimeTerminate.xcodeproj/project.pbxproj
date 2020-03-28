@@ -272,6 +272,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = TaskTimeTerminate/TaskTimeTerminate.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = TaskTimeTerminate/Info.plist;
@@ -290,6 +291,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = TaskTimeTerminate/TaskTimeTerminate.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = TaskTimeTerminate/Info.plist;

@@ -3,11 +3,15 @@
 <plist version="1.0">
 <dict>
 	<key>BuildMachineOSBuild</key>
-	<string>19D76</string>
+	<string>19E266</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
 	<string>TaskTimeTerminate</string>
+	<key>CFBundleIconFile</key>
+	<string>AppIcon</string>
+	<key>CFBundleIconName</key>
+	<string>AppIcon</string>
 	<key>CFBundleIdentifier</key>
 	<string>eu.kimb-technologies.TaskTimeTerminate</string>
 	<key>CFBundleInfoDictionaryVersion</key>

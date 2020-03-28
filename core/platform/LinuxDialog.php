@@ -11,6 +11,7 @@ class LinuxDialog extends Dialog {
 			'--sticky',
 			'--on-top',
 			'--center',
+			'--image="' . realpath( __DIR__ . '/../icon/icon.png' ) . '"',
 			'--form',
 			'--item-separator=,',
 			'--separator=" "',

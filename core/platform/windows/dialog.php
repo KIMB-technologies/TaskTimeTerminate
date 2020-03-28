@@ -36,6 +36,17 @@ $window->connect_simple('destroy', function (){
 	sendInput( "", "", "", true );
 }); 
 
+// image (load only if loading possible on system)
+try {
+	$window->set_icon(
+		GdkPixbuf::new_from_file(
+			realpath( __DIR__ . '/../../icon/icon.png' )
+		)
+	);
+} catch (Exception $e) {
+	// proceed without icon
+}
+
 $fixed = new GtkFixed();
 
 $label = new GtkLabel("It is time for a new task!");

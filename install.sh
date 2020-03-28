@@ -70,7 +70,10 @@ fi;
 
 # download/ update
 git checkout -- . 
-git pull origin master 
+git fetch --tags --quiet
+latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
+git checkout "$latestTag" --quiet
+
 chmod +x ./cli.php ./record.php ./install.sh
 
 # add to shell

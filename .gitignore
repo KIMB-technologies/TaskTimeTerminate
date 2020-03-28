@@ -1,7 +1,12 @@
+# json file locks
 *.lock
+# php gtk for windows binary -- Windows dialog
 /core/platform/php-gtk/*
 
+# xcode source -- macOS Dialog
 *.xcuserstate
-
 project.xcworkspace/
 xcuserdata/
+
+# custom installation settings (will be created by Config.php on first startup)
+/config.json

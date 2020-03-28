@@ -1,4 +1,3 @@
-> Alpha Version  
 > Support for **Linux**, **macOS** and **Windows**
 
 # TaskTimeTerminate
@@ -54,6 +53,19 @@ Other stat-commands for different periods and filters:
 - `ttt s week -cats Work,Hobby`
 - `ttt s month -cats Hobby -names Website`
 - `ttt s all`
+- `ttt s range 2020-01-11 2020-01-15`
+- `ttt s range 2020-01-11`
+
+The available categories can be edited using `ttt conf cats add|del|list`,
+When deleting a category, the corresponding task won't be deleted too. The categories
+are used to display the values in the dropdown of the dialogs.
+
+If some typo has occurred there is are two possibilities to change finished tasks:
+1. `ttt conf merge` Merge tasks of different names into one single name. With other words e.g. rename
+	tasks called `ProectX` to `ProjectX`.
+2. `ttt conf edit 2020-01-21` Edit the finished tasks of a specified day. The system will show a list of all
+	tasks finished that day. Afterwards one can choose a task and either change or delete it.
+	While changing allows to change the name, category and duration.
 
 ## Setup
 The tool supports Linux (like Ubuntu, Linux Mint), macOS and Windows.
@@ -73,9 +85,9 @@ The script will follow these steps (for detailed information per operating syste
 1. Install PHP 7.4 (only the CLI component is needed)
     - On Linux install `yad` for dialogs
     - On Windows PHP-GTK will be used (and downloaded on first run of `./cli.php r`)
-    - On macOS the dialog is a native program bundle in this repository
+    - On macOS the dialog is a native program bundle shipped in this repository
 2. Download this repository, either via [git](https://github.com/KIMB-technologies/TaskTimeTerminate.git)
-	or as [zip](https://github.com/KIMB-technologies/TaskTimeTerminate/archive/master.zip) and save to a folder
+	or as archive from [Releases](https://github.com/KIMB-technologies/TaskTimeTerminate/releases/latest) and save to a folder
 3. Make executable `chmod +x ./record.php ./cli.php`
 4. Setup an autostart for `./record.php`
     - The system needs a background process to check for limits and timeouts and to open dialogs
@@ -90,15 +102,14 @@ The script will follow these steps (for detailed information per operating syste
 
 ### Collected Data and Update
 Per default all data is saved in `~/.tasktimeterminate/`. This can be changed by editing the
-`config.json` in the programs root folder.
+`config.json` in the programs root folder (will be created on first run of program).
 On Windows we will use `%AppData%/Roaming` for `~`.
 
 Per default all times use the timezone `Europe/Berlin`. This can be changed by editing the `config.json` in the programs 
 root folder.
 
 The program folder (not the data folder) can be deleted and replaced by a newer version.
-- If downloaded via git `git pull` will do.
-- If used the install script, just rerun it or use the `ttt-update` command.
+The install script registers the `ttt-update` command (which reruns `install.sh` under the hood).
 
 ### Installation per OS
 #### Linux

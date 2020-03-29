@@ -145,7 +145,14 @@ The install script registers the `ttt-update` command (which reruns `install.sh`
 	- Download prebuilt version from https://windows.php.net/download/#php-7.4
 	- Unzip and place somewhere on computer
 	- Add to `$PATH` or always run like `C:/my/php/path/php.exe C:/Users/<me>/TaskTimeTerminate/cli.php`
-- Add `ttt` alias to `~/macros.doskey`
-- Add a script to `%AppData%\Roaming\Microsoft\Windows\Start Menu\Programs\Startup` which
-	runs `C:/my/php/path/php.exe C:/Users/<me>/TaskTimeTerminate/record.php`
-	- There will be an open Command-Prompt, I don't know how to hide it.
+- Create runner for background job
+	- To hide the running process a program has to be self-compiled. The source can be found at
+		[TTTd.c](/core/platform/windows/TTTd.c).
+	- Change the command in the `TTTd.c` and provide the correct paths (see `CHANGE BELOW` in code).
+	- Install a compiler like http://www.mingw.org/ and run `gcc TTTd.c -o TTTd.exe` to compile.
+	- Running `TTTd.exe` will start a hidden process running the background job.
+	- Place `TTTd.exe` in the autostart directory
+		- Press `Windows + R` fill `shell:startup` into the window and copy `TTTd.exe` in the folder.
+		- Or directly copy into `%AppData%\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`
+- Add `ttt` alias to `~/macros.doskey` which runs `C:/my/php/path/php.exe C:/Users/<me>/TaskTimeTerminate/cli.php`
+		

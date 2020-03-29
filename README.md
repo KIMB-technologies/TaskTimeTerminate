@@ -72,7 +72,7 @@ The tool supports Linux (like Ubuntu, Linux Mint), macOS and Windows.
 We have tested it under Linux Mint 18, macOS Catalina and Windows 10.
 
 ### General Installation
-We have an install and update script for macOS and Linux &ndash; [`install.sh`](https://raw.githubusercontent.com/KIMB-technologies/TaskTimeTerminate/master/install.sh).
+We have an install and update script for macOS and Linux &ndash; [`install.sh`](install.sh).
 
 The script will follow these steps (for detailed information per operating system see below).
 1. Check the installation of PHP 7.4
@@ -147,7 +147,7 @@ The install script registers the `ttt-update` command (which reruns `install.sh`
 	- Add to `$PATH` or always run like `C:/my/php/path/php.exe C:/Users/<me>/TaskTimeTerminate/cli.php`
 - Create runner for background job
 	- To hide the running process a program has to be self-compiled. The source can be found at
-		[TTTd.c](/core/platform/windows/TTTd.c).
+		[TTTd.c](core/platform/windows/TTTd.c).
 	- Change the command in the `TTTd.c` and provide the correct paths (see `CHANGE BELOW` in code).
 	- Install a compiler like http://www.mingw.org/ and run `gcc TTTd.c -o TTTd.exe` to compile.
 	- Running `TTTd.exe` will start a hidden process running the background job.

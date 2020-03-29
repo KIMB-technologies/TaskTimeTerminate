@@ -6,6 +6,7 @@ class StatsData {
 	const DATE_PREG = '/^\d{4}-(0|1)\d-[0-3]\d$/';
 
 	private int $until = 0;
+	private int $untilDay = 0;
 	private int $forward = -1;
 	private array $filelist = array();
 	private array $dataset = array();
@@ -13,6 +14,7 @@ class StatsData {
 	public function __construct(int $time = 0, int $forwardTo = self::FORWARD_TO_NOW) {
 		$this->forward = ( $forwardTo  === self::FORWARD_TO_NOW ) ? time() : $forwardTo;
 		$this->until = $time;
+		$this->untilDay = strtotime(date('Y-m-d', $this->until)); // timestamp 00:00 for day of $until 
 		$this->selectUntil();
 	}
 
@@ -23,7 +25,7 @@ class StatsData {
 		foreach( $datafiles as $f ){
 			$timestamp = strtotime(substr($f, 0, -5));
 			if( $timestamp !== false ){
-				if( $timestamp >= $this->until && $timestamp <= $this->forward){
+				if( $timestamp >= $this->untilDay && $timestamp <= $this->forward){
 					$this->filelist[] = substr($f, 0, -5);
 				}
 			}

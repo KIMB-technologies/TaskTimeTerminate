@@ -5,40 +5,54 @@ class StatsData {
 	const DATE_PREG = '/^\d{4}-(0|1)\d-[0-3]\d$/';
 
 	private StatsLoader $loader;
-	private array $dataset;
+	private bool $localOnly;
 
-	public function __construct(int $time = 0, int $forwardTo = self::FORWARD_TO_NOW) {
+	private array $dataset = array();
+
+	public function __construct(int $time = 0, int $forwardTo = self::FORWARD_TO_NOW, bool $localOnly = true) {
+		$this->localOnly = $localOnly;
+		
 		$this->loader = new StatsLoader(
 			$time,
-			( $forwardTo  === self::FORWARD_TO_NOW ) ? time() : $forwardTo
+			( $forwardTo  === self::FORWARD_TO_NOW ) ? time() : $forwardTo,
+			$this->localOnly
 		);
 	}
 
-	private function loadContents(bool $force = false, $localOnly = false) : void {
-		$this->dataset = $this->loader->loadContents( $force, $localOnly );
+	private function loadContents() : void {
+		if( $this->dataset === array() ){
+			$this->dataset = $this->loader->getContents();
+		}
 	}
 
-	public function filterData(array $names = array(), array $cats = array(), $localOnly = false){
-		$this->loadContents(false, $localOnly);
+	public function filterData(array $names = array(), array $cats = array(), array $devices = array()){
+		$this->loadContents();
 		foreach( $this->dataset as $k => $d ){
 			if(
 				(!empty($cats) && !in_array($d['category'], $cats))
 				||
 				(!empty($names) && !in_array($d['name'], $names))
+				||
+				(!empty($devices) && !in_array($d['device'], $devices))
 			){
-				unset( $this->dataset[$k]);
+				unset( $this->dataset[$k] );
 			}
 		}
-	}
-	
-	public function getAllNames() : array {
-		$this->loadContents();
-
-		return array_unique(array_column($this->dataset, 'name'));
 	}
 
 	public function getAllDatasets() : array {
 		return $this->dataset;
+	}
+	
+	public function getLocalNames() : array {
+		$this->loadContents();
+
+		return array_unique(array_column(
+				array_filter( $this->dataset, function ($a) {
+					return empty($a['device']); // => no device means local
+				}),
+				'name'
+			));
 	}
 	
 	public function merge($merge, $mergeTo) : bool {
@@ -47,7 +61,7 @@ class StatsData {
 		}
 
 		$ret = true;
-		foreach( $this->filelist as $f ){
+		foreach( $this->loader->getLocalFilelist() as $f ){
 			$r = Config::getStorageReader($f);
 			foreach( $r->getArray() as $k => $a ){
 				if( $a['name'] === $merge ){
@@ -57,7 +71,7 @@ class StatsData {
 			unset($r);
 		}
 
-		$this->loadContents(true); //force reload
+		$this->dataset = array(); //force to reload contents on next use
 		return $ret;
 	}
 

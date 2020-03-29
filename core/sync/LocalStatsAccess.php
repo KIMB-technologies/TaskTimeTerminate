@@ -2,11 +2,12 @@
 
 class LocalStatsAccess extends StatsAccess {
 
-	public function listDayFiles() : array {
-		return array_map(	function ($v) {
+	public function listFiles() : array {
+		return array_map(	function ($f) {
 			return array(
-					'day' => $v,
-					'client' => ''
+					'timestamp' => strtotime(substr($f, 0, -5)),
+	 				'file' => $f, 
+	 				'device' => ''
 				);
 			},
 			array_filter(scandir( Config::getStorageDir()), function ($f) {
@@ -15,8 +16,16 @@ class LocalStatsAccess extends StatsAccess {
 		);
 	}
 
-	public function getDayFile( string $client, string $day  ) : array {
-		return Config::getStorageReader($day)->getArray();
+	public function getFile( string $file, string $device  ) : array {
+		return Config::getStorageReader(substr($file, 0, -5))->getArray();
+	}
+
+	public function initialSync() : bool {
+		return true; // never needed (since local data is the "real" data)
+	}
+
+	public function setDayTasks(array $tasks) : void {
+		throw new Exception("StatsAccess::setDayTasks() will not work for LocalStatsAccess!");
 	}
 }
 

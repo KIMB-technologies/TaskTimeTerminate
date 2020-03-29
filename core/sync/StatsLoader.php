@@ -2,79 +2,77 @@
 
 class StatsLoader {
 
-	private array $access = array();
-
+	private array $locations = array();
 	private array $filelist = array();
-	private array $datasets = array();
+
+	private int $until = 0;
+	private int $untilDay = 0;
+	private int $forward = 0;
 
 	public function __construct(int $time, int  $forwardTo, bool $localOnly = false){
-		$this->access['local'] = new LocalStatsAccess();
+		$this->locations['local'] = new LocalStatsAccess();
 		if( !$localOnly ){
 			$c = Config::getStorageReader('config');
 			if( $c->isValue(['sync', 'directory']) ){
-				$this->access['directory'] = new DirectoryStatsAccess(
-					$c->getValue(['sync', 'directory', 'path']),
-					$c->getValue(['sync', 'directory', 'thisname'])
-				);
+				$this->locations['directory'] = new DirectoryStatsAccess();
 			}
 			if( $c->isValue(['sync', 'server']) ){
-				$this->access['server'] = new ServerStatsAccess(
-					$c->getValue(['sync', 'server', 'uri']),
-					$c->getValue(['sync', 'server', 'group']),
-					$c->getValue(['sync', 'server', 'token']),
-					$c->getValue(['sync', 'server', 'thisname'])
-				);
+				$this->locations['server'] = new ServerStatsAccess();
 			}
 		}
 
-		$this->selectUntil($time, $forwardTo);
+		$this->forward = $forwardTo;
+		$this->until = $time;
+		$this->untilDay = strtotime(date('Y-m-d', $this->until)); // timestamp 00:00 for day of $until 
+		$this->selectUntil();
 	}
 
-	private function selectUntil(int $time, int  $forwardTo) : void {
-		foreach( $this->access as $type => $acc ){
-			foreach( $acc->listDayFiles() as $f ){
-				$timestamp = strtotime($f['day']);
-				if( $timestamp !== false ){
-					if( $timestamp >= $time && $timestamp <= $forwardTo){
-						$this->filelist[] = array(
-							'day' => $f['day'],
-							'client' => $f['client'],
-							'type' => $type
-						);
-					}
+	private function selectUntil() : void {
+		foreach( $this->locations as $location => $access ){
+			foreach( $access->listFiles() as $file ){
+				if( $file['timestamp'] >= $this->untilDay && $file['timestamp'] <= $this->forward){
+					$this->filelist[] = array(
+						'file' => $file['file'],
+						'device' => $file['device'],
+						'location' => $location
+					);
 				}
 			}
 		}
 	}
 
-	public function getFilelist() : array {
-		return $this->filelist;
+	public function getLocalFilelist() : array {
+		return array_values(array_column(
+				array_filter( $this->filelist, function ($a) {
+					return $a['location'] === 'local';
+				}),
+				'file'
+			));
 	}
 
-	public function getContents(bool $force = false) : array {
-		if( $this->datasets === array() || $force ){
-			$this->loadContents();
-		}
-		return $this->datasets;
-	}
+	public function getContents() : array {
+		$knownDevices = array();
 
-	
-	private function loadContents(bool $force = false) : void {
+		$dataset = array();
 		foreach( $this->filelist as $f ){
-				$r = Config::getStorageReader($f);
-				$array = $r->getArray();
+			$hashKey = $f['file'] . '++' . $f['device'];
+			if( !in_array( $hashKey, $knownDevices ) ){
+				$array = $this->locations[$f['location']]->getFile($f['file'], $f['device']);
 				foreach( $array as $key => $a ){
 					if($a['end'] < $this->until ){
 						unset($array[$key]);
 					}
 					else {
 						$array[$key]['duration'] = $a['end'] - $a['begin'];
+						$array[$key]['device'] = $f['device'];
 					}
 				}
 				if( !empty($array )){
-					$this->dataset = array_merge($this->dataset, $array);
+					$dataset = array_merge($dataset, $array);
 				}
+				$knownDevices[] = $hashKey;
 			}
+		}
+		return $dataset;
 	}
-
 }

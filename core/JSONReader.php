@@ -92,8 +92,10 @@ class JSONReader extends Reader {
 	public function __destruct(){
 		$this->write_content();
 		//unlock and close
-		flock($this->filehandler, LOCK_UN );
-		fclose($this->filehandler);
+		if( is_resource($this->filehandler) ){
+			flock($this->filehandler, LOCK_UN );
+			fclose($this->filehandler);
+		}
 	}
 
 	/**

@@ -4,12 +4,16 @@ class DirectoryStatsAccess extends StatsAccess {
 	private string $directory;
 	private string $thisClientName;
 
-	public function __construct( string $directory, string $thisClientName ){
-		$this->directory = ( substr($directory, -1) === '/' ? substr($directory, 0, -1) : $directory);
-		$this->thisClientName = $thisClientName;
+	public function __construct(){
+		$c = Config::getStorageReader('config');
+
+		$dir = $c->getValue(['sync', 'directory', 'path']);
+		$this->directory = ( substr($dir, -1) === '/' ? substr($dir, 0, -1) : $dir);
+		
+		$this->thisClientName = $c->getValue(['sync', 'directory', 'thisname']);
 	}
 
-	public function listDayFiles() : array {
+	public function listFiles() : array {
 		$files = array();
 		foreach(array_diff(scandir($this->directory), ['.','..']) as $dir ){
 			if( $dir !== $this->thisClientName && is_dir($this->directory . '/' . $dir) ){
@@ -17,8 +21,9 @@ class DirectoryStatsAccess extends StatsAccess {
 					$files,
 					array_map( function ($f) use (&$dir) {
 							return array(
-								'day' => substr($f, 0.),
-								'client' => $dir,
+								'timestamp' => strtotime(substr($f, 0, -5)),
+	 							'file' => $f, 
+	 							'device' => $dir
 							);
 						},
 						array_filter(
@@ -34,8 +39,29 @@ class DirectoryStatsAccess extends StatsAccess {
 		return $files;
 	}
 
-	public function getDayFile( string $client, string $day ) : array {
-		return json_decode(file_get_contents( $this->directory . '/' . $client . '/' . $day . '.json' ), true);
+	public function getFile( string $file, string $device ) : array {
+		return json_decode(file_get_contents( $this->directory . '/' . $device . '/' . $file ), true);
+	}
+
+	public function initialSync() : bool {
+		if( !is_dir( $this->directory . '/' . $this->thisClientName ) ){
+			if(!mkdir( $this->directory . '/' . $this->thisClientName , 0740, true)){
+				return false;
+			};
+		}
+		
+		$ok = true;
+		foreach( $this->filesToSyncInitially() as $file ){
+			$ok &= copy(
+				Config::getStorageDir() . '/' . $file,
+				$this->directory . '/' . $this->thisClientName . '/' . $file
+			);
+		}
+		return $ok;
+	}
+
+	public function setDayTasks(array $tasks) : void {
+		
 	}
 }
 ?>

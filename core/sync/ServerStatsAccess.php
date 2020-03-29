@@ -7,28 +7,39 @@ class ServerStatsAccess extends StatsAccess {
 	private string $token;
 	private string $thisClientName;
 
-	public function __construct( string $uri, string $groupId, string $token, string $thisClientName ){
-		$this->uri = $uri;
-		$this->groupId = $groupId;
-		$this->token = $token;
-		$this->thisClientName = $thisClientName;
+	public function __construct(){
+		$c = Config::getStorageReader('config');
+		$this->uri = $c->getValue(['sync', 'server', 'uri']);
+		$this->groupId = $c->getValue(['sync', 'server', 'group']);
+		$this->token = $c->getValue(['sync', 'server', 'token']);
+		$this->thisClientName = $c->getValue(['sync', 'server', 'thisname']);
 	}
 
-	public function listDayFiles() : array {
-		/**
-		 * ToDo
-		 */
-		return array(array(
-			'day' => '2020-03-29',
-			'client' => 'xxx'
-		));
-	}
-
-	public function getDayFile( string $client, string $day ) : array {
+	public function listFiles() : array {
 		/**
 		 * ToDo
 		 */
 		return array();
+	}
+
+	public function getFile( string $file, string $device ) : array {
+		/**
+		 * ToDo
+		 */
+		return array();
+	}
+
+	public function initialSync() : bool {
+		/**
+		 * ToDo
+		 */
+		return false;
+	}
+
+	public function setDayTasks(array $tasks) : void {
+		/**
+		 * ToDo
+		 */
 	}
 
 }

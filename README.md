@@ -25,8 +25,6 @@ This tool tries to solve both problems at once:
 - Of course
     - One can continue the same task after the limit (the next dialog is just a reminder)
     - One can pause the tool
-- Planned
-    - Sync. stats and categories about multiple computers
 
 ## Usage
 If a dialog opens, give a name for the current task and choose a category. Also give a time limit,
@@ -66,6 +64,37 @@ If some typo has occurred there is are two possibilities to change finished task
 2. `ttt conf edit 2020-01-21` Edit the finished tasks of a specified day. The system will show a list of all
 	tasks finished that day. Afterwards one can choose a task and either change or delete it.
 	While changing allows to change the name, category and duration.
+
+### Synchronisation
+The system can synchronize the completed tasks across multiple devices.
+There are two ways to synchronize your tasks:
+
+1. Use a local directory where the client will save a copy of each completed task.
+	If the directory is synchronized across multiple devices 
+	(e.g. using NextCloud, GoogleDrive, OneDrive, ...) the clients on
+	other devices will also save a copy of their completed task in the
+	directory.
+	In the end the client can load all local tasks and all task
+	from other devices into one stats view.
+2. Use a sync server. All clients pushe the tasks to a server
+	and other devices can load them from their.
+
+> Until now only way 1. works. There will be docker-image providing
+> a sync server when the client supports way 2.
+
+When synchronisation is enabled the stats view will show a new
+column `Other devices` if the shown tasks were
+completed on other devices, too. By giving the argument 
+`-localOnly` only local tasks will be shown. Also it is possible
+to filter for devices by using e.g. `-devices Desktop`.
+
+Synchronisation can be enabled using the `ttt conf sync server|directory` command.
+Type `ttt conf sync directory` to enable directory syncing, the system 
+will ask for a local directory (the directory should only be used for
+TTT synchronisation and synced to the other devices e.g. via Netxcloud).
+Next the client will ask for a name, this name has to be unique for
+each device and will be shown in the stats view of the other devices.
+`ttt conf sync directory` has to be run on each device.
 
 ## Setup
 The tool supports Linux (like Ubuntu, Linux Mint), macOS and Windows.

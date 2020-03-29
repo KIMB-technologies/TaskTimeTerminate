@@ -236,7 +236,9 @@ class Settings {
 					CLIOutput::colorString( "merge", CLIOutput::GREEN ),
 					array( CLIOutput::colorString( "Merge two tasks into one (rename one)", CLIOutput::BLUE) ),
 					CLIOutput::colorString( "edit, e ", CLIOutput::GREEN ) . CLIOutput::colorString( "2020-01-20", CLIOutput::YELLOW ),
-					array( CLIOutput::colorString( "Edit the logged tasks for a given day", CLIOutput::BLUE) )
+					array( CLIOutput::colorString( "Edit the logged tasks for a given day", CLIOutput::BLUE) ),
+					CLIOutput::colorString( "sync ", CLIOutput::GREEN ) . CLIOutput::colorString( "server| directory", CLIOutput::YELLOW ),
+					array( CLIOutput::colorString( "Enable, disable or edit multi device synchronization", CLIOutput::BLUE) )
 				)
 			)
 		));

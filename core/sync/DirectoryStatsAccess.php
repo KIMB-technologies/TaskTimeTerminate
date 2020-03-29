@@ -61,7 +61,15 @@ class DirectoryStatsAccess extends StatsAccess {
 	}
 
 	public function setDayTasks(array $tasks) : void {
-		
+		$file = date(
+			'Y-m-d',
+			$tasks[array_key_last($tasks)]['begin']
+		);
+
+		file_put_contents(
+			$this->directory . '/' . $this->thisClientName . '/' . $file . '.json',
+			json_encode( $tasks, JSON_PRETTY_PRINT )
+		);
 	}
 }
 ?>

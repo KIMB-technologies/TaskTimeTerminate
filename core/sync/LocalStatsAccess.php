@@ -16,7 +16,7 @@ class LocalStatsAccess extends StatsAccess {
 		);
 	}
 
-	public function getFile( string $file, string $device  ) : array {
+	public function getFile( string $file, string $device ) : array {
 		return Config::getStorageReader(substr($file, 0, -5))->getArray();
 	}
 

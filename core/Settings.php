@@ -25,6 +25,9 @@ class Settings {
 			case "e":
 				$this->edit(array_slice($commands, 1));
 				break;
+			case "sync":
+				$this->sync(array_slice($commands, 1));
+				break;
 			default:
 				$this->commandList();
 		}
@@ -111,7 +114,7 @@ class Settings {
 		));
 			
 		$s = new StatsData();
-		$allnames = $s->getAllNames();
+		$allnames = $s->getLocalNames();
 		$color = null;
 		do {
 			if( $color == CLIOutput::RED){
@@ -233,10 +236,120 @@ class Settings {
 					CLIOutput::colorString( "merge", CLIOutput::GREEN ),
 					array( CLIOutput::colorString( "Merge two tasks into one (rename one)", CLIOutput::BLUE) ),
 					CLIOutput::colorString( "edit, e ", CLIOutput::GREEN ) . CLIOutput::colorString( "2020-01-20", CLIOutput::YELLOW ),
-					array( CLIOutput::colorString( "Edit the logged tasks for a given day", CLIOutput::BLUE) )
+					array( CLIOutput::colorString( "Edit the logged tasks for a given day", CLIOutput::BLUE) ),
+					CLIOutput::colorString( "sync ", CLIOutput::GREEN ) . CLIOutput::colorString( "server| directory", CLIOutput::YELLOW ),
+					array( CLIOutput::colorString( "Enable, disable or edit multi device synchronization", CLIOutput::BLUE) )
 				)
 			)
 		));
+	}
+
+	private function sync(array $commands) : void {
+		$this->output->print(array(
+			'Settings -> Sync'
+		));
+
+		$c = Config::getStorageReader('config');
+		if( $c->isValue(['sync', 'directory']) ){
+			$this->output->print(array(
+				'Directory sync:',
+				array(
+					"Sync path: \t\t" . $c->getValue(['sync', 'directory', 'path']),
+					"Name of this client: \t" . $c->getValue(['sync', 'directory', 'thisname'])
+			)), null, 1);
+		}
+		else{
+			$this->output->print(array('No directory sync enabled!'), CLIOutput::YELLOW, 1);
+		}
+
+		if( $c->isValue(['sync', 'server']) ){
+			$this->output->print(array(
+				'Server sync:',
+				array(
+					"Server URI: \t\t" . $c->getValue(['sync', 'server', 'uri']),
+					"Sync group: \t\t" . $c->getValue(['sync', 'server', 'group']),
+					"Client token: \t\t" . str_repeat( '*', strlen($c->getValue(['sync', 'server', 'token']))),
+					"Name of this client: \t" . $c->getValue(['sync', 'server', 'thisname'])
+			)), null, 1);
+		}
+		else{
+			$this->output->print(array('No server sync enabled!'), CLIOutput::YELLOW, 1);
+		}
+
+		if( isset($commands[0]) && in_array( trim($commands[0]), ['server', 'directory'], true ) ){
+			$this->output->print(array(''));
+			$this->editSync(trim($commands[0]), $c);
+		}
+		else {
+			$this->output->print(array(array(
+				'To edit syncs choose type to edit.',
+				array( CLIOutput::colorString( 'ttt conf sync server', CLIOutput::BLUE) .' or '. CLIOutput::colorString( 'ttt conf sync directory', CLIOutput::BLUE) )
+			)));
+		}
+	}
+
+	private function editSync(string $type, JSONReader $c) : void {
+		// Datastore and String values
+		$default = array(
+			['sync', 'server', 'uri'],
+			['sync', 'server', 'group'],
+			['sync', 'server', 'token'],
+			['sync', 'server', 'thisname'],
+			['sync', 'directory', 'path'],
+			['sync', 'directory', 'thisname']
+		);
+		$names = array(
+			'path' => "Sync path",
+			'thisname' => "Name of this client",
+			'uri' => "Server URI",
+			'group' => "Sync group",
+			'token' => "Client token",
+		);
+
+		// setup array or remove sync
+		if( !$c->isValue(['sync']) ){
+			$c->setValue(['sync'], array());
+		}
+		if( !$c->isValue(['sync', $type]) ){
+			$c->setValue(['sync', $type], array());
+			foreach($default as $v){
+				if( $v[1] == $type ){
+					$c->setValue($v, '');
+				}
+			}
+		}
+		else if( $this->output->readline('Delete '. $type .' sync (y/n)?', CLIOutput::RED, 1) == 'y' ){
+			$c->setValue(['sync', $type], null);
+			return;
+		}
+		else{
+			$this->output->print(array("For all upcoming, leave empty to remain unchanged."), CLIOutput::BLUE, 1);
+		}
+
+		// change sync
+		$unchanged = true;
+		foreach($c->getValue(['sync', $type]) as $key => $value ){
+			do {
+				$input = trim($this->output->readline(
+						$names[$key] . ':' . ($key != 'thisname' ? "\t\t" : "\t"
+					), null, 1));
+				if( !empty($input)){
+					$unchanged = false;
+					$c->setValue(['sync', $type, $key], $input);
+				}
+			} while( empty( $c->getValue(['sync', $type, $key]) ) );
+		}
+
+		if( !$unchanged ){
+			$c->__destruct(); // write to disk and release lock
+			$acc = ( $type == 'directory' ? new DirectoryStatsAccess() : new ServerStatsAccess() );
+			if($acc->initialSync()){ // copy initial files to sync dir
+				$this->output->print(array('', 'Initialization of destination successful.'), CLIOutput::GREEN, 1);
+			}
+			else{
+				$this->output->print(array('', 'Error to initialize destination.'), CLIOutput::RED, 1);
+			}
+		}
 	}
 }
 ?>

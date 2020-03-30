@@ -3,6 +3,7 @@ class Stats {
 
 	const DAYS_DISPLAY = 'd.m';
 	const DAYS_MAXCOUNT = 5;
+	const DEVICE_MAXCOUNT = 3;
 
 	private CLIParser $parser;
 	private CLIOutput $output;
@@ -20,9 +21,19 @@ class Stats {
 		$this->output->print(
 			array('Statistics',
 				array(
-					'Use commands ' . CLIOutput::colorString( 'day, week, month, all or today (=default)', CLIOutput::BLUE ),
-					'Optional add '.CLIOutput::colorString('-cats Hobby,Home', CLIOutput::BLUE) .
-						' and/or '.CLIOutput::colorString('-names TTT,Website', CLIOutput::BLUE).' to filter for categories and names.' 
+					'Use commands ' .
+						CLIOutput::colorString( 'day', CLIOutput::BLUE ) . ', ' .
+						CLIOutput::colorString( 'week', CLIOutput::BLUE ) . ', '.
+						CLIOutput::colorString( 'month', CLIOutput::BLUE ) . ', '.
+						CLIOutput::colorString( 'all', CLIOutput::BLUE ) . ' or '.
+						CLIOutput::colorString( 'today', CLIOutput::BLUE ) . ' (=default).',
+					'Optional add '.CLIOutput::colorString('-cats Hobby,Home', CLIOutput::BLUE) . 
+						', ' . CLIOutput::colorString('-names TTT,Website', CLIOutput::BLUE),
+					'and/or ' . CLIOutput::colorString('-devices Laptop,Desktop', CLIOutput::BLUE).
+						' to filter for',
+					'categories, names and devices (if synced across devices).',
+					'Also '.CLIOutput::colorString('-localOnly', CLIOutput::BLUE) . 
+						' can be added to ignore external devices from syncs.',
 				)
 			));
 		switch( $commands[0] ) {
@@ -85,22 +96,37 @@ class Stats {
 	}
 
 	private function backUntil(int $timestamp, array $f, int $forwardTo = StatsData::FORWARD_TO_NOW) : void {
-		$s = new StatsData($timestamp, $forwardTo);
-
-		// Name and Cat filtering
+		// Name, Device and Cat filtering
 		$isCats = false;
 		$isNames = false;
+		$isDevices = false;
 		$allNames = array();
 		$allCats = array();
+		$allDevices = array();
+
+		// No syn
+		$onlyLocal = false;
 		foreach( $f as $arg ){
 			if( $arg == '-cats' ){
 				$isCats = true;
 				$isNames = false;
+				$isDevices = false;
 				continue;
 			}
 			if( $arg == '-names' ){
 				$isCats = false;
 				$isNames = true;
+				$isDevices = false;
+				continue;
+			}
+			if( $arg == '-devices' ){
+				$isCats = false;
+				$isNames = false;
+				$isDevices = true;
+				continue;
+			}
+			if( $arg == '-localOnly' ){
+				$onlyLocal = true;
 				continue;
 			}
 
@@ -118,13 +144,23 @@ class Stats {
 				$allCats = array_merge($allCats, $cats);
 				$isCats = false;
 			}
+			if( $isDevices ){
+				$devs = explode(',', $arg);
+				$devs = array_map('trim', $devs);
+				$devs = array_filter( $devs, 'InputParser::checkDeviceName');
+				$allDevices = array_merge($allDevices, $devs);
+				$isDevices = false;
+			}
 		}
-		$s->filterData($allNames, $allCats);
+
+		$s = new StatsData($timestamp, $forwardTo, $onlyLocal);
+		$s->filterData($allNames, $allCats, $allDevices);
 
 		$this->printDataset($s->getAllDatasets());
 	}
 
 	private function printDataset(array $data) : void {
+		$noExternalDevice = true;
 		$combi = array();
 		foreach( $data as $d ){
 			$key = $d['category'] . '++' . $d['name'];
@@ -135,7 +171,8 @@ class Stats {
 					'name' => $d['name'],
 					'duration' => 0,
 					'times' => 0,
-					'days' => array( $day )
+					'days' => array( $day ),
+					'devices' => array()
 				);
 			}
 			$combi[$key]['times']++;
@@ -144,18 +181,28 @@ class Stats {
 			if( !in_array( $day, $combi[$key]['days'] ) ){
 				$combi[$key]['days'][] = $day;
 			}
+			if( !empty($d['device']) && !in_array( $d['device'], $combi[$key]['devices'] ) ){
+				$combi[$key]['devices'][] = $d['device'];
+				$noExternalDevice = false;
+			}
 		}
 		$combi = array_values($combi);
 
 		$table = array();
 		foreach( $combi as $d ){
-			$table[] = array(
-				'Category' => $d['category'],
-				'Name' => $d['name'],
-				'Time' => $d['duration'],
-				'Work Items' => str_pad($d['times'], 4, " ", STR_PAD_LEFT),
-				'Days' => implode(', ', array_slice(array_reverse($d['days']), 0, self::DAYS_MAXCOUNT))
-					. (count($d['days']) > self::DAYS_MAXCOUNT ? ', ...' : '' )
+			$table[] = array_merge(
+				array(
+					'Category' => $d['category'],
+					'Name' => $d['name'],
+					'Time' => $d['duration'],
+					'Work Items' => str_pad($d['times'], 4, " ", STR_PAD_LEFT),
+					'Days' => implode(', ', array_slice(array_reverse($d['days']), 0, self::DAYS_MAXCOUNT))
+						. (count($d['days']) > self::DAYS_MAXCOUNT ? ', ...' : '' )
+				),
+				$noExternalDevice ? array() : array(
+					'Other devices' => implode(', ', array_slice($d['devices'], 0, self::DEVICE_MAXCOUNT))
+					. (count($d['devices']) > self::DEVICE_MAXCOUNT ? ', ...' : '' )
+				)
 			);
 		}
 

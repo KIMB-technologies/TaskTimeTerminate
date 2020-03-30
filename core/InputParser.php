@@ -7,6 +7,8 @@ class InputParser {
 
 	private const NAME_INPUT_PREG = '/^[A-Za-z0-9\_\-]+$/';
 
+	private const DEVICE_NAME_PREG = '/^[A-Za-z0-9\-]+$/';
+
 	public static function checkTimeInput(string $t) : bool {
 		return !empty($t) && preg_match( self::TIME_INPUT_PREG, $t) === 1;
 	}
@@ -17,6 +19,10 @@ class InputParser {
 
 	public static function checkNameInput(string $n) : bool {
 		return !empty($n) && preg_match( self::NAME_INPUT_PREG, $n) === 1;
+	}
+
+	public static function checkDeviceName(string $n) : bool {
+		return !empty($n) && preg_match( self::DEVICE_NAME_PREG, $n) === 1;
 	}
 
 	public static function getEndTimestamp(string $t) : int {

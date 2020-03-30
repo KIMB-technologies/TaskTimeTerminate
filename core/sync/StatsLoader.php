@@ -9,7 +9,7 @@ class StatsLoader {
 	private int $untilDay = 0;
 	private int $forward = 0;
 
-	public function __construct(int $time, int  $forwardTo, bool $localOnly = false){
+	public function __construct(int $time, int  $forwardTo, bool $localOnly){
 		$this->locations['local'] = new LocalStatsAccess();
 		if( !$localOnly ){
 			$c = Config::getStorageReader('config');

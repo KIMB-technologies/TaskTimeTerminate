@@ -3,7 +3,7 @@
 class LocalStatsAccess extends StatsAccess {
 
 	public function listFiles() : array {
-		return array_map(	function ($f) {
+		return array_map( function ($f) {
 			return array(
 					'timestamp' => strtotime(substr($f, 0, -5)),
 	 				'file' => $f, 

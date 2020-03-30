@@ -47,7 +47,7 @@ class DirectoryStatsAccess extends StatsAccess {
 		if( !is_dir( $this->directory . '/' . $this->thisClientName ) ){
 			if(!mkdir( $this->directory . '/' . $this->thisClientName , 0740, true)){
 				return false;
-			};
+			}
 		}
 		
 		$ok = true;

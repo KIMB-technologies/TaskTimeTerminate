@@ -62,7 +62,7 @@ class StatsData {
 
 		$ret = true;
 		foreach( $this->loader->getLocalFilelist() as $f ){
-			$r = Config::getStorageReader($f);
+			$r = Config::getStorageReader(substr($f, 0, -5));
 			foreach( $r->getArray() as $k => $a ){
 				if( $a['name'] === $merge ){
 					$ret &= $r->setValue([$k, 'name'], $mergeTo);

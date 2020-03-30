@@ -80,13 +80,7 @@ class Recorder {
 			"category" => $r->getValue(['category'])
 		));
 		// also save to sync
-		$c = Config::getStorageReader('config');
-		if( $c->isValue(['sync', 'directory']) ){
-			(new DirectoryStatsAccess())->setDayTasks($data->getArray());
-		}
-		if( $c->isValue(['sync', 'server']) ){
-			(new ServerStatsAccess())->setDayTasks($data->getArray());
-		}
+		StatsLoader::saveDayTasks( $data->getArray() );
 		
 		$this->dialog->setLastTask(
 			$r->getValue(['name']),

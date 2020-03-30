@@ -177,6 +177,8 @@ class Settings {
 				}
 				while( $s->isValue([$id]) );
 				$this->output->print(array("Exit!"), CLIOutput::YELLOW, 1);
+
+				StatsLoader::saveDayTasks( $s->getArray() );				
 			}
 			else{
 				$this->output->print(array(array(

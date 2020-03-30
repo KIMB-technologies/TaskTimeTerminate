@@ -75,4 +75,14 @@ class StatsLoader {
 		}
 		return $dataset;
 	}
+
+	public static function saveDayTasks(array $array ) : void {
+		$c = Config::getStorageReader('config');
+		if( $c->isValue(['sync', 'directory']) ){
+			(new DirectoryStatsAccess())->setDayTasks($array);
+		}
+		if( $c->isValue(['sync', 'server']) ){
+			(new ServerStatsAccess())->setDayTasks($array);
+		}
+	}
 }

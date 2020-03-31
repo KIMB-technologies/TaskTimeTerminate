@@ -2,7 +2,7 @@
 
 class LocalStatsAccess extends StatsAccess {
 
-	public function listFiles() : array {
+	protected function listFilesUnfiltered() : array {
 		return array_map( function ($f) {
 			return array(
 					'timestamp' => strtotime(substr($f, 0, -5)),
@@ -16,7 +16,7 @@ class LocalStatsAccess extends StatsAccess {
 		);
 	}
 
-	public function getFile( string $file, string $device ) : array {
+	protected function getFileUnfiltered( string $file, string $device ) : array {
 		return Config::getStorageReader(substr($file, 0, -5))->getArray();
 	}
 

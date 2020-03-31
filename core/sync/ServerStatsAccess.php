@@ -48,11 +48,11 @@ class ServerStatsAccess extends StatsAccess {
 			return array();
 	}
 
-	public function listFiles() : array {
+	protected function listFilesUnfiltered() : array {
 		return $this->postToServer('list');
 	}
 
-	public function getFile( string $file, string $device ) : array {
+	protected function getFileUnfiltered( string $file, string $device ) : array {
 		return $this->postToServer(
 			'get',
 			array(

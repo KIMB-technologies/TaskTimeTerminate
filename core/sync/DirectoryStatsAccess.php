@@ -13,7 +13,7 @@ class DirectoryStatsAccess extends StatsAccess {
 		$this->thisClientName = $c->getValue(['sync', 'directory', 'thisname']);
 	}
 
-	public function listFiles() : array {
+	protected function listFilesUnfiltered() : array {
 		$files = array();
 		foreach(array_diff(scandir($this->directory), ['.','..']) as $dir ){
 			if( $dir !== $this->thisClientName && is_dir($this->directory . '/' . $dir) ){
@@ -39,7 +39,7 @@ class DirectoryStatsAccess extends StatsAccess {
 		return $files;
 	}
 
-	public function getFile( string $file, string $device ) : array {
+	protected function getFileUnfiltered( string $file, string $device ) : array {
 		return json_decode(file_get_contents( $this->directory . '/' . $device . '/' . $file ), true);
 	}
 

@@ -160,6 +160,11 @@ class Stats {
 	}
 
 	private function printDataset(array $data) : void {
+		array_multisort( // sort multiple days (s.t. latest days are first)
+			array_column( $data, 'begin' ), SORT_DESC,
+			$data
+		);
+
 		$noExternalDevice = true;
 		$combi = array();
 		foreach( $data as $d ){
@@ -196,7 +201,7 @@ class Stats {
 					'Name' => $d['name'],
 					'Time' => $d['duration'],
 					'Work Items' => str_pad($d['times'], 4, " ", STR_PAD_LEFT),
-					'Days' => implode(', ', array_slice(array_reverse($d['days']), 0, self::DAYS_MAXCOUNT))
+					'Days' => implode(', ', array_slice($d['days'], 0, self::DAYS_MAXCOUNT))
 						. (count($d['days']) > self::DAYS_MAXCOUNT ? ', ...' : '' )
 				),
 				$noExternalDevice ? array() : array(

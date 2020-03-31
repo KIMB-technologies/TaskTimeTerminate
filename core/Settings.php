@@ -48,7 +48,7 @@ class Settings {
 						if( $color == CLIOutput::RED){
 							$this->output->print(array("Please check input, can't create categories twice, check allowed chars!"), $color ,1);
 						}
-						$newcat = $this->output->readline("Name of category to add [Only A-Z, a-z and -]:", $color, 1);
+						$newcat = $this->output->readline("Name of category to add [Only A-Z, a-z, 0-9 and -]:", $color, 1);
 						$color = CLIOutput::RED;
 					} while (!InputParser::checkCategoryInput($newcat) || in_array($newcat, $cats));
 					$cats[] = $newcat;
@@ -202,13 +202,13 @@ class Settings {
 		else{
 			$this->output->print(array("For all upcoming, leave empty to remain unchanged."), CLIOutput::BLUE, 1);
 			
-			$name = trim($this->output->readline("Give a new name:", null, 1));
-			if( !empty( $name ) ){
+			$name = trim($this->output->readline("Give a new name [Only A-Z, a-z, 0-9, _ and -]:", null, 1));
+			if( InputParser::checkNameInput($name) ){
 				$s->setValue([$id, 'name'], $name);
 			}
 
-			$category = trim($this->output->readline("Give a new category (type a name, not an ID):", null, 1));
-			if( !empty( $category ) ){
+			$category = trim($this->output->readline("Give a new category [Use a name containing A-Z, a-z, 0-9 and -, no ID]:", null, 1));
+			if( InputParser::checkCategoryInput($category) ){
 				$s->setValue([$id, 'category'], $category);
 			}
 
@@ -307,6 +307,13 @@ class Settings {
 			'group' => "Sync group",
 			'token' => "Client token",
 		);
+		$check = array(
+			'path' => fn(string $p) => is_dir($p) && is_writable($p),
+			'thisname' => fn(string $n) => InputParser::checkDeviceName($n),
+			'uri' => fn(string $u) => @filter_var($u, FILTER_VALIDATE_URL, FILTER_FLAG_HOST_REQUIRED | FILTER_FLAG_SCHEME_REQUIRED),
+			'group' => fn(string $g) => preg_match('/^[A-Za-z0-9]+$/', $g) === 1,
+			'token' => fn(string $t) => preg_match('/^[A-Za-z0-9]+$/', $t) === 1,
+		);
 
 		// setup array or remove sync
 		if( !$c->isValue(['sync']) ){
@@ -335,9 +342,15 @@ class Settings {
 				$input = trim($this->output->readline(
 						$names[$key] . ':' . ($key != 'thisname' ? "\t\t" : "\t"
 					), null, 1));
-				if( !empty($input)){
-					$unchanged = false;
-					$c->setValue(['sync', $type, $key], $input);
+				if( !empty($input) ){
+					if( isset( $check[$key] ) && !$check[$key]($input) ){
+						$this->output->print(array("Invalid format! Stays unchanged!"), CLIOutput::RED, 2);
+						
+					}
+					else{
+						$unchanged = false;
+						$c->setValue(['sync', $type, $key], $input);
+					}
 				}
 			} while( empty( $c->getValue(['sync', $type, $key]) ) );
 		}

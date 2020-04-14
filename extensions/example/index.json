@@ -1,0 +1,15 @@
+{
+	"name" : "Example Extension",
+	"shortname" : "ee",
+	"events" : {
+		"newRecordSaved" : "TTTExampleExtension\\ExampleExtension::newRecordSaved",
+		"newDialogOpened" : "TTTExampleExtension\\ExampleExtension::newDialogOpened",
+		"daemonAfterSleep" : "TTTExampleExtension\\ExampleExtension::daemonAfterSleep",
+		"daemonBeforeSleep" : "TTTExampleExtension\\ExampleExtension::daemonBeforeSleep",
+		"dayFileSync" : "TTTExampleExtension\\ExampleExtension::dayFileSync",
+		"statsViewed" : "TTTExampleExtension\\ExampleExtension::statsViewed",
+		"settingsCatsChanged" : "TTTExampleExtension\\ExampleExtension::settingsCatsChanged"
+	},
+	"cli" : "TTTExampleExtension\\ExampleExtension::cli",
+	"version" : "v0.1.0"
+}

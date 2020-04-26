@@ -35,7 +35,7 @@ to be defined. Of course an autoloader may be used.
 It is recommended to use a custom namespace. All core classes
 of TTT are in the global namespace.
 
-See the commented example [index.php](extensions/example/index.php).
+See the commented example [index.php](example/index.php).
  
 ### `index.json`
 ```json

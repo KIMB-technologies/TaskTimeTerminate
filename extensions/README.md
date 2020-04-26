@@ -56,4 +56,4 @@ See the commented example [index.php](example/index.php).
 	"version" : "v0.1.0" // the addons version, shown in 'ttt v'
 }
 ```
-More information about the events, the callbacks and parameter can be found in [index.php](extensions/example/index.php).
+More information about the events, the callbacks and parameter can be found in [index.php](example/index.php).

@@ -96,6 +96,9 @@ Next the client will ask for a name, this name has to be unique for
 each device and will be shown in the stats view of the other devices.
 `ttt conf sync directory` has to be run on each device.
 
+### Extensions
+See the Readme in the extension-folder!
+
 ## Setup
 The tool supports Linux (like Ubuntu, Linux Mint), macOS and Windows.
 We have tested it under Linux Mint 18, macOS Catalina and Windows 10.

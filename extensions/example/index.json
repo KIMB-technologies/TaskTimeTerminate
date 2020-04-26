@@ -11,5 +11,5 @@
 		"settingsCatsChanged" : "TTTExampleExtension\\ExampleExtension::settingsCatsChanged"
 	},
 	"cli" : "TTTExampleExtension\\ExampleExtension::cli",
-	"version" : "v0.1.0"
+	"version" : "v1.0.0"
 }

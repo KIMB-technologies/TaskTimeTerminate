@@ -54,6 +54,7 @@ class Settings {
 					$cats[] = $newcat;
 					if($r->setValue(['categories'], $cats)){
 						$this->output->print(array("Added '". $newcat ."'"), CLIOutput::GREEN, 1);
+						ExtensionEventHandler::settingsCatsChanged($newcat, true);
 					}
 					else{
 						$this->output->print(array("Unable to add '". $newcat ."'"), CLIOutput::RED, 1);
@@ -75,6 +76,7 @@ class Settings {
 						unset($cats[$delid]);
 						if($r->setValue(['categories'], $cats)){
 							$this->output->print(array("Deleted '". $delcat ."'"), CLIOutput::GREEN, 1);
+							ExtensionEventHandler::settingsCatsChanged($delcat, false);
 						}
 						else{
 							$this->output->print(array("Unable to delete '". $delcat ."'"), CLIOutput::RED, 1);

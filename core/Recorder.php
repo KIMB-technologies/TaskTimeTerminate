@@ -81,6 +81,8 @@ class Recorder {
 		));
 		// also save to sync
 		StatsLoader::saveDayTasks( $data->getArray() );
+		ExtensionEventHandler::newRecordSaved($r->getValue(['begin']), $r->getValue(['lastopend']) + Config::getSleepTime(), 
+			$r->getValue(['name']), $r->getValue(['category']));
 		
 		$this->dialog->setLastTask(
 			$r->getValue(['name']),
@@ -92,6 +94,8 @@ class Recorder {
 	private function recordNew(JSONReader $r) : void {
 		$this->dialog->setCategories(StatsData::getAllCategories());
 		$this->dialog->open();
+
+		ExtensionEventHandler::newDialogOpened($this->dialog);
 
 		if( !$this->dialog->doesShortBreak()){
 			$r->setValue(['name'], $this->dialog->getChosenName());

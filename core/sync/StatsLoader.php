@@ -84,5 +84,6 @@ class StatsLoader {
 		if( $c->isValue(['sync', 'server']) ){
 			(new ServerStatsAccess())->setDayTasks($array);
 		}
+		ExtensionEventHandler::dayFileSync($array);
 	}
 }

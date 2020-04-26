@@ -6,7 +6,7 @@ class CLIParser {
 
 	const TASK_VERSION = 'v', TASK_HELP = 'h', TASK_STATS = 's',
 		TASK_SETTINGS = 'p', TASK_RECORD = 'r', TASK_PAUSE = 'e',
-		TASK_OVERVIEW = 'o';
+		TASK_OVERVIEW = 'o', TASK_EXTENSION = 'a';
 	private $tasks = array(
 		'v' => array('version', 'v'),
 		'h' => array('help', 'h'),
@@ -14,7 +14,8 @@ class CLIParser {
 		'p' => array('settings', 'preferences', 'p', 'conf', 'c'),
 		'r' => array('record', 'r', 'change', 'new'),
 		'e' => array('end', 'begin', 'pause', 'stop', 'e', 'start', 't', 'toggle'),
-		'o' => array('overview', 'o')
+		'o' => array('overview', 'o'),
+		'a' => array('addon', 'a', 'extension', 'ext')
 	);
 
 	public function __construct(int $argc, array $argv) {
@@ -32,7 +33,7 @@ class CLIParser {
 		}
 	}
 
-	public function getTask() : string {
+	public function getTask(bool $unknownEmpty = true) : string {
 		if( !$this->empty ){
 			$t = strtolower($this->args[0]);
 			foreach($this->tasks as $key => $vals ){
@@ -41,7 +42,10 @@ class CLIParser {
 				}
 			}
 		}
-		return '';
+		else{
+			$t = '';
+		}
+		return $unknownEmpty ? '' : $t;
 	}
 
 	public function getTaskParams() : array {
@@ -52,7 +56,8 @@ class CLIParser {
 			'p' => 'Edit settings of program, e.g. categories',
 			'r' => 'Start a new task now, will stop the current and open task dialog',
 			'e' => 'Switch the program status, between enabled [collect data, ask for tasks] and disabled [do nothing]',
-			'o' => 'Get an overview about current task and program status'
+			'o' => 'Get an overview about current task and program status',
+			'a' => 'Call the cli component of an loaded extension (see version for all loaded extension)'
 		);
 		$o = array();
 		foreach( $this->tasks as $key => $task ){

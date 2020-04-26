@@ -5,10 +5,12 @@ class CLI {
 
 	private CLIParser $parser;
 	private CLIOutput $output;
+	private ExtensionLoader $extLoader;
 
 	public function __construct(CLIParser $parser) {
 		$this->parser = $parser;
 		$this->output = new CLIOutput();
+		$this->extLoader = new ExtensionLoader();
 	}
 
 	public function checkTask(){
@@ -31,9 +33,18 @@ class CLI {
 			case CLIParser::TASK_PAUSE:
 				$this->togglePause();
 				break;
+			case CLIParser::TASK_EXTENSION:
+				$this->extension();
+				break;
 			case CLIParser::TASK_HELP:
 			default:
-				$this->help();
+				if( !$this->extLoader->callShortname(
+						$this->parser->getTask(false),
+						$this->parser,
+						$this->output
+					) ){
+						$this->help();
+				}
 			break;
 		}
 	}
@@ -48,6 +59,25 @@ class CLI {
 			)
 		));
 		
+	}
+
+	private function extension(){
+		$this->output->print(array(
+			'Extension CLI'
+		));
+		if( empty($this->parser->getCommands()[0]) ){
+			$this->output->print( array(
+					'Please give the name of the extension to load.', 
+					CLIOutput::colorString( 'extension <name>', CLIOutput::BLUE)
+				), null, 1 );
+		}
+		else if( !$this->extLoader->callCLI(
+				$this->parser->getCommands()[0],
+				$this->parser,
+				$this->output
+			) ){
+				$this->output->print( array('Extension not found'), CLIOutput::RED, 1);
+		}
 	}
 
 	private function record(){
@@ -128,6 +158,7 @@ class CLI {
 				)
 			)
 		));
+		$this->extLoader->getVersions( $this->output );
 	}
 
 	private function togglePause(){

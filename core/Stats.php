@@ -25,6 +25,7 @@ class Stats {
 						CLIOutput::colorString( 'day', CLIOutput::BLUE ) . ', ' .
 						CLIOutput::colorString( 'week', CLIOutput::BLUE ) . ', '.
 						CLIOutput::colorString( 'month', CLIOutput::BLUE ) . ', '.
+						CLIOutput::colorString( 'range', CLIOutput::BLUE ) . ', '.
 						CLIOutput::colorString( 'all', CLIOutput::BLUE ) . ' or '.
 						CLIOutput::colorString( 'today', CLIOutput::BLUE ) . ' (=default).',
 					'Optional add '.CLIOutput::colorString('-cats Hobby,Home', CLIOutput::BLUE) . 
@@ -227,6 +228,8 @@ class Stats {
 		if( $this->todayview ){
 			$this->printTodayView($data);
 		}
+
+		ExtensionEventHandler::statsViewed($data, $this->output);
 	}
 
 	public static function secToTime(int $t) : string {

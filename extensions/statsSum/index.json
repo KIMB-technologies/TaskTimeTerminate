@@ -1,0 +1,8 @@
+{
+	"name" : "Stats Sum",
+	"shortname" : "sum",
+	"events" : {
+		"statsViewed" : "TTTStatsSum\\StatsSum::statsViewed"
+	},
+	"version" : "v1.0.0"
+}

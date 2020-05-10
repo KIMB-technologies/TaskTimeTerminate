@@ -1,7 +1,9 @@
 {
 	"name" : "MiLog Export",
 	"shortname" : "ml",
-	"events" : {},
+	"events" : {
+		"statsViewed" : "TTTMiLog\\MiLog::statsViewed"
+	},
 	"cli" : "TTTMiLog\\MiLog::cli",
-	"version" : "v0.0.0"
+	"version" : "v1.0.0"
 }

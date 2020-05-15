@@ -7,7 +7,7 @@ if ! command -v php > /dev/null; then
 	exit;
 fi;
 
-if ! php -i | grep -q "7.4" ; then
+if ! php -v | grep -q "7.4" ; then
 	echo "PHP is not version 7.4!"
 	exit;
 fi; 

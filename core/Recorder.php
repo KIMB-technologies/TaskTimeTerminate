@@ -61,6 +61,7 @@ class Recorder {
 				}
 				$r->setValue(['lastopend'], time());
 			}
+			ReaderManager::clearAll();
 		}
 		$this->unlockDialogs();
 	}

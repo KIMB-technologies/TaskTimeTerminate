@@ -10,3 +10,5 @@ xcuserdata/
 
 # custom installation settings (will be created by Config.php on first startup)
 /config.json
+
+.DS_Store

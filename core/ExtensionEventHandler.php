@@ -35,7 +35,20 @@ class ExtensionEventHandler {
 
 	public static function cli( string $name, CLIParser $parser, CLIOutput $output, string $callback ) : void {
 		self::ensureExtensionLoaded($name);
-		$callback($parser, $output);
+		if($parser->getTask() !== CLIParser::TASK_EXTENSION){
+			// shortcut used, we will reconstruct full parser (tasks/ commands)!!
+			$oldArgs = $parser->getPlainArgs();
+			$newArgs = array_merge(array(
+				$oldArgs[0],
+				CLIParser::TASK_EXTENSION,
+				$name
+			), array_slice($oldArgs, 2));
+			$p = new CLIParser(count($newArgs), $newArgs );
+		}
+		else{
+			$p = $parser;
+		}
+		$callback($p, $output);
 	}
 
 	private static function event( string $event, ...$args ) : void {

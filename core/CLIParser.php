@@ -3,6 +3,7 @@ class CLIParser {
 
 	private array $args = array();
 	private bool $empty = true;
+	private array $plainArgs = array();
 
 	const TASK_VERSION = 'v', TASK_HELP = 'h', TASK_STATS = 's',
 		TASK_SETTINGS = 'p', TASK_RECORD = 'r', TASK_PAUSE = 'e',
@@ -19,6 +20,7 @@ class CLIParser {
 	);
 
 	public function __construct(int $argc, array $argv) {
+		$this->plainArgs = $argv;
 		if( $argc > 0){
 			$this->args = array_slice($argv, 1);
 			$this->args = array_map('trim', $this->args);
@@ -72,6 +74,10 @@ class CLIParser {
 			return array_slice($this->args, 1);
 		}
 		return array('');
+	}
+
+	public function getPlainArgs() : array {
+		return $this->plainArgs;
 	}
 }
 ?>

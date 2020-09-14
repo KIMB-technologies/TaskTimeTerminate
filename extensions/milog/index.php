@@ -7,11 +7,15 @@ class MiLog {
 	private static array $data;
 
 	public static function cli( \CLIParser $parser, \CLIOutput $output ) : void {
+		$newArgs = $parser->getCommands();
+		array_unshift( $newArgs, \CLIParser::TASK_STATS );
+		$p = new \CLIParser(count($newArgs), $newArgs);
+		
 		self::$isMiLogOutput = true;
 		\ob_start();
 
 		$o = new \CLIOutput();
-		$s = new \Stats($parser, $o);
+		$s = new \Stats($p, $o);
 		$o->__destruct();
 		unset($o);
 
@@ -21,7 +25,9 @@ class MiLog {
 		$output->print(
 			array('MiLog',
 				array(
-					'Please give the same commands to filter data as used in the statistics view.',
+					'Please give the same commands to filter data as used in the statistics view, e.g.',
+					\CLIOutput::colorString('ttt ext milog week -cats "Hobby"', \CLIOutput::BLUE),
+					\CLIOutput::colorString('ttt ml all', \CLIOutput::BLUE),
 			)
 		));
 

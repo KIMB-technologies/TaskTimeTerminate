@@ -48,6 +48,59 @@ abstract class Dialog {
 	public abstract function open() : void;
 
 	/**
+	 * JSON Response handler
+	 * 	may be called by open()
+	 * @param $stdout {string} STDout JSON from dialog process
+	 */
+	protected function handleStdoutJson(string $stdout) : void {
+		if( !empty($stdout) ){
+			$stdout = json_decode($stdout, true);
+
+			if( $stdout['pause'] ){
+				$this->shortBreak = true;
+			}
+			else{
+				if( strpos($stdout['time'], '+' ) === false ){ // not additional time for last task/ else values are set
+					$this->chCategory = in_array($stdout['cat'], $this->categories) ? array_search($stdout['cat'], $this->categories) : null; // category id
+					$this->chName = InputParser::checkNameInput($stdout['name']) ? $stdout['name'] : null;
+				}
+				$this->chTime = InputParser::checkTimeInput($stdout['time']) ? $stdout['time'] : null;
+
+				if( is_null($this->chCategory) || is_null( $this->chTime ) || is_null($this->chName)){
+					$this->open();
+					return;
+				}
+			}
+		}
+		else { // error
+			$this->open();
+			return;
+		}
+	}
+
+	/**
+	 * Create commandline args (cats, last used cat and task)
+	 * @param $dialogPath {string} the command to call/ init dialog process
+	 */
+	protected function createCommandLineArgs(string $dialogPath) : string {
+		$cmd = array(
+			$dialogPath,
+			'-cats',
+			'"'. implode(',', $this->categories) .'"',
+			'-lastcat',
+			'"'.$this->categories[$this->chCategory ?? 0] .'"'
+		);
+		if( !empty($this->chName)){
+			array_push($cmd,
+				'-lasttask',
+				'"'.$this->chName.'"'
+			);
+		}
+
+		return implode(' ', $cmd);
+	}
+
+	/**
 	 * Get chosen value for category.
 	 * @return the id (key of array)
 	 */

@@ -16,15 +16,38 @@ function sendInput( $cat, $name, $time, $pause = false ){
 
 /**
  * Get the array of categories 
- * 	.../php.exe ..../dialog.php -cats Test,TTT,UUU
+ * 	.../php.exe ..../dialog.php -cats Test,TTT,UUU -lastcat TTT -lasttask Test
  */
+$lastCatIndex = 0;
+$lastTask = "";
 function getInput(){
-	global $argc, $argv;
-	if( $argc === 3 && $argv[1] === '-cats'){
-		if( !empty($argv[2]) ){
-			return explode(",", $argv[2]);
-		}
+	global $argc, $argv, $lastCatIndex, $lastTask;
+
+	$catList = array();
+	$lastCat = null;
+
+	if( $argc >= 3 ){
+		foreach( $argv as $key => $value ) {
+			switch ( $value ) {
+				case "-cats":
+					$catList = explode(",", $argv[$key+1]);
+					break;
+				case "-lastcat":
+					$lastCat = $argv[$key+1];
+					break;
+				case "-lasttask":
+					$lastTask = $argv[$key+1];
+					break;
+				default:
+					break;
+			}
+		}	
 	}
+	if( $lastCat !== null ){
+		$lastCatIndex = array_search($lastCat, $catList);
+	}
+
+	return $catList;
 }
 
 /**
@@ -58,10 +81,16 @@ foreach( getInput() as $c ){
 	$dropdown->append_text($c);
 }
 $fixed->put($dropdown, 90, 40);
+$dropdown->set_active($lastCatIndex);
 
 $fixed->put(new GtkLabel("Task"), 10, 70);
-$task = new GtkEntry();
+$task = new GtkEntry($lastTask);
 $fixed->put($task, 90, 70);
+$task->connect_simple('activate', function () use (&$task, &$lastTask){
+	if( $task->get_text() === $lastTask ){
+		$task->set_text('');
+	}
+});
 
 $fixed->put(new GtkLabel("Time"), 10, 100);
 $time = new GtkEntry();

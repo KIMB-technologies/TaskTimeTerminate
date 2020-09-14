@@ -70,12 +70,33 @@ class ViewController: NSViewController {
         super.viewDidLoad();
         
         var catList = ["No", "Categories", "given!", "Use", "argument", "-cats Test,TTT,UUU"];
-        if(CommandLine.arguments.count == 3 && CommandLine.arguments[1] == "-cats" ){
-            catList = CommandLine.arguments[2].components(separatedBy: ",");
+        var lastCat = "No";
+        var lastTask = "Coding";
+        
+        if(CommandLine.arguments.count >= 3 ){
+            for (key, value) in CommandLine.arguments.enumerated() {
+                switch value {
+                case "-cats":
+                    catList = CommandLine.arguments[key+1].components(separatedBy: ",");
+                    break;
+                case "-lastcat":
+                    lastCat = CommandLine.arguments[key+1];
+                    break;
+                case "-lasttask":
+                    lastTask = CommandLine.arguments[key+1];
+                    break;
+                default:
+                    break;
+                }
+            }
         }
         
         categoryDropdown.removeAllItems();
         categoryDropdown.addItems(withTitles: catList);
+        categoryDropdown.selectItem(withTitle: lastCat);
+        
+        nameInput.placeholderString = lastTask;
+        
     }
     
     /**

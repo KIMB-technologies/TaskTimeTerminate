@@ -8,8 +8,17 @@ class MacDialog extends Dialog {
 		$cmd = array(
 			self::MAC_DIALOG,
 			'-cats',
-			'"'. implode(',', $this->categories) .'"'
+			'"'. implode(',', $this->categories) .'"',
+			'-lastcat',
+			'"'.$this->categories[$this->chCategory ?? 0] .'"'
 		);
+		if( !empty($this->chName)){
+			array_push($cmd,
+				'-lasttask',
+				'"'.$this->chName.'"'
+			);
+		}
+
 		$handle = popen(implode(' ', $cmd), 'r');
 		$stdout = fgets($handle);
 		pclose($handle);

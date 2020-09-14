@@ -74,13 +74,13 @@ $timelII = new GtkLabel("The time is seen as a limit, if reached this dialog wil
 $fixed->put($timelII, 10, 150);
 
 $start = new GtkButton('Start');
-$fixed->put($start, 10, 180);
+$fixed->put($start, 100, 180);
 $start->connect_simple('clicked', function () use (&$dropdown, &$task, &$time ){
 	sendInput( $dropdown->get_active_text(), $task->get_text(), $time->get_text() );
 });
 
 $pause = new GtkButton('Pause');
-$fixed->put($pause, 100, 180);
+$fixed->put($pause, 10, 180);
 $pause->connect_simple('clicked', function (){
 	sendInput( "", "", "", true );
 });

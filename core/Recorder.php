@@ -3,6 +3,7 @@ class Recorder {
 
 	const PID_FILE_LINUX = '/run/lock/TaskTimeTerminate';
 	const PID_FILE_MAC = '/private/tmp/TaskTimeTerminate';
+	const ACTIVATE_SOCKET = false;
 
 	private Dialog $dialog;
 	private $lockfileHandle;
@@ -16,6 +17,7 @@ class Recorder {
 				case Utilities::OS_MAC:
 					MacDialog::checkOSPackages();
 					$this->dialog = new MacDialog();
+					AutocompleteSocket::createSocketThread();
 					break;
 				case Utilities::OS_LINUX:
 					MacDialog::checkOSPackages();

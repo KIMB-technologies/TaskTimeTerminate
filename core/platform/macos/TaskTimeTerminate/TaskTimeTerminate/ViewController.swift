@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Socket
 
 extension FileHandle : TextOutputStream {
     public func write(_ string: String) {
@@ -29,9 +30,11 @@ class ViewController: NSViewController {
      * Enter Handling on Textareas
      */
     @IBAction func taskFieldEnter(_ sender: NSTextField) {
+        print(getCompletions(prefix: nameInput.stringValue));
+        /*
         if( timeInput.stringValue != "" && nameInput.stringValue != "" ){
             startClicked(nil);
-        }
+        }*/
     }
     @IBAction func timeFieldEnter(_ sender: NSTextField) {
         if( timeInput.stringValue != "" ){
@@ -61,6 +64,20 @@ class ViewController: NSViewController {
         print("{ \"pause\" : true, \"cat\": \"\", \"name\": \"\", \"time\": \"\" }", to:&stdOut);
         
         NSApplication.shared.terminate(self);
+    }
+    
+    /**
+     * Autocomplete
+     */
+    func getCompletions(prefix : String) -> [String] {
+        let msg = prefix + "\n";
+        
+        var socket = try? Socket.create(family: .unix, type: .stream, proto: .tcp);
+        try? socket?.connect( to: "/private/tmp/TaskTimeTerminateAutocomplete.sock" );
+        try? socket?.setBlocking(mode: true);
+        try? socket?.write(from: msg);
+        let reponse = try? socket?.readString();
+        return reponse?.trimmingCharacters(in: .whitespacesAndNewlines).components(separatedBy: ",") ?? []
     }
     
     /**
@@ -96,8 +113,8 @@ class ViewController: NSViewController {
         categoryDropdown.selectItem(withTitle: lastCat);
         
         nameInput.placeholderString = lastTask;
-        
     }
+    
     
     /**
      * Stay in foreground

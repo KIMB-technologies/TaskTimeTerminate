@@ -143,20 +143,34 @@ class AutocompleteSocket {
 	public static function createSocketThread(){
 		if( self::ACTIVATE_SOCKET ){
 			if( Utilities::getOS() === Utilities::OS_WIN ){
-				/**
-				 * ToDo
-				 * 	Windows is buggy here!!!
-				 */
+				
+				// locate php.exe
 				$PHP_BIN = exec("where php.exe");
 				if( !is_executable($PHP_BIN)){
 					$PHP_BIN = "php.exe";
 				}
+				// make sure to free socket
 				if( file_exists(self::getWinSocketFile()) ){
 					unlink(self::getWinSocketFile());
 				}
-				echo $PHP_BIN . ' "'.realpath(__DIR__) . '/../socket.php" > NUL';
-				echo system($PHP_BIN . ' "'.realpath(__DIR__) . '/../socket.php" > NUL &', $ret );
-				var_dump($ret);
+				
+				//calc command
+				$cmd = $PHP_BIN . ' "'.realpath(__DIR__) . '/../socket.php" > NUL';
+
+				//open async background thread
+				$descriptorspec = array(
+					0 => array("pipe", "r"), // STDIN
+					1 => array("pipe", "w"), // STDOUT
+					2 => array("pipe", "w") // STDERR
+				);
+				$pipes = array();
+				$sock = proc_open($cmd, $descriptorspec, $pipes);
+			
+				if (is_resource($sock)) {
+					foreach($pipes as $pipe){
+						stream_set_blocking($pipe, 0);
+					}
+				}
 			}
 			else if (Utilities::getOS() === Utilities::OS_MAC ){
 				$cmd = array(

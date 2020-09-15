@@ -1,7 +1,8 @@
 <?php
 
 function getSocketPath(){
-	return getenv('USERPROFILE') . '/AppData/Local/Temp/TaskTimeTerminateAutocomplete.sock';
+	return '/private/tmp/TaskTimeTerminateAutocomplete.sock';
+	//return getenv('USERPROFILE') . '/AppData/Local/Temp/TaskTimeTerminateAutocomplete.sock';
 }
 
 function getCompletion($prefix){
@@ -22,5 +23,16 @@ function getCompletion($prefix){
 		}
 	}
 	return $completions;
+}
+
+while(true){
+	$pref = readline('Type prefix (or exit): ');
+	foreach(getCompletion($pref) as $p ){
+		echo "\t $p" . PHP_EOL;
+	}
+
+	if($pref == "exit"){
+		die('Bye :)');
+	}
 }
 ?>

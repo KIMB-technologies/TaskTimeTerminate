@@ -79,8 +79,8 @@ There are two ways to synchronize your tasks:
 2. Use a sync server. All clients pushe the tasks to a server
 	and other devices can load them from their.
 
-> Until now only way 1. works. There will be docker-image providing
-> a sync server when the client supports way 2.
+> Until now only way 1. works (in fact 2. also works, but there is no server to communicate with).
+>There will be docker-image providing a sync server when the client supports way 2.
 
 When synchronisation is enabled the stats view will show a new
 column `Other devices` if the shown tasks were
@@ -118,6 +118,7 @@ The script will follow these steps (for detailed information per operating syste
     - On Linux install `yad` for dialogs
     - On Windows PHP-GTK will be used (and downloaded on first run of `./cli.php r`)
     - On macOS the dialog is a native program bundle shipped in this repository
+    - If you are on macOS or Windows and would like to use the Task-Autocomplete in the dialogs. Then the extension `sockets` has to be available in PHP.
 2. Download this repository, either via [git](https://github.com/KIMB-technologies/TaskTimeTerminate.git)
 	or as archive from [Releases](https://github.com/KIMB-technologies/TaskTimeTerminate/releases/latest) and save to a folder
 3. Make executable `chmod +x ./record.php ./cli.php`
@@ -160,6 +161,7 @@ The install script registers the `ttt-update` command (which reruns `install.sh`
 	- Install `brew install php` or `brew install php@7.4`
 	- PHP will be installed to `/usr/local/Cellar/php@7.4/*/bin/php` or `/usr/local/Cellar/php/*/bin/php`
 		(so use something like this `alias ttt="/usr/local/Cellar/php/*/bin/php /Users/<me>/Applications/TaskTimeTerminate/cli.php`)
+	- The extension `sockets` (for autocompletion of tasks in the dialog) is part of the default PHP installation done by Homebrew.
 - Background Job
 	- We will register as *Login Object*
 		- Got to *System Preferences &rarr; Users and Groups &rarr; Username &rarr; Login Objects*
@@ -177,6 +179,13 @@ The install script registers the `ttt-update` command (which reruns `install.sh`
 	- Download prebuilt version from https://windows.php.net/download/#php-7.4
 	- Unzip and place somewhere on computer
 	- Add to `$PATH` or always run like `C:/my/php/path/php.exe C:/Users/<me>/TaskTimeTerminate/cli.php`
+	- Enable the extension `sockets` (for autocompletion of tasks in the dialog) 
+		- Edit `C:/my/php/path/php.ini` (create there if not existent) to load the extension (it is part of the prebuilt PHP version)
+		- Make sure to have this two lines in it (i.e. remove `;` in from of each)
+		```ini
+		extension_dir = "ext" 
+		extension = "php_sockets.dll"
+		```
 - Create runner for background job
 	- To hide the running process a program has to be self-compiled. The source can be found at
 		[TTTd.c](core/platform/windows/TTTd.c).
@@ -187,9 +196,3 @@ The install script registers the `ttt-update` command (which reruns `install.sh`
 		- Press `Windows + R` fill `shell:startup` into the window and copy `TTTd.exe` in the folder.
 		- Or directly copy into `%AppData%\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`
 - Add `ttt` alias to `~/macros.doskey` which runs `C:/my/php/path/php.exe C:/Users/<me>/TaskTimeTerminate/cli.php`
-- Socket Support for Autocomplete
-	- Add two lines to `C:/my/php/path/php.ini` (create if not existent)
-	```ini
-		extension_dir = "ext"
-		extension = "php_sockets.dll"
-	```

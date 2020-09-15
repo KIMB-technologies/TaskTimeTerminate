@@ -3,10 +3,12 @@ class AutocompleteSocket {
 
 	const SOCKET_FILE_MAC = '/private/tmp/TaskTimeTerminateAutocomplete.sock';
 	const ACTIVATE_SOCKET = false;
+	const CACHE_TIME = 3600;
 	
 	private string $socketpath;
 	private $socket;
 	private array $answerCache = array();
+	private int $lastCached = 0;
 
 	public function __construct(string $socketpath) {
 		$this->socketpath = $socketpath;
@@ -16,13 +18,17 @@ class AutocompleteSocket {
 	}
 
 	private function cacheAnswers() : void  {
-		$data = new StatsData();
-		$names = array_values($data->getLocalNames());
-		unset($data);
+		if( $this->lastCached + self::CACHE_TIME < time() ){
+			$data = new StatsData();
+			$names = array_values($data->getLocalNames());
+			unset($data);
 
-		$this->answerCache = array();
-		foreach($names as $name){
-			$this->answerCache[str_replace(['-', '_'], '', strtolower($name))] = $name;
+			$this->answerCache = array();
+			foreach($names as $name){
+				$this->answerCache[str_replace(['-', '_'], '', strtolower($name))] = $name;
+			}
+
+			$this->lastCached = time();
 		}
 	}
 
@@ -101,13 +107,24 @@ class AutocompleteSocket {
 	}
 
 	private function getCompletes( string $prefix ) : array {
+		$this->cacheAnswers();
+
 		$prefix = str_replace(['-', '_'], '', strtolower($prefix));
 		$prefLen = strlen($prefix);
 
 		$answers = array();
+		$sims = array();
+
 		$count = 0;
 		foreach($this->answerCache as $search => $cand ){
-			if(substr($search, 0, $prefLen) == $prefix ){
+			$percent = 0;
+			if( $prefLen > 2 ){
+				similar_text( $prefix, $search, $percent );
+				if( $percent > 30 ){
+					$sims[$cand] = $percent;
+				}
+			}
+			if( substr($search, 0, $prefLen) == $prefix || $percent > 70 ){
 				$answers[] = $cand;
 
 				$count++;
@@ -116,12 +133,20 @@ class AutocompleteSocket {
 				}
 			}
 		}
+		if( $count < 10){
+			arsort($sims, SORT_NUMERIC);
+			$answers = array_unique(array_merge($answers, array_slice(array_keys($sims), 0, 10 - $count)));
+		}
 		return $answers;
 	}
 
 	public static function createSocketThread(){
 		if( self::ACTIVATE_SOCKET ){
 			if( Utilities::getOS() === Utilities::OS_WIN ){
+				/**
+				 * ToDo
+				 * 	Windows is buggy here!!!
+				 */
 				$PHP_BIN = exec("where php.exe");
 				if( !is_executable($PHP_BIN)){
 					$PHP_BIN = "php.exe";

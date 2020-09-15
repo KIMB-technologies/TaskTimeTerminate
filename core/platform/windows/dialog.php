@@ -1,5 +1,9 @@
 <?php
 
+// Autocomplete
+require_once(__DIR__ . '/socket.php');
+//	getCompletion($prefix) => array('A', 'AA', 'AAB')
+
 /**
  * Echos the users input as JSON
  */

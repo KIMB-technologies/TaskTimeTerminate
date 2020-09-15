@@ -3,7 +3,6 @@ class Recorder {
 
 	const PID_FILE_LINUX = '/run/lock/TaskTimeTerminate';
 	const PID_FILE_MAC = '/private/tmp/TaskTimeTerminate';
-	const ACTIVATE_SOCKET = false;
 
 	private Dialog $dialog;
 	private $lockfileHandle;
@@ -26,6 +25,7 @@ class Recorder {
 				case Utilities::OS_WIN:
 					WindowsDialog::checkOSPackages();
 					$this->dialog = new WindowsDialog();
+					AutocompleteSocket::createSocketThread();
 					break;
 				default:
 					die( PHP_EOL . 'Plattform not supported!!' . PHP_EOL . PHP_EOL);

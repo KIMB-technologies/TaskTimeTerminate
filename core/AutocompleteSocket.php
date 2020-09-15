@@ -2,7 +2,8 @@
 class AutocompleteSocket {
 
 	const SOCKET_FILE_MAC = '/private/tmp/TaskTimeTerminateAutocomplete.sock';
-
+	const ACTIVATE_SOCKET = false;
+	
 	private string $socketpath;
 	private $socket;
 	private array $answerCache = array();
@@ -57,9 +58,9 @@ class AutocompleteSocket {
 	private function closeOtherSocket(){
 		$s = socket_create( AF_UNIX, SOCK_STREAM, 0 );
 		if( $s !== false && @socket_connect($s, $this->socketpath) ){
-			$msg = ">__SELFKILL__<";
+			$msg = ">__SELFKILL__<" . PHP_EOL;
 
-			socket_send($s, $msg, strlen($msg), MSG_EOF);	
+			socket_write($s, $msg, strlen($msg));
 		}
 		if(is_resource($s)){
 			socket_close($s);
@@ -72,18 +73,17 @@ class AutocompleteSocket {
 	}
 
 	private function connectionHandler( $connection ){
-		$bytes = 0;
 		$buffer = "";
-		while($bytes !== false && $buffer !== null){
+		do{
 			if( !is_resource($connection) ){
 				return;
 			}
-			$bytes = socket_recv($connection, $buffer, 256, MSG_WAITALL);
+			$buffer = @socket_read($connection, 256, PHP_NORMAL_READ);
 
-			if( $bytes > 0 && $buffer !== null ){
+			if( !empty($buffer) ){
 				$buffer = trim($buffer);
 				if(InputParser::checkNameInput($buffer)){
-					$answer = implode(',', $this->getCompletes($buffer));
+					$answer = implode(',', $this->getCompletes($buffer)) . PHP_EOL;
 					socket_write( $connection, $answer );
 				}
 				else{
@@ -92,11 +92,11 @@ class AutocompleteSocket {
 						die();
 					}
 					else {
-						socket_write( $connection, empty($buffer) ? "" : "ERROR: Invalid prefix!" );
+						socket_write( $connection, ( empty($buffer) ? "" : "ERROR: Invalid prefix!" ) . PHP_EOL );
 					}
 				}
 			}
-		}
+		} while(!empty($buffer));
 		socket_close( $connection );
 	}
 
@@ -120,9 +120,9 @@ class AutocompleteSocket {
 	}
 
 	public static function createSocketThread(){
-		if( Recorder::ACTIVATE_SOCKET ){
+		if( self::ACTIVATE_SOCKET ){
 			$cmd = array(
-				'"'.PHP_BINDIR.'/php"',
+				'"'.PHP_BINDIR.'/php'. ( Utilities::getOS() === Utilities::OS_WIN ? '.exe' : '' ) .'"',
 				'"'.realpath(__DIR__ . '/../socket.php' ) .'"',
 				'> /dev/null &'
 			);
@@ -131,6 +131,16 @@ class AutocompleteSocket {
 		} 
 		else {
 			echo "INFO: Automatic Socket starting disabled!" . PHP_EOL;
+		}
+	}
+
+	public static function getWinSocketFile() : string {
+		if( Utilities::getOS() === Utilities::OS_WIN ){
+			return getenv('USERPROFILE') . '/AppData/Local/Temp/TaskTimeTerminateAutocomplete.sock';
+		}
+		else{
+			echo "ERROR: Used windows socket path function (AutocompleteSocket::getWinSocketFile) on non-windows OS!" . PHP_EOL;
+			return "";
 		}
 	}
 }

@@ -31,6 +31,9 @@ class WindowsDialog extends Dialog {
 					$zip->extractTo(__DIR__ . '/php-gtk/');
 					$zip->close();
 
+					// activate Sockets
+					$a = file_put_contents( __DIR__ . '/php-gtk/PHP55-GTK2/php.ini', PHP_EOL . 'extension = "php_sockets.dll"' . PHP_EOL, FILE_APPEND);
+
 					unlink(__DIR__ . '/d.zip');
 
 					exec(self::PHP_GTK_TEST, $output);

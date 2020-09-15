@@ -187,4 +187,9 @@ The install script registers the `ttt-update` command (which reruns `install.sh`
 		- Press `Windows + R` fill `shell:startup` into the window and copy `TTTd.exe` in the folder.
 		- Or directly copy into `%AppData%\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`
 - Add `ttt` alias to `~/macros.doskey` which runs `C:/my/php/path/php.exe C:/Users/<me>/TaskTimeTerminate/cli.php`
-		
+- Socket Support for Autocomplete
+	- Add two lines to `C:/my/php/path/php.ini` (create if not existent)
+	```ini
+		extension_dir = "ext"
+		extension = "php_sockets.dll"
+	```

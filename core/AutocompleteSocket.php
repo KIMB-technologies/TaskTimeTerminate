@@ -121,13 +121,27 @@ class AutocompleteSocket {
 
 	public static function createSocketThread(){
 		if( self::ACTIVATE_SOCKET ){
-			$cmd = array(
-				'"'.PHP_BINDIR.'/php'. ( Utilities::getOS() === Utilities::OS_WIN ? '.exe' : '' ) .'"',
-				'"'.realpath(__DIR__ . '/../socket.php' ) .'"',
-				'> /dev/null &'
-			);
+			if( Utilities::getOS() === Utilities::OS_WIN ){
+				$PHP_BIN = exec("where php.exe");
+				if( !is_executable($PHP_BIN)){
+					$PHP_BIN = "php.exe";
+				}
+				if( file_exists(self::getWinSocketFile()) ){
+					unlink(self::getWinSocketFile());
+				}
+				echo $PHP_BIN . ' "'.realpath(__DIR__) . '/../socket.php" > NUL';
+				echo system($PHP_BIN . ' "'.realpath(__DIR__) . '/../socket.php" > NUL &', $ret );
+				var_dump($ret);
+			}
+			else if (Utilities::getOS() === Utilities::OS_MAC ){
+				$cmd = array(
+					'"'. PHP_BINDIR. '/php"',
+					'"'.realpath(__DIR__ . '/../socket.php' ) .'"',
+					'> /dev/null &'
+				);
 
-			exec(implode(' ', $cmd));
+				exec(implode(' ', $cmd));
+			}
 		} 
 		else {
 			echo "INFO: Automatic Socket starting disabled!" . PHP_EOL;

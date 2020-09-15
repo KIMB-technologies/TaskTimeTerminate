@@ -90,9 +90,22 @@ $dropdown->set_active($lastCatIndex);
 $fixed->put(new GtkLabel("Task"), 10, 70);
 $task = new GtkEntry($lastTask);
 $fixed->put($task, 90, 70);
-$task->connect_simple('activate', function () use (&$task, &$lastTask){
-	if( $task->get_text() === $lastTask ){
+$task->connect('key-press-event', function ($w, $e) use (&$task, &$lastTask){
+	// http://gtk.php.net/manual/en/appendix.keysyms.php
+	if( in_array($e->keyval, array(Gdk::KEY_BackSpace, Gdk::KEY_Clear)) && $task->get_text() === $lastTask ){
 		$task->set_text('');
+	}
+});
+
+$completion = new GtkEntryCompletion();
+$completion->set_text_column(0);
+$model = new GtkListStore(GObject::TYPE_STRING);
+$completion->set_model($model); 
+$task->set_completion($completion);
+$task->connect_simple('key-release-event', function () use (&$task, &$model) {
+	$model->clear();
+	foreach(getCompletion($task->get_text()) as $c){
+		$model->append(array($c)); 
 	}
 });
 

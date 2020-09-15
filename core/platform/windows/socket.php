@@ -7,7 +7,7 @@ function getSocketPath(){
 
 function getCompletion($prefix){
 	$completions = array();
-	if(!empty($prefix)){
+	if(!empty($prefix) && function_exists('socket_create') ){
 		$s = socket_create( AF_UNIX, SOCK_STREAM, 0 );
 		if( $s !== false && @socket_connect($s, getSocketPath()) ){
 			$send = socket_write($s, $prefix . PHP_EOL, strlen($prefix . PHP_EOL));
@@ -25,5 +25,5 @@ function getCompletion($prefix){
 	return $completions;
 }
 
-//var_dump(getCompletion('A'));
+//var_dump(getCompletion('C'));
 ?>

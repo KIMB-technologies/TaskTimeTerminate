@@ -130,6 +130,7 @@ $fixed->put($pause, 10, 180);
 $pause->connect_simple('clicked', function (){
 	sendInput( "", "", "", true );
 });
+$fixed->set_focus_chain(array( $dropdown, $task, $time, $start, $pause ));
 
 $window->add($fixed); 
 $window->set_default_size(400, 220); 

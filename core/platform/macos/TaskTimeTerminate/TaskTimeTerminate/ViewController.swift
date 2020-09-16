@@ -15,26 +15,27 @@ extension FileHandle : TextOutputStream {
     }
 }
 
-class ViewController: NSViewController {
+class ViewController: NSViewController, NSComboBoxCellDataSource {
     
     /**
      * GUI References
      */
     @IBOutlet weak var categoryDropdown: NSPopUpButtonCell!
     
-    @IBOutlet weak var nameInput: NSTextField!
-    
     @IBOutlet weak var timeInput: NSTextField!
+    
+    @IBOutlet weak var taskComboBox: NSComboBoxCell!
+    
+    var currentCompletions : [String]!
+    var maxCompletions : Int!
     
     /**
      * Enter Handling on Textareas
      */
-    @IBAction func taskFieldEnter(_ sender: NSTextField) {
-        print(getCompletions(prefix: nameInput.stringValue));
-        /*
-        if( timeInput.stringValue != "" && nameInput.stringValue != "" ){
+    @IBAction func nameFieldEnter(_ sender: Any) {
+        if( timeInput.stringValue != "" && taskComboBox.stringValue != "" ){
             startClicked(nil);
-        }*/
+        }
     }
     @IBAction func timeFieldEnter(_ sender: NSTextField) {
         if( timeInput.stringValue != "" ){
@@ -49,7 +50,7 @@ class ViewController: NSViewController {
     @IBAction func startClicked(_ sender: NSButton?) {
         var output = "{ \"pause\" : false, ";
         output += " \"cat\": \"" + (categoryDropdown.titleOfSelectedItem ?? "").replacingOccurrences(of: "\"", with: "") + "\", ";
-        output += " \"name\": \"" + nameInput.stringValue.replacingOccurrences(of: "\"", with: "") + "\", ";
+        output += " \"name\": \"" + taskComboBox.stringValue.replacingOccurrences(of: "\"", with: "") + "\", ";
         output += " \"time\": \"" + timeInput.stringValue.replacingOccurrences(of: "\"", with: "") + "\" ";
         output += "}";
         
@@ -77,8 +78,43 @@ class ViewController: NSViewController {
         try? socket?.setBlocking(mode: true);
         try? socket?.write(from: msg);
         let reponse = try? socket?.readString();
+        socket?.close();
         return reponse?.trimmingCharacters(in: .whitespacesAndNewlines).components(separatedBy: ",") ?? []
     }
+    
+    func updateCurrentCompletions(){
+        if( !taskComboBox.isAccessibilityExpanded() ){
+            taskComboBox.setAccessibilityExpanded(true);
+        }
+        let completions = getCompletions(prefix: taskComboBox.stringValue);
+        for index in 0...(maxCompletions-1){
+            if( index < maxCompletions && index < completions.count  ){
+                currentCompletions[index] = completions[index];
+            }
+            else{
+                currentCompletions[index] = "";
+            }
+        }
+        taskComboBox.reloadData();
+      }
+      
+      func comboBoxCell(_ : NSComboBoxCell, completedString: String) -> String? {
+          return "";
+      }
+     
+      func comboBoxCell(_ : NSComboBoxCell, indexOfItemWithStringValue: String) -> Int {
+          updateCurrentCompletions();
+          return NSNotFound;
+      }
+      
+      func comboBoxCell(_ : NSComboBoxCell, objectValueForItemAt: Int) -> Any {
+          updateCurrentCompletions();
+          return currentCompletions[objectValueForItemAt];
+      }
+    
+      func numberOfItems(in: NSComboBoxCell) -> Int {
+          return maxCompletions;
+      }
     
     /**
      * On load setup, load args
@@ -111,10 +147,12 @@ class ViewController: NSViewController {
         categoryDropdown.removeAllItems();
         categoryDropdown.addItems(withTitles: catList);
         categoryDropdown.selectItem(withTitle: lastCat);
-        
-        nameInput.placeholderString = lastTask;
+                
+        maxCompletions = 10;
+        currentCompletions = [String](repeating: "", count: maxCompletions);
+        taskComboBox.placeholderString = lastTask;
+        taskComboBox.dataSource = self;
     }
-    
     
     /**
      * Stay in foreground

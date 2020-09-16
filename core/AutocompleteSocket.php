@@ -2,7 +2,7 @@
 class AutocompleteSocket {
 
 	const SOCKET_FILE_MAC = '/private/tmp/TaskTimeTerminateAutocomplete.sock';
-	const ACTIVATE_SOCKET = false;
+	const ACTIVATE_SOCKET = true;
 	const CACHE_TIME = 3600;
 	
 	private string $socketpath;

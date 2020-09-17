@@ -68,6 +68,17 @@ class Recorder {
 		$this->unlockDialogs();
 	}
 
+	private function sameTaskExists(JSONReader $data, JSONReader $new ) : bool {
+		$id = $data->searchValue([], $new->getValue(['begin']), 'begin');
+		if( $id !== false ){
+			return $data->isValue([$id, 'name'], $new->getValue(['name']) ) &&
+				$data->isValue([$id, 'category'], $new->getValue(['category']) );
+		}
+		else{
+			return false;
+		}
+	}
+
 	private function saveTaskTime(JSONReader $r) : void {
 		$data = Config::getStorageReader(
 				date(
@@ -76,16 +87,23 @@ class Recorder {
 				)
 			);
 		ReaderManager::addReader($data);
-		$data->setValue([null], array(
-			"begin" => $r->getValue(['begin']),
-			"end" => $r->getValue(['lastopend']) + Config::getSleepTime(),
-			"name" => $r->getValue(['name']),
-			"category" => $r->getValue(['category'])
-		));
+		if( !$this->sameTaskExists($data, $r) ){ // make sure to save each task only once for same timestamps (some type of fix for https://github.com/KIMB-technologies/TaskTimeTerminate/issues/21)
+			$data->setValue([null], array(
+				"begin" => $r->getValue(['begin']),
+				"end" => $r->getValue(['lastopend']) + Config::getSleepTime(),
+				"name" => $r->getValue(['name']),
+				"category" => $r->getValue(['category'])
+			));
+		}
+		else{
+			echo "WARN: Last task is already stored -- therefore TTT ignores it." . PHP_EOL;
+		}
 		// also save to sync
 		StatsLoader::saveDayTasks( $data->getArray() );
-		ExtensionEventHandler::newRecordSaved($r->getValue(['begin']), $r->getValue(['lastopend']) + Config::getSleepTime(), 
-			$r->getValue(['name']), $r->getValue(['category']));
+		ExtensionEventHandler::newRecordSaved(
+				$r->getValue(['begin']), $r->getValue(['lastopend']) + Config::getSleepTime(), 
+				$r->getValue(['name']), $r->getValue(['category'])
+			);
 		
 		$this->dialog->setLastTask(
 			$r->getValue(['name']),

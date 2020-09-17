@@ -132,7 +132,7 @@ class CLI {
 					),
 					array(
 						'' => 'Worked until now',
-						'Value' => Stats::secToTime($current->getValue(['lastopend']) - $current->getValue(['begin']))
+						'Value' => Time::secToTime($current->getValue(['lastopend']) - $current->getValue(['begin']))
 					)
 				));
 			}

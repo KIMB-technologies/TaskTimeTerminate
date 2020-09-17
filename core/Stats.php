@@ -220,7 +220,7 @@ class Stats {
 		);
 
 		foreach( $table as &$d ){
-			$d['Time'] = self::secToTime($d['Time']);
+			$d['Time'] = Time::secToTime($d['Time']);
 		}
 
 		$this->output->table($table);
@@ -232,20 +232,7 @@ class Stats {
 		ExtensionEventHandler::statsViewed($data, $this->output);
 	}
 
-	public static function secToTime(int $t) : string {
-		return str_pad(
-				($t >= 3600 ? intval($t/3600) . 'h ' : '' ) .
-				str_pad(
-					intval(($t % 3600) / 60) . 'm',
-					3,
-					" ",
-					STR_PAD_LEFT
-				),
-				8,
-				" ",
-				STR_PAD_LEFT
-			);
-	}
+	
 
 	private function printTodayView(array $data) : void {
 		array_multisort(
@@ -275,7 +262,7 @@ class Stats {
 		}
 
 		foreach( $table as &$d ){
-			$d['Time'] = self::secToTime($d['Time']);
+			$d['Time'] = Time::secToTime($d['Time']);
 		}
 
 		$this->output->table($table);

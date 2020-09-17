@@ -24,13 +24,13 @@ class StatsSum {
 		foreach( $sums as $k => $s ){
 			$tab[] = array(
 				'Category' => $k,
-				'Sum' => \Stats::secToTime($s)
+				'Sum' => \Time::secToTime($s)
 			);
 		}
 
 		$output->table($tab);
 		$output->print(array(
-			'Total sum: ' . trim(\Stats::secToTime(array_sum($sums)))
+			'Total sum: ' . trim(\Time::secToTime(array_sum($sums)))
 		), \CLIOutput::RED);
 	}
 }

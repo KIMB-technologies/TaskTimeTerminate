@@ -159,7 +159,7 @@ class Settings {
 							array(
 								'Name:     ' . CLIOutput::colorString( $s->getValue([$id, 'name']), CLIOutput::YELLOW),
 								'Category: ' . CLIOutput::colorString( $s->getValue([$id, 'category']), CLIOutput::YELLOW),
-								'Duration: ' . CLIOutput::colorString( Stats::secToTime( $s->getValue([$id, 'end']) - $s->getValue([$id, 'begin']) ) , CLIOutput::YELLOW),
+								'Duration: ' . CLIOutput::colorString( Time::secToTime( $s->getValue([$id, 'end']) - $s->getValue([$id, 'begin']) ) , CLIOutput::YELLOW),
 							)
 						), null, 1);
 						$this->editSingle($id, $s);
@@ -171,7 +171,7 @@ class Settings {
 							'ID' => strval($id),
 							'Name' => $d['name'],
 							'Category' => $d['category'],
-							'Duration' => Stats::secToTime( $d['end'] - $d['begin'] )
+							'Duration' => Time::secToTime( $d['end'] - $d['begin'] )
 						);
 					}
 					$this->output->table($list);

@@ -34,7 +34,7 @@ abstract class StatsAccess {
 	 * Set a array of daily task 
 	 * (will use last tasks timestamp to calculate day)
 	 */
-	abstract public function setDayTasks(array $tasks) : void;
+	abstract public function setDayTasks(array $tasks, int $day) : void;
 
 	/**
 	 * Get a list of all local files to sync on init of a sync

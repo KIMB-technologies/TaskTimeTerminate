@@ -65,16 +65,19 @@ class ServerStatsAccess extends StatsAccess {
 		$ok = true;
 		foreach( $this->filesToSyncInitially() as $file ){
 			$this->setDayTasks(json_decode(
-				file_get_contents( Config::getStorageDir() . '/' . $file ),
-				true
-			));
+					file_get_contents( Config::getStorageDir() . '/' . $file ),
+					true
+				),
+				strtotime($file)
+			);
 			$ok &= !$this->requestError;
+			
 		}
 		return $ok;
 	}
 
-	public function setDayTasks(array $tasks) : void {
-		$this->postToServer('add', $tasks );
+	public function setDayTasks(array $tasks, int $day) : void {
+		$this->postToServer('add', array( 'day' => $day, 'tasks' => $tasks ) );
 	}
 
 }

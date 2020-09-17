@@ -180,7 +180,7 @@ class Settings {
 				while( $s->isValue([$id]) );
 				$this->output->print(array("Exit!"), CLIOutput::YELLOW, 1);
 
-				StatsLoader::saveDayTasks( $s->getArray() );				
+				StatsLoader::saveDayTasks( $s->getArray(), strtotime($finame) );				
 			}
 			else{
 				$this->output->print(array(array(

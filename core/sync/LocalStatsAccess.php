@@ -24,7 +24,7 @@ class LocalStatsAccess extends StatsAccess {
 		return true; // never needed (since local data is the "real" data)
 	}
 
-	public function setDayTasks(array $tasks) : void {
+	public function setDayTasks(array $tasks, int $day) : void {
 		throw new Exception("StatsAccess::setDayTasks() will not work for LocalStatsAccess!");
 	}
 }

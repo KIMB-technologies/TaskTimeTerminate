@@ -53,8 +53,8 @@ class ExampleExtension {
 	 * all sync disabled)
 	 * @param $array like as used in StatsAccess::setDayTasks(), like JSON in files per day
 	 */
-	public static function dayFileSync(array $array) : void {
-		echo PHP_EOL . "ExampleExtension: Changed a day containing  " . count($array) . " Tasks " . PHP_EOL;
+	public static function dayFileSync(array $array, int $day) : void {
+		echo PHP_EOL . "ExampleExtension: Changed a day containing  " . count($array) . " Tasks for Day " . date('Y-m-d', $day). PHP_EOL;
 		echo "\t e.g. task: " . print_r($array[0], true) . PHP_EOL;
 	}
 

@@ -77,8 +77,8 @@ class ExtensionEventHandler {
 		self::event("daemonBeforeSleep");
 	}
 
-	public static function dayFileSync( array $array ) : void {
-		self::event("dayFileSync", $array);
+	public static function dayFileSync( array $array, int $day ) : void {
+		self::event("dayFileSync", $array, $day);
 	}
 
 	public static function statsViewed(array $data, CLIOutput $output ) : void {

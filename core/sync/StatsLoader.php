@@ -76,14 +76,22 @@ class StatsLoader {
 		return $dataset;
 	}
 
-	public static function saveDayTasks(array $array ) : void {
+	public static function saveDayTasks(array $array, int $day = -1) : void {
+		if($day < 0){
+			if( isset( $array[array_key_last($array)]['begin'] ) ){
+				$day = $array[array_key_last($array)]['begin'];
+			}
+			if($day < 0){
+				$day = 0; // will result in file 1970-01-01
+			}
+		}
 		$c = Config::getStorageReader('config');
 		if( $c->isValue(['sync', 'directory']) ){
-			(new DirectoryStatsAccess())->setDayTasks($array);
+			(new DirectoryStatsAccess())->setDayTasks($array, $day);
 		}
 		if( $c->isValue(['sync', 'server']) ){
-			(new ServerStatsAccess())->setDayTasks($array);
+			(new ServerStatsAccess())->setDayTasks($array, $day);
 		}
-		ExtensionEventHandler::dayFileSync($array);
+		ExtensionEventHandler::dayFileSync($array, $day);
 	}
 }

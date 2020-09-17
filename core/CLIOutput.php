@@ -43,6 +43,9 @@ class CLIOutput {
 	}
 
 	public function table(array $data) : void {
+		if( empty($data)){
+			return;
+		}
 		$colsize = array();
 		foreach( $data as $row ){
 			foreach( $row as $cid => $col ){

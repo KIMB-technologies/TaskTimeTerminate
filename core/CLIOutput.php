@@ -5,7 +5,7 @@ class CLIOutput {
 	const MIDDLE =   "------------------------------------------------------------";
 	const MOIN = "Welcome to TTT -- TaskTimeTerminate by KIMB-technologies ";
 
-	const PAD_SPACING = 2;
+	const PAD_SPACING = 1;
 
 	const RED = "\e[0;31m";
 	const BLACK = "\e[0;30m";
@@ -53,20 +53,20 @@ class CLIOutput {
 			}
 		}
 
-		echo PHP_EOL . str_repeat('-', array_sum($colsize) + count($colsize) * 5) . PHP_EOL;
+		echo PHP_EOL . str_repeat('-', array_sum($colsize) + count($colsize) * (2*self::PAD_SPACING+1) + 1) . PHP_EOL;
 		$firstrow = true;
 		$lastfirstcell = '';
 		foreach( $data as $row ){
 			if($firstrow){
-				echo '| ';
+				echo '|' . str_repeat(' ', self::PAD_SPACING);
 				foreach( $row as $cid => $col ){
-					echo self::BLUE . str_pad($cid, $colsize[$cid] + self::PAD_SPACING ) . self::RESET . '|  ';
+					echo self::BLUE . str_pad($cid, $colsize[$cid] + self::PAD_SPACING ) . self::RESET . '|' . str_repeat(' ', self::PAD_SPACING);
 				}
 				echo PHP_EOL;
-				echo str_repeat('-', array_sum($colsize) + count($colsize) * 5) . PHP_EOL;
+				echo str_repeat('-', array_sum($colsize) + count($colsize) * (2*self::PAD_SPACING+1) + 1) . PHP_EOL;
 				$firstrow = false;
 			}
-			echo '| ';
+			echo '|' . str_repeat(' ', self::PAD_SPACING);
 			$firstcell = true;
 			foreach( $row as $cid => $col ){
 				if($firstcell){
@@ -78,11 +78,11 @@ class CLIOutput {
 					}
 					$firstcell = false;
 				}
-				echo str_pad($col, $colsize[$cid] + self::PAD_SPACING ) . '|  ';
+				echo str_pad($col, $colsize[$cid] + self::PAD_SPACING ) . '|' . str_repeat(' ', self::PAD_SPACING);
 			}
 			echo PHP_EOL;
 		}
-		echo str_repeat('-', array_sum($colsize) + count($colsize) * 5) . PHP_EOL . PHP_EOL;
+		echo str_repeat('-', array_sum($colsize) + count($colsize) * (2*self::PAD_SPACING+1) + 1) . PHP_EOL . PHP_EOL;
 	}
 
 	public function __destruct(){

@@ -68,7 +68,6 @@ class Time {
 	private function getDurationString(int $t) : string {
 		foreach(explode(self::DELIMITER, $this->timeformat) as $format){
 			$v = $this->formatTime($t, $format);
-			//print_r($v);
 			if( array_sum($v) > 0 ){
 				return $this->formatAsString($v);
 			}

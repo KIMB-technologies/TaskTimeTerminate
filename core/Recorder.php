@@ -19,7 +19,7 @@ class Recorder {
 					AutocompleteSocket::createSocketThread();
 					break;
 				case Utilities::OS_LINUX:
-					MacDialog::checkOSPackages();
+					LinuxDialog::checkOSPackages();
 					$this->dialog = new LinuxDialog();
 					break;
 				case Utilities::OS_WIN:
@@ -96,7 +96,7 @@ class Recorder {
 			));
 		}
 		else{
-			echo "WARN: Last task is already stored -- therefore TTT ignores it." . PHP_EOL;
+			CLIOutput::error(CLIOutput::ERROR_WARN, "Last task is already stored -- therefore TTT ignores it.");
 		}
 		// also save to sync
 		StatsLoader::saveDayTasks( $data->getArray() );

@@ -47,7 +47,7 @@ class AutocompleteSocket {
 			}
 		}
 		else {
-			echo "ERROR: Unable to bind socket to '" . $this->socketpath . "'!" . PHP_EOL;
+			CLIOutput::error( CLIOutput::ERROR_FATAL, "ERROR: Unable to bind socket to '" . $this->socketpath . "'!");
 		}
 			
 	}
@@ -183,7 +183,7 @@ class AutocompleteSocket {
 			}
 		} 
 		else {
-			echo "INFO: Automatic Socket starting disabled!" . PHP_EOL;
+			CLIOutput::error( CLIOutput::ERROR_INFO, "Automatic Socket starting disabled!");
 		}
 	}
 
@@ -192,7 +192,7 @@ class AutocompleteSocket {
 			return getenv('USERPROFILE') . '/AppData/Local/Temp/TaskTimeTerminateAutocomplete.sock';
 		}
 		else{
-			echo "ERROR: Used windows socket path function (AutocompleteSocket::getWinSocketFile) on non-windows OS!" . PHP_EOL;
+			CLIOutput::error( CLIOutput::ERROR_FATAL, "Used windows socket path function (AutocompleteSocket::getWinSocketFile) on non-windows OS!");
 			return "";
 		}
 	}

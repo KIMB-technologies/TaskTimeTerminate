@@ -88,7 +88,7 @@ abstract class Dialog {
 			'-cats',
 			'"'. implode(',', $this->categories) .'"',
 			'-lastcat',
-			'"'.$this->categories[$this->chCategory ?? 0] .'"'
+			'"'.$this->categories[$this->chCategory ?? array_key_first($this->categories)] .'"'
 		);
 		if( !empty($this->chName)){
 			array_push($cmd,

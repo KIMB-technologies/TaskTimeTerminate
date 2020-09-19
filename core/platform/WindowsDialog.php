@@ -31,9 +31,6 @@ class WindowsDialog extends Dialog {
 					$zip->extractTo(__DIR__ . '/php-gtk/');
 					$zip->close();
 
-					// activate Sockets in PHP-GD
-					file_put_contents( __DIR__ . '/php-gtk/PHP55-GTK2/php.ini', PHP_EOL . 'extension = "php_sockets.dll"' . PHP_EOL, FILE_APPEND);
-
 					unlink(__DIR__ . '/d.zip');
 
 					exec(self::PHP_GTK_TEST, $output);
@@ -49,6 +46,13 @@ class WindowsDialog extends Dialog {
 			else{
 				die( PHP_EOL . 'Error downloading PHP-GTK!!' . PHP_EOL . PHP_EOL);
 			}
+		}
+
+		// check if Sockets in PHP-GD active
+		$iniActivate = PHP_EOL . 'extension = "php_sockets.dll"' . PHP_EOL;
+		$ini = file_get_contents( __DIR__ . '/php-gtk/PHP55-GTK2/php.ini' );
+		if( strpos($ini, $iniActivate) === false ){ 
+			file_put_contents( __DIR__ . '/php-gtk/PHP55-GTK2/php.ini', $iniActivate, FILE_APPEND);
 		}
 	}
 }

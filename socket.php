@@ -11,11 +11,11 @@ if( function_exists('socket_create') ){
 			$socket = new AutocompleteSocket(AutocompleteSocket::getWinSocketFile());
 			break;
 		default:
-			echo "ERROR: Unable to create Socket on this OS!" . PHP_EOL;
+			CLIOutput::error( CLIOutput::ERROR_FATAL, "Unable to create Socket on this OS!" );
 			break;
 	}
 }
 else{
-	echo "ERROR: Socket Library not loaded in this installation!" . PHP_EOL;
+	CLIOutput::error( CLIOutput::ERROR_WARN, "Socket Library not loaded in this php installation!" );
 }
 ?>

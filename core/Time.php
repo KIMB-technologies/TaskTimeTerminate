@@ -3,10 +3,14 @@ class Time {
 
 	private const DEFAULT_FORMAT = 'dhm|s';
 	private const ALLOWED_PARTS = array(
-			'd' => 24*60*60,
-			'h' => 60*60,
-			'm' => 60, 
-			's' => 1
+			'y' => 365*24*60*60, // year
+			't' => 30*24*60*60, // month (one of twelve)
+			'w' => 7*24*60*60, // week
+			'd' => 24*60*60, // day
+			'a' => 6*60*60, // work-day (8 hours)
+			'h' => 60*60, // hour
+			'm' => 60, // minute
+			's' => 1 // second
 		);
 	private const DELIMITER = '|';
 	private const PAD_VALUE = 4;
@@ -35,8 +39,8 @@ class Time {
 			str_replace('||', '', $this->timeformat) === $this->timeformat;
 
 		if(!$ok){
-			$this->timeformat =  self::DEFAULT_FORMAT;
-			echo "ERROR: Invalid timeformat in config.json" . PHP_EOL;
+			$this->timeformat = self::DEFAULT_FORMAT;
+			CLIOutput::error( CLIOutput::ERROR_WARN, "Invalid timeformat in config.json" );
 		}
 
 		// calculate pad 

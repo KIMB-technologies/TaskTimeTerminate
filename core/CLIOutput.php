@@ -15,8 +15,28 @@ class CLIOutput {
 	const WHITE = "\e[0;37m";
 	const RESET = "\e[0;0m";
 
-	public static function colorString($s, $color) : string {
+	const ERROR_WARN = 1;
+	const ERROR_INFO = 2;
+	const ERROR_FATAL = 3;
+
+	public static function colorString(string $s, string $color) : string {
 		return $color . $s . self::RESET;
+	}
+
+	public static function error(int $type, string $msg) : void {
+		$p = "";
+		switch ($type){
+			case self::ERROR_WARN:
+				$p = self::colorString("WARN", self::YELLOW);
+				break;
+			case self::ERROR_INFO:
+				$p = self::colorString("INFO", self::BLUE);
+				break;
+			case self::ERROR_FATAL:
+				$p = self::colorString("ERROR", self::RED);
+				break;
+		}
+		echo $p . ': "' . $msg . '"' . PHP_EOL;
 	}
 
 	public function __construct() {

@@ -4,5 +4,5 @@
 	"events" : {
 		"statsViewed" : "TTTCharts\\Charts::statsViewed"
 	},
-	"version" : "v1.0.0"
+	"version" : "v1.0.1"
 }

@@ -14,7 +14,7 @@ class Charts {
 	 * @param $output the CLI Output object
 	 */
 	public static function statsViewed(array $data, \CLIOutput $output) : void {
-		if(empty($array)){
+		if(empty($data)){
 			return;
 		}
 		// plot categories

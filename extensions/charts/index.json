@@ -1,0 +1,8 @@
+{
+	"name" : "Charts",
+	"shortname" : "",
+	"events" : {
+		"statsViewed" : "TTTCharts\\Charts::statsViewed"
+	},
+	"version" : "v1.0.0"
+}

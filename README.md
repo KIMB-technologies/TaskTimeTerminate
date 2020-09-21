@@ -78,9 +78,8 @@ There are two ways to synchronize your tasks:
 	from other devices into one stats view.
 2. Use a sync server. All clients pushe the tasks to a server
 	and other devices can load them from their.
-
-> Until now only way 1. works (in fact 2. also works, but there is no server to communicate with).
->There will be docker-image providing a sync server when the client supports way 2.
+	See https://github.com/KIMB-technologies/TaskTimeTerminateServer 
+	for a sync server implementation.
 
 When synchronisation is enabled the stats view will show a new
 column `Other devices` if the shown tasks were

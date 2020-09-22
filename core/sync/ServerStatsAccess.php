@@ -68,7 +68,7 @@ class ServerStatsAccess extends StatsAccess {
 					file_get_contents( Config::getStorageDir() . '/' . $file ),
 					true
 				),
-				strtotime($file)
+				strtotime(substr($file, 0, -5))
 			);
 			$ok &= !$this->requestError;
 			

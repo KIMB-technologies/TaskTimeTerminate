@@ -2,7 +2,8 @@
 
 class LocalStatsAccess extends StatsAccess {
 
-	protected function listFilesUnfiltered() : array {
+	protected function listFilesUnfiltered( int $timeMin, int $timeMax ) : array {
+		// No filtertering for $timeMax, $timeMin cause only minimal speedup
 		return array_map( function ($f) {
 			return array(
 					'timestamp' => strtotime(substr($f, 0, -5)),

@@ -48,8 +48,14 @@ class ServerStatsAccess extends StatsAccess {
 			return array();
 	}
 
-	protected function listFilesUnfiltered() : array {
-		return $this->postToServer('list');
+	protected function listFilesUnfiltered(int $timeMin, int $timeMax) : array {
+		// Filtertering cause reduces server response size
+		return $this->postToServer(
+			'list',
+			array(
+				'timeMin' => $timeMin,
+				'timeMax' => $timeMax
+			));
 	}
 
 	protected function getFileUnfiltered( string $file, string $device ) : array {

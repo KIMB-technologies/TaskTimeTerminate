@@ -13,7 +13,8 @@ class DirectoryStatsAccess extends StatsAccess {
 		$this->thisClientName = $c->getValue(['sync', 'directory', 'thisname']);
 	}
 
-	protected function listFilesUnfiltered() : array {
+	protected function listFilesUnfiltered( int $timeMin, int $timeMax ) : array {
+		// No filtertering for $timeMax, $timeMin cause only minimal speedup
 		$files = array();
 		foreach(array_diff(scandir($this->directory), ['.','..']) as $dir ){
 			if( $dir !== $this->thisClientName && is_dir($this->directory . '/' . $dir) ){

@@ -10,12 +10,15 @@ abstract class StatsAccess {
 	 * 	'device' => '' // device to pass to getFile()
 	 * ), ...)
 	 * 
+	 * @param $timeMin the minimal timestamp the retuned file my have
+	 * @param $timeMax the maximal timestamp the retuned file my have
+	 * 	Filtering for timeMin, timeMax is optional!!
 	 * Must not return stats of the client itself!
 	 */
-	public function listFiles() : array {
-		return $this->filterFileList($this->listFilesUnfiltered());
+	public function listFiles( int $timeMin, int $timeMax ) : array {
+		return $this->filterFileList($this->listFilesUnfiltered( $timeMin, $timeMax ));
 	}
-	abstract protected function listFilesUnfiltered() : array;
+	abstract protected function listFilesUnfiltered(int $timeMin, int $timeMax) : array;
 
 	/**
 	 * return array like JSON in e.g. "2020-02-12.json"

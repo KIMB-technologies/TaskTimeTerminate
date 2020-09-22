@@ -29,7 +29,7 @@ class StatsLoader {
 
 	private function selectUntil() : void {
 		foreach( $this->locations as $location => $access ){
-			foreach( $access->listFiles() as $file ){
+			foreach( $access->listFiles( $this->untilDay, $this->forward ) as $file ){
 				if( $file['timestamp'] >= $this->untilDay && $file['timestamp'] <= $this->forward){
 					$this->filelist[] = array(
 						'file' => $file['file'],

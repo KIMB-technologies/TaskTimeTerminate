@@ -80,6 +80,7 @@ There are two ways to synchronize your tasks:
 	and other devices can load them from their.
 	See https://github.com/KIMB-technologies/TaskTimeTerminateServer 
 	for a sync server implementation.
+	> If the inital sync fails on windows, one may check that `extension=php_openssl.dll` is defined in `php.ini`
 
 When synchronisation is enabled the stats view will show a new
 column `Other devices` if the shown tasks were

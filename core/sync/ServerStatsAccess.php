@@ -22,6 +22,7 @@ class ServerStatsAccess extends StatsAccess {
 				'http' => array(
 					'method'  => 'POST',
 					'header'  => 'Content-Type: application/x-www-form-urlencoded',
+					'ignore_errors' => true,
 					'content' => http_build_query(array(
 						'group' => $this->groupId,
 						'token' => $this->token,
@@ -29,23 +30,27 @@ class ServerStatsAccess extends StatsAccess {
 						'data' => json_encode($data)
 					))
 			));
-			$append = substr($this->uri, -1) === '/' ? '' : '/';
+		$append = substr($this->uri, -1) === '/' ? '' : '/';
 
-			if( in_array($endpoint, ['add', 'list', 'get'])){
-				$append .= 'api/' . $endpoint . '.php';
-				$ret = file_get_contents( $this->uri . $append, false, stream_context_create($context));
+		if( in_array($endpoint, ['add', 'list', 'get'])){
+			$append .= 'api/' . $endpoint . '.php';
+			$ret = file_get_contents( $this->uri . $append, false, stream_context_create($context));
 
-				if( $ret !== false ){
-					$json = json_decode( $ret, true);
-					if( !is_null($json) ){
-						$this->requestError = false;
-						return $json;
-					}
+			if( $ret !== false ){
+				$json = json_decode( $ret, true);
+				if( !is_null($json) && empty($json['error']) ){
+					$this->requestError = false;
+					return $json;
+				}
+				else{
+					$msg = is_null($json) ? $ret : $json['error'];
+					echo "ERROR: Returned message from server: '". $msg ."'" . PHP_EOL;
 				}
 			}
-			
-			$this->requestError = true;
-			return array();
+		}
+		echo "ERROR: Request failed!" . PHP_EOL;
+		$this->requestError = true;
+		return array();
 	}
 
 	protected function listFilesUnfiltered(int $timeMin, int $timeMax) : array {

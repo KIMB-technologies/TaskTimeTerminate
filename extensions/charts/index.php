@@ -69,12 +69,12 @@ class Charts {
 		$c = str_repeat("-", self::LINE_LENGTH+1) . PHP_EOL;
 		$fullLength = 0;
 		foreach($lengths as $name => $d){
-			if( $d > 0){
+			if( $d > 0 ){
 				$c .= '|' . \str_pad($name, $d - 1, " ", STR_PAD_BOTH);
 				$fullLength += $d < 1 ? 1 : $d;
 			}
 		}
-		$c .= str_repeat(" ", self::LINE_LENGTH - $fullLength) . '|' . PHP_EOL;
+		$c .= ( self::LINE_LENGTH - $fullLength > 0 ? str_repeat(" ", self::LINE_LENGTH - $fullLength) : '') . '|' . PHP_EOL;
 		$c .= str_repeat("-", self::LINE_LENGTH+1);
 		return $c;
 	}

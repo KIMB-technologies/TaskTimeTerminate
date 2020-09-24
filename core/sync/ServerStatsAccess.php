@@ -6,15 +6,19 @@ class ServerStatsAccess extends StatsAccess {
 	private string $groupId;
 	private string $token;
 	private string $thisClientName;
+	private ServerAccessCache $cache;
 
 	private bool $requestError = false;
 
 	public function __construct(){
 		$c = Config::getStorageReader('config');
+
 		$this->uri = $c->getValue(['sync', 'server', 'uri']);
 		$this->groupId = $c->getValue(['sync', 'server', 'group']);
 		$this->token = $c->getValue(['sync', 'server', 'token']);
 		$this->thisClientName = $c->getValue(['sync', 'server', 'thisname']);
+
+		$this->cache = new ServerAccessCache( $this->uri, $this->groupId, $this->token, $this->thisClientName );
 	}
 
 	private function postToServer(string $endpoint, array $data = array() ) : array {
@@ -54,22 +58,33 @@ class ServerStatsAccess extends StatsAccess {
 	}
 
 	protected function listFilesUnfiltered(int $timeMin, int $timeMax) : array {
-		// Filtertering cause reduces server response size
-		return $this->postToServer(
-			'list',
-			array(
-				'timeMin' => $timeMin,
-				'timeMax' => $timeMax
-			));
+		$data = $this->cache->cachedFileList($timeMin, $timeMax);
+		if( is_null($data) ){
+			// Filtertering cause reduces server response size
+			$data = $this->postToServer(
+				'list',
+				array(
+					'timeMin' => $timeMin,
+					'timeMax' => $timeMax
+				));
+
+			$this->cache->setFileList($timeMin, $timeMax, $data);
+		}
+		return $data;
 	}
 
 	protected function getFileUnfiltered( string $file, string $device ) : array {
-		return $this->postToServer(
-			'get',
-			array(
-				'file' => $file,
-				'device' => $device
-			));
+		$data = $this->cache->cachedGetFile($file, $device);
+		if( is_null($data) ){
+			$data = $this->postToServer(
+				'get',
+				array(
+					'file' => $file,
+					'device' => $device
+				));
+			$this->cache->setGetFile($file, $device, $data);
+		}
+		return $data;
 	}
 
 	public function initialSync() : bool {

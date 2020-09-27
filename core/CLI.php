@@ -151,7 +151,7 @@ class CLI {
 				Utilities::VERSION,
 				'TaskTimeTerminate',
 				'(c) 2020 by KIMB-technologies',
-				'https://git.5d7.eu/KIMB-technologies/TaskTimeTerminate',
+				'https://github.com/KIMB-technologies/TaskTimeTerminate',
 				array(
 					'released under the terms of GNU Public License Version 3',
 					'https://www.gnu.org/licenses/gpl-3.0.txt'

@@ -71,8 +71,13 @@ class ServerAccessCache {
 	 * Returns array with data or null, if uncached
 	 */
 	public function setGetFile( string $file, string $device, array $value ) : void {
-		$this->cache->setValue(['file',$device,$file,'data'], $value);
-		$this->cache->setValue(['file',$device,$file,'time'], time());
+		if(!$this->cache->isValue(['file',$device])){
+			$this->cache->setValue(['file',$device], array());
+		}
+		$this->cache->setValue(['file',$device,$file], array(
+			'data' => $value,
+			'time' => time()
+		));
 	}
 }
 

@@ -4,8 +4,6 @@ namespace TTTCharts;
 
 class Charts {
 
-	const LINE_LENGTH = 150;
-
 	/**
 	 * Called after the stats output to cli is finished, just before ttt stops execution.
 	 * Adds some charts to the stats view.
@@ -37,9 +35,9 @@ class Charts {
 		}
 
 		// plot time in ttt vs all time
-		$minBegin = min(array_column($data, 'begin'));
-		$maxEnd = max(array_column($data, 'end'));
-		$tttTime = array_sum(array_column($data, 'duration'));
+		$minBegin = \min(\array_column($data, 'begin'));
+		$maxEnd = \max(\array_column($data, 'end'));
+		$tttTime = \array_sum(\array_column($data, 'duration'));
 		$fullTime = $maxEnd - $minBegin;
 
 		$output->print(array(
@@ -56,26 +54,46 @@ class Charts {
 			return "";
 		}
 
+		// determine terminal width
+		$lineLength = \Utilities::getTerminalColumns()-1;
+
 		// calculate length for each category
-		$all = array_sum($data);
+		$all = \array_sum($data);
 		$lengths = array();
 		foreach($data as $name => $d){
-			$ln = floor(($d / $all) * self::LINE_LENGTH);
-			$lengths[strlen($name)-1 <= $ln ? $name : ""] = $ln;
+			$ln = \intval(\floor(($d / $all) * $lineLength));
+			$key = \strlen($name)+1 <= $ln ? $name : "";
+			if( !isset($lengths[$key]) ){
+				$lengths[$key] = 0;
+			}
+			$lengths[$key] += $ln;
 		}
 		\arsort($lengths, SORT_NUMERIC);
 
-		// draw chart
-		$c = str_repeat("-", self::LINE_LENGTH+1) . PHP_EOL;
-		$fullLength = 0;
-		foreach($lengths as $name => $d){
-			if( $d > 0 ){
-				$c .= '|' . \str_pad($name, $d - 1, " ", STR_PAD_BOTH);
-				$fullLength += $d < 1 ? 1 : $d;
+		// deal with zero length fields
+		$zeros = \array_reduce($lengths, function ($c, $i){
+			return $c + ( $i === 0 ? 1 : 0 );
+		}, 0);
+		while($zeros > 0){
+			foreach($lengths as $name => &$d){
+				if($d > \strlen($name) + 1){
+					$d--; $zeros--;
+				}
+				if($zeros === 0){
+					break;
+				}
 			}
 		}
-		$c .= ( self::LINE_LENGTH - $fullLength > 0 ? str_repeat(" ", self::LINE_LENGTH - $fullLength) : '') . '|' . PHP_EOL;
-		$c .= str_repeat("-", self::LINE_LENGTH+1);
+
+		// draw chart
+		$c = \str_repeat("-", $lineLength+1) . PHP_EOL;
+		$fullLength = 0;
+		foreach($lengths as $name => $d){
+			$c .= '|' . \str_pad($name, $d - 1, " ", STR_PAD_BOTH);
+			$fullLength += $d < 1 ? 1 : $d;
+		}
+		$c .= \str_repeat(" ", $lineLength - $fullLength) . '|' . PHP_EOL;
+		$c .= \str_repeat("-", $lineLength+1);
 		return $c;
 	}
 }

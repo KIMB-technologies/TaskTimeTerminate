@@ -4,7 +4,9 @@
  */
 class Utilities {
 
-	const VERSION = 'v1.0.3';
+	const VERSION = 'v1.0.4';
+
+	const DEFAULT_LINE_LENGTH = 125;
 
 	/**
 	 * OS Consts
@@ -68,6 +70,25 @@ class Utilities {
 		return $r;
 	}
 
+	/**
+	 * Determine the columns of terminal
+	 * @return the number of columns or the default value (margin already subtracted)
+	 */
+	public static function getTerminalColumns() : int {
+		if( self::getOS() === self::OS_LINUX || self::getOS() === self::OS_MAC ){
+			$value = shell_exec('stty size');
+			if($value !== null ){
+				$value = explode(' ', $value);
+				return intval($value[1]) - 3; // columns are second int
+			}
+		}
+		return self::DEFAULT_LINE_LENGTH - 3;
+	}
+
+	/**
+	 * Get the OS running on.
+	 * @return one of OS_MAC, OS_WIN, OS_LINUX, OS_OTHER
+	 */
 	public static function getOS() : string {
 		$os = php_uname('s');
 		if( stripos($os, 'darwin') !== false ){

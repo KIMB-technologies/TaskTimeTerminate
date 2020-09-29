@@ -1,8 +1,8 @@
 <?php
 class CLIOutput {
 
-	const BEGINEND = "============================================================";
-	const MIDDLE =   "------------------------------------------------------------";
+	const BEGINEND = "=";
+	const MIDDLE =   "-";
 	const MOIN = "Welcome to TTT -- TaskTimeTerminate by KIMB-technologies ";
 
 	const PAD_SPACING = 1;
@@ -44,10 +44,11 @@ class CLIOutput {
 	}
 
 	public function hello(){
+		$cols = Utilities::getTerminalColumns();
 		$this->print(array(
-			self::BEGINEND,
+			str_repeat(self::BEGINEND, $cols),
 			self::MOIN,
-			self::MIDDLE
+			str_repeat(self::MIDDLE, $cols)
 		));
 	}
 
@@ -109,7 +110,9 @@ class CLIOutput {
 	}
 
 	public function __destruct(){
-		$this->print([self::BEGINEND]);
+		$this->print(array(
+			str_repeat(self::BEGINEND, Utilities::getTerminalColumns())
+		));
 	}
 
 	private function echo( string $s, ?string $color = null, int $ind = 0) : void {

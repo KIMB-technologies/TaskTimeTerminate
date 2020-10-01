@@ -12,13 +12,13 @@ class Config {
 	private int $sleeptime;
 	private string $savedir;
 
-	public function __construct() {
+	public function __construct( string $configPath ) {
 		// create default config.json, if non exists
-		if( !is_file( __DIR__ . '/../config.json' ) ){
-			file_put_contents(__DIR__ . '/../config.json', self::DEFAULT_CONF);
+		if( !is_file( $configPath . 'config.json' ) ){
+			file_put_contents($configPath . 'config.json', self::DEFAULT_CONF);
 		}
 		// load config json
-		$json = new JSONReader( 'config', false, __DIR__ . '/../');
+		$json = new JSONReader( 'config', false, $configPath);
 
 		// check for storage dir
 		if( !$json->isValue(['savedir'])){
@@ -53,9 +53,9 @@ class Config {
 		unset($json);
 	}
 
-	public static function init(){
+	public static function init(string $configPath = __DIR__ . '/../'){
 		if(self::$instance == null){
-			self::$instance = new Config();
+			self::$instance = new Config($configPath);
 		}
 	}
 

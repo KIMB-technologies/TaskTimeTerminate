@@ -120,10 +120,23 @@ class CLIOutput {
 	}
 
 	public function readline(string $question, ?string $color = null, int $ind = 0) : string {
-		echo str_repeat("\t", $ind) . ($color === null ? '' : $color );
-		$r = readline($question . ' ');
-		echo self::RESET;
-		return $r;
+		if(Utilities::getOS() === Utilities::OS_TELEGRAM){
+			$r = Config::getStorageReader('telegram');
+			if($r->isValue(['readline', $question])){
+				$val = $r->getValue(['readline', $question]);
+				return !is_string($val) ? $val : "";
+			}
+			else{
+				file_put_contents(Config::getStorageDir() . '/notFoundReadlineKeys.log', json_encode($question) . PHP_EOL, FILE_APPEND); 
+				return "";
+			}
+		}
+		else{
+			echo str_repeat("\t", $ind) . ($color === null ? '' : $color );
+			$r = readline($question . ' ');
+			echo self::RESET;
+			return $r;
+		}
 	}
 }
 ?>

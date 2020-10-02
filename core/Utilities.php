@@ -4,7 +4,7 @@
  */
 class Utilities {
 
-	const VERSION = 'v1.0.5';
+	const VERSION = 'v1.0.6';
 
 	const DEFAULT_LINE_LENGTH = 125;
 
@@ -15,6 +15,7 @@ class Utilities {
 	const OS_WIN = "win";
 	const OS_LINUX = "lin";
 	const OS_OTHER = "oth";
+	const OS_TELEGRAM = "tel";
 
 	/**
 	 * Possible chars for:
@@ -75,7 +76,7 @@ class Utilities {
 	 * @return the number of columns or the default value (margin already subtracted)
 	 */
 	public static function getTerminalColumns() : int {
-		if( self::getOS() === self::OS_LINUX || self::getOS() === self::OS_MAC ){
+		if( self::getOS() === self::OS_LINUX || self::getOS() === self::OS_MAC || self::getOS() === self::OS_TELEGRAM ){
 			$value = shell_exec('stty size');
 			if($value !== null ){
 				$value = explode(' ', $value);
@@ -87,9 +88,12 @@ class Utilities {
 
 	/**
 	 * Get the OS running on.
-	 * @return one of OS_MAC, OS_WIN, OS_LINUX, OS_OTHER
+	 * @return one of OS_MAC, OS_WIN, OS_LINUX, OS_OTHER, OS_TELEGRAM
 	 */
 	public static function getOS() : string {
+		if( is_file(Config::getStorageDir()  . '/telegram.json') ){
+			return self::OS_TELEGRAM;
+		}
 		$os = php_uname('s');
 		if( stripos($os, 'darwin') !== false ){
 			return self::OS_MAC;
@@ -103,6 +107,10 @@ class Utilities {
 		else{
 			return self::OS_OTHER;
 		}
+	}
+
+	public static function isWindowsOS() : bool {
+		return stripos(php_uname('s'), 'windows') !== false ;
 	}
 }
 

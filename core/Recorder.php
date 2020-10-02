@@ -27,6 +27,10 @@ class Recorder {
 					$this->dialog = new WindowsDialog();
 					AutocompleteSocket::createSocketThread();
 					break;
+				case Utilities::OS_TELEGRAM:
+					TelegramDialog::checkOSPackages();
+					$this->dialog = new TelegramDialog();
+					break;
 				default:
 					die( PHP_EOL . 'Plattform not supported!!' . PHP_EOL . PHP_EOL);
 			}

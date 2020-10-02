@@ -92,7 +92,7 @@ class Config {
 
 	private static function parsePath(string $path) : string {
 		$path = ltrim($path);
-		if( Utilities::getOS() === Utilities::OS_WIN){
+		if( Utilities::isWindowsOS() ){
 			if( $path[0] === '~' ){ // home shortcut
 				$home = getenv('USERPROFILE');
 				return $home . '/AppData/Roaming/' . substr($path, 1);

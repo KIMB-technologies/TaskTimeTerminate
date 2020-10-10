@@ -19,6 +19,8 @@ class CLIOutput {
 	const ERROR_INFO = 2;
 	const ERROR_FATAL = 3;
 
+	private static int $readlineCount = 0;
+
 	public static function colorString(string $s, string $color) : string {
 		return $color . $s . self::RESET;
 	}
@@ -124,10 +126,14 @@ class CLIOutput {
 			$r = Config::getStorageReader('telegram');
 			if($r->isValue(['readline', $question])){
 				$val = $r->getValue(['readline', $question]);
-				return !is_string($val) ? $val : "";
+				return !is_string($val) ? "" : $val;
 			}
 			else{
+				self::$readlineCount++;
 				file_put_contents(Config::getStorageDir() . '/notFoundReadlineKeys.log', json_encode($question) . PHP_EOL, FILE_APPEND); 
+				if(self::$readlineCount > 50){
+					die("Readline Count Error!");
+				}
 				return "";
 			}
 		}

@@ -4,7 +4,7 @@
  */
 class Utilities {
 
-	const VERSION = 'v1.0.6';
+	const VERSION = 'v1.0.7';
 
 	const DEFAULT_LINE_LENGTH = 125;
 

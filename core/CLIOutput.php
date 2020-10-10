@@ -123,17 +123,19 @@ class CLIOutput {
 
 	public function readline(string $question, ?string $color = null, int $ind = 0) : string {
 		if(Utilities::getOS() === Utilities::OS_TELEGRAM){
+			self::$readlineCount++;
+			if(self::$readlineCount > 50){
+				die("Readline Count Error!");
+			}
+			
 			$r = Config::getStorageReader('telegram');
 			if($r->isValue(['readline', $question])){
 				$val = $r->getValue(['readline', $question]);
 				return !is_string($val) ? "" : $val;
 			}
 			else{
-				self::$readlineCount++;
+				
 				file_put_contents(Config::getStorageDir() . '/notFoundReadlineKeys.log', json_encode($question) . PHP_EOL, FILE_APPEND); 
-				if(self::$readlineCount > 50){
-					die("Readline Count Error!");
-				}
 				return "";
 			}
 		}

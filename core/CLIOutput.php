@@ -20,6 +20,7 @@ class CLIOutput {
 	const ERROR_FATAL = 3;
 
 	private static int $readlineCount = 0;
+	private static array $readlineUsed = array();
 
 	public static function colorString(string $s, string $color) : string {
 		return $color . $s . self::RESET;
@@ -131,6 +132,15 @@ class CLIOutput {
 			$r = Config::getStorageReader('telegram');
 			if($r->isValue(['readline', $question])){
 				$val = $r->getValue(['readline', $question]);
+				if(is_array($val)){
+					if(!isset( self::$readlineUsed[$question] ) ){
+						self::$readlineUsed[$question] = 0;
+					}
+					if(isset($val[self::$readlineUsed[$question]])){
+						$val = self::$readlineUsed[$question];
+					}
+					self::$readlineUsed[$question]++;
+				}
 				return !is_string($val) ? "" : $val;
 			}
 			else{

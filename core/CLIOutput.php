@@ -137,7 +137,7 @@ class CLIOutput {
 						self::$readlineUsed[$question] = 0;
 					}
 					if(isset($val[self::$readlineUsed[$question]])){
-						$val = self::$readlineUsed[$question];
+						$val = $val[self::$readlineUsed[$question]];
 					}
 					self::$readlineUsed[$question]++;
 				}

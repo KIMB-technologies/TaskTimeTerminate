@@ -4,7 +4,7 @@
  */
 class Utilities {
 
-	const VERSION = 'v1.0.10';
+	const VERSION = 'v1.0.11';
 
 	const DEFAULT_LINE_LENGTH = 125;
 
@@ -111,6 +111,28 @@ class Utilities {
 
 	public static function isWindowsOS() : bool {
 		return stripos(php_uname('s'), 'windows') !== false ;
+	}
+
+	/**
+	 * Determines if a host is online.
+	 * @param $url give a URI/ URL of the host (supports http(s))
+	 */
+	public static function isOnline(string $url) : bool {
+		preg_match('/^http(s?):\/\/([^:\/]+)((?::\d+)?)(?:\/.*)?$/', $url, $matches);
+		$host = $matches[2];
+		if(!empty($matches[1])){ // http_s_??
+			$host = 'ssl://' . $host;
+			$port = 443;
+		}
+		else{
+			$port = 80;
+		}
+		if(!empty($matches[3])){ // different port?
+			$port = substr($matches[3], 1);
+		}
+	
+		$r = @fsockopen( $host, $port, $errno, $errstr, 2);
+		return $r !== false;
 	}
 }
 

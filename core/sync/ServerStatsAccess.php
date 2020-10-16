@@ -6,7 +6,10 @@ class ServerStatsAccess extends StatsAccess {
 	private string $groupId;
 	private string $token;
 	private string $thisClientName;
+
 	private ServerAccessCache $cache;
+	private JSONReader $offlineTasks;
+	private bool $isOnline;
 
 	private bool $requestError = false;
 
@@ -18,10 +21,36 @@ class ServerStatsAccess extends StatsAccess {
 		$this->token = $c->getValue(['sync', 'server', 'token']);
 		$this->thisClientName = $c->getValue(['sync', 'server', 'thisname']);
 
+		$this->offlineTasks = Config::getStorageReader('offlineTasks');
+		$this->isOnline = Utilities::isOnline($this->uri);
+		$this->checkForOfflineTasks();
+
 		$this->cache = new ServerAccessCache( $this->uri, $this->groupId, $this->token, $this->thisClientName );
 	}
 
+	private function checkForOfflineTasks() : void {
+		// online and offline tasks to upload?
+		if($this->isOnline && !empty($this->offlineTasks->getArray()) ){
+			$ok = true;
+			foreach($this->offlineTasks->getArray() as $task){
+				$this->postToServer('add', $task );
+				$ok &= !$this->requestError;
+			}
+			if(!$ok){
+				CLIOutput::error(CLIOutput::ERROR_WARN, 'Unable to upload tasks done offline');
+			}
+			else{
+				$this->offlineTasks->setArray(array());
+			}
+		}
+	}
+
 	private function postToServer(string $endpoint, array $data = array() ) : array {
+		if(!$this->isOnline){
+			CLIOutput::error(CLIOutput::ERROR_INFO, 'Client is offline, so no data from sync server will be shown.');
+			return array();
+		}
+
 		$context = array(
 				'http' => array(
 					'method'  => 'POST',
@@ -48,11 +77,11 @@ class ServerStatsAccess extends StatsAccess {
 				}
 				else{
 					$msg = is_null($json) ? $ret : $json['error'];
-					echo "ERROR: Returned message from server: '". $msg ."'" . PHP_EOL;
+					CLIOutput::error(CLIOutput::ERROR_WARN, "Returned message from server: '". $msg ."'");
 				}
 			}
 		}
-		echo "ERROR: Request failed!" . PHP_EOL;
+		CLIOutput::error(CLIOutput::ERROR_WARN, "Request failed!");
 		$this->requestError = true;
 		return array();
 	}
@@ -103,7 +132,13 @@ class ServerStatsAccess extends StatsAccess {
 	}
 
 	public function setDayTasks(array $tasks, int $day) : void {
-		$this->postToServer('add', array( 'day' => $day, 'tasks' => $tasks ) );
+		$data = array( 'day' => $day, 'tasks' => $tasks );
+		if($this->isOnline){
+			$this->postToServer('add', $data );
+		}
+		else{
+			$this->offlineTasks->setValue([null], $data);
+		}
 	}
 
 }

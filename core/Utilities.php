@@ -4,7 +4,7 @@
  */
 class Utilities {
 
-	const VERSION = 'v1.0.11';
+	const VERSION = 'v1.0.12';
 
 	const DEFAULT_LINE_LENGTH = 125;
 
@@ -132,7 +132,13 @@ class Utilities {
 		}
 	
 		$r = @fsockopen( $host, $port, $errno, $errstr, 2);
-		return $r !== false;
+		if( is_resource($r) ){
+			fclose($r);
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 }
 

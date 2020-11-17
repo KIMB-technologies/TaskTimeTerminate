@@ -73,7 +73,7 @@ class ViewController: NSViewController, NSComboBoxCellDataSource {
     func getCompletions(prefix : String) -> [String] {
         let msg = prefix + "\n";
         
-        var socket = try? Socket.create(family: .unix, type: .stream, proto: .tcp);
+        let socket = try? Socket.create(family: .unix, type: .stream, proto: .tcp);
         try? socket?.connect( to: "/private/tmp/TaskTimeTerminateAutocomplete.sock" );
         try? socket?.setBlocking(mode: true);
         try? socket?.write(from: msg);

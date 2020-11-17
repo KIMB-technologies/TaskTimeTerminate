@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>AMApplicationBuild</key>
-	<string>492</string>
+	<string>509</string>
 	<key>AMApplicationVersion</key>
 	<string>2.10</string>
 	<key>AMDocumentVersion</key>
@@ -55,7 +55,7 @@
 				<key>ActionBundlePath</key>
 				<string>/System/Library/Automator/Run Shell Script.action</string>
 				<key>ActionName</key>
-				<string>Shell-Skript ausführen</string>
+				<string>Run Shell Script</string>
 				<key>ActionParameters</key>
 				<dict>
 					<key>COMMAND_STRING</key>
@@ -107,9 +107,9 @@ echo "Starting with '$PHP' at $NOW" &gt;&gt; /tmp/TaskTimeTerminateDeamon.log;
 				<key>Keywords</key>
 				<array>
 					<string>Shell</string>
-					<string>Skript</string>
-					<string>Befehl</string>
-					<string>Ausführen</string>
+					<string>Script</string>
+					<string>Command</string>
+					<string>Run</string>
 					<string>Unix</string>
 				</array>
 				<key>OutputUUID</key>
@@ -191,7 +191,7 @@ echo "Starting with '$PHP' at $NOW" &gt;&gt; /tmp/TaskTimeTerminateDeamon.log;
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>467.500000:436.000000</string>
+				<string>309.000000:252.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run Shell Script.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>

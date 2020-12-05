@@ -53,7 +53,7 @@ class AutocompleteSocket {
 	}
 
 	public function __destruct(){
-		if( is_resource($this->socket)){
+		if( Utilities::isSocketType($this->socket)){
 			socket_close($this->socket);
 		}
 		if( file_exists($this->socketpath)){
@@ -68,7 +68,7 @@ class AutocompleteSocket {
 
 			socket_write($s, $msg, strlen($msg));
 		}
-		if(is_resource($s)){
+		if(Utilities::isSocketType($s)){
 			socket_close($s);
 		}
 
@@ -81,7 +81,7 @@ class AutocompleteSocket {
 	private function connectionHandler( $connection ){
 		$buffer = "";
 		do{
-			if( !is_resource($connection) ){
+			if( !Utilities::isSocketType($connection) ){
 				return;
 			}
 			$buffer = @socket_read($connection, 256, PHP_NORMAL_READ);

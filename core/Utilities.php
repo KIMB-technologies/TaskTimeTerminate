@@ -4,7 +4,7 @@
  */
 class Utilities {
 
-	const VERSION = 'v1.0.13';
+	const VERSION = 'v1.0.14';
 
 	const DEFAULT_LINE_LENGTH = 125;
 
@@ -138,6 +138,20 @@ class Utilities {
 		}
 		else{
 			return false;
+		}
+	}
+
+	/**
+	 * Checks if given variable is a socket.
+	 * @param mixed $s the var to check
+	 * @return bool is socket?
+	 */
+	public static function isSocketType($s) : bool {
+		if( class_exists('Socket') && version_compare(PHP_VERSION, '8.0.0', '>=') ){
+			return $s instanceof Socket;
+		}
+		else{
+			return is_resource($s);
 		}
 	}
 }

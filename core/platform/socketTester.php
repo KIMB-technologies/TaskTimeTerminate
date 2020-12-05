@@ -1,5 +1,7 @@
 <?php
 
+require_once(__DIR__ . '/../Utilities.php');
+
 function getSocketPath(){
 	return '/private/tmp/TaskTimeTerminateAutocomplete.sock';
 	//return getenv('USERPROFILE') . '/AppData/Local/Temp/TaskTimeTerminateAutocomplete.sock';
@@ -18,7 +20,7 @@ function getCompletion($prefix){
 				}
 			}
 		}
-		if(is_resource($s)){
+		if(Utilities::isSocketType($s)){
 			socket_close($s);
 		}
 	}

@@ -1,0 +1,412 @@
+{
+	"name" : "TaskTimeTerminate",
+	"repository" : "https://github.com/KIMB-technologies/TaskTimeTerminate",	
+	"author" : "KIMB-technologies",
+	"last-updated" : 1608496037,
+	"this-file" : "https://KIMB-technologies.github.io/KIMB-technologies/TaskTimeTerminate/version.json",
+	"versions" : [
+		{
+			"tag" : "v0.5.0a",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v0.5.0a.zip",
+			"name" : "Version 0.5.0 Alpha",
+			"count" : 1,
+			"stable" : false
+		},
+		{
+			"tag" : "v0.6.0a",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v0.6.0a.zip",
+			"name" : "Version 0.6.0 Alpha",
+			"count" : 2,
+			"stable" : false
+		}, 
+		{
+			"tag" : "v0.7.0a",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v0.7.0a.zip",
+			"name" : "Version 0.7.0 Alpha",
+			"count" : 3,
+			"stable" : false
+		},
+		{
+			"tag" : "v.0.7.5a",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v.0.7.5a.zip",
+			"name" : "Version .0.7.5 Alpha",
+			"count" : 4,
+			"stable" : false
+		},
+		{
+			"tag" : "v0.8.0a",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v0.8.0a.zip",
+			"name" : "Version 0.8.0 Alpha",
+			"count" : 5,
+			"stable" : false
+		},
+		{
+			"tag" : "v0.8.10a",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v0.8.10a.zip",
+			"name" : "Version 0.8.10 Alpha",
+			"count" : 6,
+			"stable" : false
+		},
+		{
+			"tag" : "v0.8.11a",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v0.8.11a.zip",
+			"name" : "Version 0.8.11 Alpha",
+			"count" : 7,
+			"stable" : false
+		},
+		{
+			"tag" : "v0.8.1a",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v0.8.1a.zip",
+			"name" : "Version 0.8.1 Alpha",
+			"count" : 8,
+			"stable" : false
+		},
+		{
+			"tag" : "v0.8.2a",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v0.8.2a.zip",
+			"name" : "Version 0.8.2 Alpha",
+			"count" : 9,
+			"stable" : false
+		},
+		{
+			"tag" : "v0.8.3a",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v0.8.3a.zip",
+			"name" : "Version 0.8.3 Alpha",
+			"count" : 10,
+			"stable" : false
+		},
+		{
+			"tag" : "v0.8.5a",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v0.8.5a.zip",
+			"name" : "Version 0.8.5 Alpha",
+			"count" : 11,
+			"stable" : false
+		},
+		{
+			"tag" : "v0.8.6a",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v0.8.6a.zip",
+			"name" : "Version 0.8.6 Alpha",
+			"count" : 12,
+			"stable" : false
+		},
+		{
+			"tag" : "v0.8.7a",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v0.8.7a.zip",
+			"name" : "Version 0.8.7 Alpha",
+			"count" : 13,
+			"stable" : false
+		},
+		{
+			"tag" : "v0.8.9a",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v0.8.9a.zip",
+			"name" : "Version 0.8.9 Alpha",
+			"count" : 14,
+			"stable" : false
+		},
+		{
+			"tag" : "v0.9.0b",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v0.9.0b.zip",
+			"name" : "Version 0.9.0 Beta",
+			"count" : 15,
+			"stable" : false
+		},
+		{
+			"tag" : "v0.9.10b",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v0.9.10b.zip",
+			"name" : "Version 0.9.10 Beta",
+			"count" : 16,
+			"stable" : false
+		},
+		{
+			"tag" : "v0.9.11b",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v0.9.11b.zip",
+			"name" : "Version 0.9.11 Beta",
+			"count" : 17,
+			"stable" : false
+		},
+		{
+			"tag" : "v0.9.1b",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v0.9.1b.zip",
+			"name" : "Version 0.9.1 Beta",
+			"count" : 18,
+			"stable" : false
+		},
+		{
+			"tag" : "v0.9.2b",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v0.9.2b.zip",
+			"name" : "Version 0.9.2 Beta",
+			"count" : 19,
+			"stable" : false
+		},
+		{
+			"tag" : "v0.9.3b",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v0.9.3b.zip",
+			"name" : "Version 0.9.3 Beta",
+			"count" : 20,
+			"stable" : false
+		},
+		{
+			"tag" : "v0.9.4b",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v0.9.4b.zip",
+			"name" : "Version 0.9.4 Beta",
+			"count" : 21,
+			"stable" : false
+		},
+		{
+			"tag" : "v0.9.5b",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v0.9.5b.zip",
+			"name" : "Version 0.9.5 Beta",
+			"count" : 22,
+			"stable" : false
+		},
+		{
+			"tag" : "v0.9.6b",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v0.9.6b.zip",
+			"name" : "Version 0.9.6 Beta",
+			"count" : 23,
+			"stable" : false
+		},
+		{
+			"tag" : "v0.9.7b",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v0.9.7b.zip",
+			"name" : "Version 0.9.7 Beta",
+			"count" : 24,
+			"stable" : false
+		},
+		{
+			"tag" : "v0.9.8b",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v0.9.8b.zip",
+			"name" : "Version 0.9.8 Beta",
+			"count" : 25,
+			"stable" : false
+		},
+		{
+			"tag" : "v0.9.9b",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v0.9.9b.zip",
+			"name" : "Version 0.9.9 Beta",
+			"count" : 26,
+			"stable" : false
+		},
+		{
+			"tag" : "v1.0.0rc",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v1.0.0rc.zip",
+			"name" : "Version 1.0.0 Release Candidate",
+			"count" : 27,
+			"stable" : false
+		},
+		{
+			"tag" : "v1.0.0rc2",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v1.0.0rc2.zip",
+			"name" : "Version 1.0.0 Release Candidate II",
+			"count" : 28,
+			"stable" : false
+		},
+		{
+			"tag" : "v1.0.0rc3",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v1.0.0rc3.zip",
+			"name" : "Version 1.0.0 Release Candidate III",
+			"count" : 29,
+			"stable" : false
+		},
+		{
+			"tag" : "v1.0.0rc4",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v1.0.0rc4.zip",
+			"name" : "Version 1.0.0 Release Candidate IV",
+			"count" : 30,
+			"stable" : false
+		},
+		{
+			"tag" : "v1.0.0",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v1.0.0.zip",
+			"name" : "Version 1.0.0 Final",
+			"count" : 31,
+			"stable" : true
+		},
+		{
+			"tag" : "v1.0.1",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v1.0.1.zip",
+			"name" : "Version 1.0.1",
+			"count" : 32,
+			"stable" : true
+		},
+		{
+			"tag" : "v1.0.10",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v1.0.10.zip",
+			"name" : "Version 1.0.10",
+			"count" : 33,
+			"stable" : true
+		},
+		{
+			"tag" : "v1.0.11",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v1.0.11.zip",
+			"name" : "Version 1.0.11",
+			"count" : 34,
+			"stable" : true
+		},
+		{
+			"tag" : "v1.0.12",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v1.0.12.zip",
+			"name" : "Version 1.0.12",
+			"count" : 35,
+			"stable" : true
+		},
+		{
+			"tag" : "v1.0.13",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v1.0.13.zip",
+			"name" : "Version 1.0.13",
+			"count" : 36,
+			"stable" : true
+		},
+		{
+			"tag" : "v1.0.14",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v1.0.14.zip",
+			"name" : "Version 1.0.14",
+			"count" : 37,
+			"stable" : true
+		},
+		{
+			"tag" : "v1.0.2",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v1.0.2.zip",
+			"name" : "Version 1.0.2",
+			"count" : 38,
+			"stable" : true
+		},
+		{
+			"tag" : "v1.0.3",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v1.0.3.zip",
+			"name" : "Version 1.0.3",
+			"count" : 39,
+			"stable" : true
+		},
+		{
+			"tag" : "v1.0.4",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v1.0.4.zip",
+			"name" : "Version 1.0.4",
+			"count" : 40,
+			"stable" : true
+		},
+		{
+			"tag" : "v1.0.5",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v1.0.5.zip",
+			"name" : "Version 1.0.5",
+			"count" : 41,
+			"stable" : true
+		},
+		{
+			"tag" : "v1.0.6",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v1.0.6.zip",
+			"name" : "Version 1.0.6",
+			"count" : 42,
+			"stable" : true
+		},
+		{
+			"tag" : "v1.0.7",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v1.0.7.zip",
+			"name" : "Version 1.0.7",
+			"count" : 43,
+			"stable" : true
+		},
+		{
+			"tag" : "v1.0.8",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v1.0.8.zip",
+			"name" : "Version 1.0.8",
+			"count" : 44,
+			"stable" : true
+		},
+		{
+			"tag" : "v1.0.9",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v1.0.9.zip",
+			"name" : "Version 1.0.9",
+			"count" : 45,
+			"stable" : true
+		},
+		{
+			"tag" : "v1.0.10",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v1.0.10.zip",
+			"name" : "Version 1.0.10",
+			"count" : 46,
+			"stable" : true
+		},
+		{
+			"tag" : "v1.0.11",
+			"description" : "The client will now recognize when the sync server or its internet connection is offline (Tasks completed offline will be synced later; The stats will show a warning, that not all data can be displayed)",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v1.0.11.zip",
+			"name" : "Version 1.0.11",
+			"count" : 47,
+			"stable" : true
+		},
+		{
+			"tag" : "v1.0.12",
+			"description" : "",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v1.0.12.zip",
+			"name" : "Version 1.0.12",
+			"count" : 48,
+			"stable" : true
+		},
+		{
+			"tag" : "v1.0.13",
+			"description" : "Support for Apple Silicone with Universial Binaries; If there are problems when using git to download TTTd.app, then repair it with xattr -d com.apple.quarantine ./TTTd.app",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v1.0.13.zip",
+			"name" : "Version 1.0.13",
+			"count" : 49,
+			"stable" : true
+		},
+		{
+			"tag" : "v1.0.14",
+			"description" : "Support socket in PHP 8",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v1.0.14.zip",
+			"name" : "Version 1.0.14",
+			"count" : 50,
+			"stable" : true
+		}
+	]
+}
+
+
+

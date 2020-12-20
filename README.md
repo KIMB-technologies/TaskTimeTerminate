@@ -8,7 +8,7 @@ This is the version and update API used by the clients.
 
 ## Version API
 
-The main endpoint is `https://KIMB-technologies.github.io/KIMB-technologies/TaskTimeTerminate/version.json`.
+The main endpoint is `https://kimb-technologies.github.io/TaskTimeTerminate/version.json`.
 Each TTT-Client will fetch this file regularly and check for new version. Always when a new version is found, the
 client will show a message to the users and ask to update.
 

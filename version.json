@@ -3,7 +3,7 @@
 	"repository" : "https://github.com/KIMB-technologies/TaskTimeTerminate",	
 	"author" : "KIMB-technologies",
 	"last-updated" : 1608496037,
-	"this-file" : "https://KIMB-technologies.github.io/KIMB-technologies/TaskTimeTerminate/version.json",
+	"this-file" : "https://kimb-technologies.github.io/TaskTimeTerminate/version.json",
 	"versions" : [
 		{
 			"tag" : "v0.5.0a",

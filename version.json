@@ -404,6 +404,14 @@
 			"name" : "Version 1.0.14",
 			"count" : 50,
 			"stable" : true
+		},
+		{
+			"tag" : "v1.0.15",
+			"description" : "Fully supports PHP 8; TTTd.app on macOS will detect PHP installs better",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v1.0.15.zip",
+			"name" : "Version 1.0.15",
+			"count" : 51,
+			"stable" : true
 		}
 	]
 }

@@ -107,14 +107,14 @@ We have tested it under Linux Mint 18, macOS Catalina and Windows 10.
 We have an install and update script for macOS and Linux &ndash; [`install.sh`](install.sh).
 
 The script will follow these steps (for detailed information per operating system see below).
-1. Check the installation of PHP 7.4
+1. Check the installation of PHP (version 7.4 or newer)
 2. Ask the user where to install
 3. Use git to download the programs repository
 4. Add the `ttt` command to the shell
 5. Create an background job if on Linux
 
 ### Manual Installation
-1. Install PHP 7.4 (only the CLI component is needed)
+1. Install PHP 7.4 or newer (only the CLI component is needed)
     - On Linux install `yad` for dialogs
     - On Windows PHP-GTK will be used (and downloaded on first run of `./cli.php r`)
     - On macOS the dialog is a native program bundle shipped in this repository
@@ -156,7 +156,7 @@ The install script registers the `ttt-update` command (which reruns `install.sh`
 	`sudo apt-get install yad`
 #### macOS
 - PHP 7.4
-	- Until now PHP 7.3. is part of macOS, so `/usr/bin/php` will not work!
+	- Only PHP 7.3. is part of macOS, so `/usr/bin/php` will not work!
 	- Install Homebrew https://brew.sh/index
 	- Install `brew install php` or `brew install php@7.4`
 	- PHP will be installed to `/usr/local/Cellar/php@7.4/*/bin/php` or `/usr/local/Cellar/php/*/bin/php`
@@ -168,8 +168,8 @@ The install script registers the `ttt-update` command (which reruns `install.sh`
 		- The repository contains an `TTTd.app` it will start `record.php` as background process
 			- `TTTd.app` will only work, if you use Homebrew for the PHP installation
 			- Also `TTTd.app` looks for TTT at `~/Applications/TaskTimeTerminate/`
-	- Create own Automator Application instead of `TTTd.app`
-		- Open Automator.app and open a new Program
+	- Create own Automator Application as alternative to provided `TTTd.app`
+		- Start Automator.app and open a new Program
 		- Select *Execute Shell Command* and `/bin/sh` as Shell
 		- Add a command like this in the textbox on the right
 		- `/usr/local/Cellar/php/*/bin/php /Users/<me>/Applications/TaskTimeTerminate/record.php &> /dev/null &`
@@ -181,7 +181,7 @@ The install script registers the `ttt-update` command (which reruns `install.sh`
 	- Add to `$PATH` or always run like `C:/my/php/path/php.exe C:/Users/<me>/TaskTimeTerminate/cli.php`
 	- Enable the extension `sockets` (for autocompletion of tasks in the dialog) 
 		- Edit `C:/my/php/path/php.ini` (create there if not existent) to load the extension (it is part of the prebuilt PHP version)
-		- Make sure to have this two lines in it (i.e. remove `;` in from of each)
+		- Make sure to have this two lines in it (i.e. remove `;` in front of each)
 		```ini
 		extension_dir = "ext" 
 		extension = "php_sockets.dll"

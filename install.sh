@@ -1,14 +1,15 @@
 #!/bin/sh
 
-# check for php 7.4
+# check for php
 if ! command -v php > /dev/null; then
 	echo "PHP not found!";
-	echo "Install PHP 7.4"
+	echo "Please install PHP 7.4 or newer!"
 	exit;
 fi;
 
-if ! php -v | grep -q "7.4" ; then
-	echo "PHP is not version 7.4!"
+# check php-version
+if [ $(php -r "echo version_compare(PHP_VERSION, '7.4', '>=') ? 'ok' : 'error';") = "error" ]; then
+	echo "TTT needs PHP version 7.4 or newer!"
 	exit;
 fi; 
 
@@ -38,7 +39,7 @@ if [ ! -f ./record.php ]; then
 	elif [ $(uname) = "Darwin" ]; then
 		installpath="$HOME/Applications/TaskTimeTerminate";
 	else
-		echo "Only Linux and macOS supported!"
+		echo "Only Linux and macOS supported by this script!"
 		exit;
 	fi;
 	echo "Install to '$installpath'? Type other absolute path or enter to use suggested."
@@ -58,7 +59,7 @@ if [ ! -d $installpath ]; then
 fi;
 cd "$installpath";
 if [ ! $(pwd) = $installpath ]; then 
-	echo "Error creating installpath '$installpath' path!"
+	echo "Error creating/ moving to installpath '$installpath'!"
 	exit;
 fi;
 
@@ -94,6 +95,16 @@ if [ -f ~/.zshrc ]; then
 	fi;
 fi;
 
+# setting up TTTd.app on macOS
+if [ $(uname) = "Darwin" ]; then 
+	if [ -d "$(pwd)/TTTd.app" ]; then
+		if [ "$(xattr "$(pwd)/TTTd.app")" = "com.apple.quarantine" ]; then 
+			xattr -d com.apple.quarantine "$(pwd)/TTTd.app"
+			echo "Removed quarantine lock on TTTd.app!"
+		fi;
+	fi;
+fi;
+
 echo "========================================================="
 echo "TaskTimeTerminate by KIMB-technologies                   "
 echo "	Installation/ Update successful!                   "
@@ -107,7 +118,7 @@ if [ $(uname) = "Linux" ]; then
 	echo "[Desktop Entry]" > ~/.config/autostart/TaskTimeTerminate.desktop
 	echo "Type=Application" >> ~/.config/autostart/TaskTimeTerminate.desktop
 	echo "Name=TaskTimeTerminate" >> ~/.config/autostart/TaskTimeTerminate.desktop
-	echo "Exec=$(command -v php7.4) $(pwd)/record.php" >> ~/.config/autostart/TaskTimeTerminate.desktop
+	echo "Exec=$(command -v php) $(pwd)/record.php" >> ~/.config/autostart/TaskTimeTerminate.desktop
 	echo "X-GNOME-Autostart-Delay=10" >> ~/.config/autostart/TaskTimeTerminate.desktop
 
 	echo "We have created an autostart into '~/.config/autostart/' "

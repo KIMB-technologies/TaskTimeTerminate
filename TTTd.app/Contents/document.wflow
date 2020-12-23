@@ -59,32 +59,46 @@
 				<key>ActionParameters</key>
 				<dict>
 					<key>COMMAND_STRING</key>
-					<string>#!/bin/sh
+					<string>#!/bin/bash
 
-NOW=$(date +"%d.%m.%Y %T")
+# some settings
+curr_time=$(date +"%d.%m.%Y %T")
+daemon_log="/tmp/TaskTimeTerminateDeamon.log"
+search_path=(
+	/usr/local/Cellar/php@7*/7.4*/bin/php
+	/usr/local/Cellar/php@8*/*/bin/php
+	/usr/local/Cellar/php*/*/bin/php
+)
+php_binary="php"
 
-# brew path
-PHP=$(echo /usr/local/Cellar/php*/7.4*/bin/php);
-if ! "$PHP" -i | grep -q "7.4"; then
-	PHP="php"; # alternative
-fi;
+# look for php
+for path in ${search_path[*]}
+do
+	# get the path
+	php_cand=$(echo $path);
+	if [ -f "$php_cand" ]; then # check if exsists
+		if [ $("$php_cand" -r "echo version_compare(PHP_VERSION, '7.4', '&gt;=') ? 'ok' : 'error';") = "ok" ]; then # check version
+			php_binary="$php_cand" # remember found
+			break;
+		fi;
+	fi;
+done
 
 # final test
-if ! "$PHP" -i | grep -q "7.4" ; then
-	echo "Unable to find PHP 7.4 using '$PHP' at $NOW" &gt;&gt; /tmp/TaskTimeTerminateDeamon.log;
+if [ $("$php_binary" -r "echo version_compare(PHP_VERSION, '7.4', '&gt;=') ? 'ok' : 'error';") = "error" ]; then
+	echo "Unable to find PHP 7.4 or newer using '$php_binary' at $curr_time" &gt;&gt; $daemon_log;
 	exit;
 fi;
 
-echo "Starting with '$PHP' at $NOW" &gt;&gt; /tmp/TaskTimeTerminateDeamon.log;
-
 # start background job
-"$PHP" ~/Applications/TaskTimeTerminate/record.php &amp;&gt; /dev/null &amp;</string>
+echo "Starting with '$php_binary' at $curr_time" &gt;&gt; $daemon_log;
+"$php_binary" ~/Applications/TaskTimeTerminate/record.php &amp;&gt; /dev/null &amp;</string>
 					<key>CheckedForUserDefaultShell</key>
 					<true/>
 					<key>inputMethod</key>
 					<integer>0</integer>
 					<key>shell</key>
-					<string>/bin/sh</string>
+					<string>/bin/bash</string>
 					<key>source</key>
 					<string></string>
 				</dict>
@@ -191,7 +205,7 @@ echo "Starting with '$PHP' at $NOW" &gt;&gt; /tmp/TaskTimeTerminateDeamon.log;
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>309.000000:252.000000</string>
+				<string>309.000000:598.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run Shell Script.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>

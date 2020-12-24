@@ -9,51 +9,57 @@ import WidgetKit
 import SwiftUI
 import Intents
 
-struct Provider: IntentTimelineProvider {
+struct Provider: TimelineProvider {
+    // single preview
+    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> Void) {
+        completion(SimpleEntry(date: Date(), configuration: ConfigurationIntent()))
+    }
+    
+    // multi preview
+    func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> Void) {
+        completion(Timeline(entries: [SimpleEntry(date: Date(), configuration: ConfigurationIntent())], policy: .atEnd))
+    }
+    
+    // empty element
     func placeholder(in context: Context) -> SimpleEntry {
         SimpleEntry(date: Date(), configuration: ConfigurationIntent())
     }
-
-    func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), configuration: configuration)
-        completion(entry)
-    }
-
-    func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        var entries: [SimpleEntry] = []
-
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-        let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, configuration: configuration)
-            entries.append(entry)
-        }
-
-        let timeline = Timeline(entries: entries, policy: .atEnd)
-        completion(timeline)
-    }
 }
 
+// the content
 struct SimpleEntry: TimelineEntry {
     let date: Date
     let configuration: ConfigurationIntent
 }
 
+// the real view (showing the content from file!!)
 struct TaskTimeTerminateWidgetEntryView : View {
     var entry: Provider.Entry
 
     var body: some View {
-        Text(entry.date, style: .time)
+        theMainView()
+    }
+    
+    func theMainView() -> AnyView {
+        let filepath = NSHomeDirectory() + "/TaskTimeTerminateWidget.txt"
+        var content = ""
+        do {
+            let path = URL(fileURLWithPath: filepath);
+            content = try String(contentsOf: path, encoding: .utf8)
+        } catch {
+            content = "Error unable to load stats!"
+        }
+        return AnyView(Text(content).font(.system(.body, design: .monospaced)))
     }
 }
 
 @main
 struct TaskTimeTerminateWidget: Widget {
-    let kind: String = "TaskTimeTerminateWidget"
-
     var body: some WidgetConfiguration {
-        IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
+        StaticConfiguration(
+            kind: "TaskTimeTerminateWidget",
+            provider: Provider()
+        ) { entry in
             TaskTimeTerminateWidgetEntryView(entry: entry)
         }
         .configurationDisplayName("TTT Widget")

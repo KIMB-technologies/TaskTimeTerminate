@@ -1,0 +1,505 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		BB92F2672594C9AF003CBCF9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB92F2662594C9AF003CBCF9 /* AppDelegate.swift */; };
+		BB92F2692594C9AF003CBCF9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB92F2682594C9AF003CBCF9 /* ViewController.swift */; };
+		BB92F26B2594C9B0003CBCF9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB92F26A2594C9B0003CBCF9 /* Assets.xcassets */; };
+		BB92F26E2594C9B0003CBCF9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB92F26C2594C9B0003CBCF9 /* Main.storyboard */; };
+		BB92F27E2594C9CB003CBCF9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB92F27D2594C9CB003CBCF9 /* WidgetKit.framework */; };
+		BB92F2802594C9CB003CBCF9 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB92F27F2594C9CB003CBCF9 /* SwiftUI.framework */; };
+		BB92F2832594C9CB003CBCF9 /* TaskTimeTerminateWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB92F2822594C9CB003CBCF9 /* TaskTimeTerminateWidget.swift */; };
+		BB92F2862594C9CB003CBCF9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB92F2852594C9CB003CBCF9 /* Assets.xcassets */; };
+		BB92F2892594C9CB003CBCF9 /* TaskTimeTerminateWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = BB92F2842594C9CB003CBCF9 /* TaskTimeTerminateWidget.intentdefinition */; };
+		BB92F28A2594C9CB003CBCF9 /* TaskTimeTerminateWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = BB92F2842594C9CB003CBCF9 /* TaskTimeTerminateWidget.intentdefinition */; };
+		BB92F28D2594C9CB003CBCF9 /* TaskTimeTerminateWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BB92F27B2594C9CB003CBCF9 /* TaskTimeTerminateWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		BB92F28B2594C9CB003CBCF9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BB92F25B2594C9AF003CBCF9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BB92F27A2594C9CB003CBCF9;
+			remoteInfo = TaskTimeTerminateWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		BB92F2912594C9CB003CBCF9 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				BB92F28D2594C9CB003CBCF9 /* TaskTimeTerminateWidgetExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		BB92F2632594C9AF003CBCF9 /* TaskTimeTerminateWidgetWrapper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TaskTimeTerminateWidgetWrapper.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB92F2662594C9AF003CBCF9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		BB92F2682594C9AF003CBCF9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		BB92F26A2594C9B0003CBCF9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BB92F26D2594C9B0003CBCF9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		BB92F26F2594C9B0003CBCF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BB92F2702594C9B0003CBCF9 /* TaskTimeTerminateWidgetWrapper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TaskTimeTerminateWidgetWrapper.entitlements; sourceTree = "<group>"; };
+		BB92F27B2594C9CB003CBCF9 /* TaskTimeTerminateWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TaskTimeTerminateWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB92F27D2594C9CB003CBCF9 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		BB92F27F2594C9CB003CBCF9 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		BB92F2822594C9CB003CBCF9 /* TaskTimeTerminateWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTimeTerminateWidget.swift; sourceTree = "<group>"; };
+		BB92F2842594C9CB003CBCF9 /* TaskTimeTerminateWidget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = TaskTimeTerminateWidget.intentdefinition; sourceTree = "<group>"; };
+		BB92F2852594C9CB003CBCF9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BB92F2872594C9CB003CBCF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BB92F2882594C9CB003CBCF9 /* TaskTimeTerminateWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TaskTimeTerminateWidget.entitlements; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BB92F2602594C9AF003CBCF9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BB92F2782594C9CB003CBCF9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BB92F2802594C9CB003CBCF9 /* SwiftUI.framework in Frameworks */,
+				BB92F27E2594C9CB003CBCF9 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		BB92F25A2594C9AF003CBCF9 = {
+			isa = PBXGroup;
+			children = (
+				BB92F2652594C9AF003CBCF9 /* TaskTimeTerminateWidgetWrapper */,
+				BB92F2812594C9CB003CBCF9 /* TaskTimeTerminateWidget */,
+				BB92F27C2594C9CB003CBCF9 /* Frameworks */,
+				BB92F2642594C9AF003CBCF9 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		BB92F2642594C9AF003CBCF9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BB92F2632594C9AF003CBCF9 /* TaskTimeTerminateWidgetWrapper.app */,
+				BB92F27B2594C9CB003CBCF9 /* TaskTimeTerminateWidgetExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BB92F2652594C9AF003CBCF9 /* TaskTimeTerminateWidgetWrapper */ = {
+			isa = PBXGroup;
+			children = (
+				BB92F2662594C9AF003CBCF9 /* AppDelegate.swift */,
+				BB92F2682594C9AF003CBCF9 /* ViewController.swift */,
+				BB92F26A2594C9B0003CBCF9 /* Assets.xcassets */,
+				BB92F26C2594C9B0003CBCF9 /* Main.storyboard */,
+				BB92F26F2594C9B0003CBCF9 /* Info.plist */,
+				BB92F2702594C9B0003CBCF9 /* TaskTimeTerminateWidgetWrapper.entitlements */,
+			);
+			path = TaskTimeTerminateWidgetWrapper;
+			sourceTree = "<group>";
+		};
+		BB92F27C2594C9CB003CBCF9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BB92F27D2594C9CB003CBCF9 /* WidgetKit.framework */,
+				BB92F27F2594C9CB003CBCF9 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BB92F2812594C9CB003CBCF9 /* TaskTimeTerminateWidget */ = {
+			isa = PBXGroup;
+			children = (
+				BB92F2822594C9CB003CBCF9 /* TaskTimeTerminateWidget.swift */,
+				BB92F2842594C9CB003CBCF9 /* TaskTimeTerminateWidget.intentdefinition */,
+				BB92F2852594C9CB003CBCF9 /* Assets.xcassets */,
+				BB92F2872594C9CB003CBCF9 /* Info.plist */,
+				BB92F2882594C9CB003CBCF9 /* TaskTimeTerminateWidget.entitlements */,
+			);
+			path = TaskTimeTerminateWidget;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BB92F2622594C9AF003CBCF9 /* TaskTimeTerminateWidgetWrapper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BB92F2732594C9B0003CBCF9 /* Build configuration list for PBXNativeTarget "TaskTimeTerminateWidgetWrapper" */;
+			buildPhases = (
+				BB92F25F2594C9AF003CBCF9 /* Sources */,
+				BB92F2602594C9AF003CBCF9 /* Frameworks */,
+				BB92F2612594C9AF003CBCF9 /* Resources */,
+				BB92F2912594C9CB003CBCF9 /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BB92F28C2594C9CB003CBCF9 /* PBXTargetDependency */,
+			);
+			name = TaskTimeTerminateWidgetWrapper;
+			productName = TaskTimeTerminateWidgetWrapper;
+			productReference = BB92F2632594C9AF003CBCF9 /* TaskTimeTerminateWidgetWrapper.app */;
+			productType = "com.apple.product-type.application";
+		};
+		BB92F27A2594C9CB003CBCF9 /* TaskTimeTerminateWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BB92F28E2594C9CB003CBCF9 /* Build configuration list for PBXNativeTarget "TaskTimeTerminateWidgetExtension" */;
+			buildPhases = (
+				BB92F2772594C9CB003CBCF9 /* Sources */,
+				BB92F2782594C9CB003CBCF9 /* Frameworks */,
+				BB92F2792594C9CB003CBCF9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TaskTimeTerminateWidgetExtension;
+			productName = TaskTimeTerminateWidgetExtension;
+			productReference = BB92F27B2594C9CB003CBCF9 /* TaskTimeTerminateWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BB92F25B2594C9AF003CBCF9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1230;
+				LastUpgradeCheck = 1230;
+				TargetAttributes = {
+					BB92F2622594C9AF003CBCF9 = {
+						CreatedOnToolsVersion = 12.3;
+					};
+					BB92F27A2594C9CB003CBCF9 = {
+						CreatedOnToolsVersion = 12.3;
+					};
+				};
+			};
+			buildConfigurationList = BB92F25E2594C9AF003CBCF9 /* Build configuration list for PBXProject "TaskTimeTerminateWidgetWrapper" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = BB92F25A2594C9AF003CBCF9;
+			productRefGroup = BB92F2642594C9AF003CBCF9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BB92F2622594C9AF003CBCF9 /* TaskTimeTerminateWidgetWrapper */,
+				BB92F27A2594C9CB003CBCF9 /* TaskTimeTerminateWidgetExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BB92F2612594C9AF003CBCF9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BB92F26B2594C9B0003CBCF9 /* Assets.xcassets in Resources */,
+				BB92F26E2594C9B0003CBCF9 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BB92F2792594C9CB003CBCF9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BB92F2862594C9CB003CBCF9 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BB92F25F2594C9AF003CBCF9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BB92F28A2594C9CB003CBCF9 /* TaskTimeTerminateWidget.intentdefinition in Sources */,
+				BB92F2692594C9AF003CBCF9 /* ViewController.swift in Sources */,
+				BB92F2672594C9AF003CBCF9 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BB92F2772594C9CB003CBCF9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BB92F2892594C9CB003CBCF9 /* TaskTimeTerminateWidget.intentdefinition in Sources */,
+				BB92F2832594C9CB003CBCF9 /* TaskTimeTerminateWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BB92F28C2594C9CB003CBCF9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BB92F27A2594C9CB003CBCF9 /* TaskTimeTerminateWidgetExtension */;
+			targetProxy = BB92F28B2594C9CB003CBCF9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		BB92F26C2594C9B0003CBCF9 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BB92F26D2594C9B0003CBCF9 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		BB92F2712594C9B0003CBCF9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		BB92F2722594C9B0003CBCF9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		BB92F2742594C9B0003CBCF9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = TaskTimeTerminateWidgetWrapper/TaskTimeTerminateWidgetWrapper.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = TaskTimeTerminateWidgetWrapper/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "eu.kimb-technologies.TaskTimeTerminateWidgetWrapper";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		BB92F2752594C9B0003CBCF9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = TaskTimeTerminateWidgetWrapper/TaskTimeTerminateWidgetWrapper.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = TaskTimeTerminateWidgetWrapper/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "eu.kimb-technologies.TaskTimeTerminateWidgetWrapper";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		BB92F28F2594C9CB003CBCF9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = TaskTimeTerminateWidget/TaskTimeTerminateWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = TaskTimeTerminateWidget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "eu.kimb-technologies.TaskTimeTerminateWidgetWrapper.TaskTimeTerminateWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		BB92F2902594C9CB003CBCF9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = TaskTimeTerminateWidget/TaskTimeTerminateWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = TaskTimeTerminateWidget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "eu.kimb-technologies.TaskTimeTerminateWidgetWrapper.TaskTimeTerminateWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BB92F25E2594C9AF003CBCF9 /* Build configuration list for PBXProject "TaskTimeTerminateWidgetWrapper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BB92F2712594C9B0003CBCF9 /* Debug */,
+				BB92F2722594C9B0003CBCF9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BB92F2732594C9B0003CBCF9 /* Build configuration list for PBXNativeTarget "TaskTimeTerminateWidgetWrapper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BB92F2742594C9B0003CBCF9 /* Debug */,
+				BB92F2752594C9B0003CBCF9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BB92F28E2594C9CB003CBCF9 /* Build configuration list for PBXNativeTarget "TaskTimeTerminateWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BB92F28F2594C9CB003CBCF9 /* Debug */,
+				BB92F2902594C9CB003CBCF9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BB92F25B2594C9AF003CBCF9 /* Project object */;
+}

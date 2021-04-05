@@ -47,7 +47,9 @@ class InputParser {
 				}
 			}
 
-			$timestamp = strtotime($plusOneDay ? "tomorrow" : "today") + 3600 * $hs + 60 * $mins;
+			$timestamp = strtotime($plusOneDay ? "tomorrow" : "today")
+				+ 3600 * ($hs + Time::getTimeChangeDifference())
+				+ 60 * $mins;
 		}
 		else if( isset($matches[2]) ){ // Gruppe 2, d.h. Minuten- und/oder Stundenangabe
 			$hs = 0;

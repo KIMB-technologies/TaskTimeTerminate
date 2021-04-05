@@ -85,5 +85,29 @@ class Time {
 		}
 		return self::$time->getDurationString($t);
 	}
+
+	public static function isSummertime(int $now = null) : bool {
+		return date('I', is_null($now) ? time() : $now) === '1';
+	}
+
+	public static function getTimeChangeDifference(int $now = null) : int {
+		$now = is_null($now) ? time() : $now;
+		$todayNight = self::isSummertime(strtotime("today 00:00", $now));
+		$todayMid = self::isSummertime(strtotime("today 12:00", $now));
+		if( $todayMid === $todayNight || intval(date('G', $now)) < 3 ){
+			return 0;
+		}
+		else {
+			if( !$todayNight && $todayMid ){
+				return -1;
+			}
+			if( $todayNight && !$todayMid ){
+				return +1;
+			}
+			else{
+				return 0;
+			}
+		}
+	}
 }
 ?>

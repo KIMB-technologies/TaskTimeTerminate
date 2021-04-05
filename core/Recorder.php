@@ -7,7 +7,7 @@ class Recorder {
 	private Dialog $dialog;
 	private $lockfileHandle;
 
-	public function __construct(bool $inTerminal = false) {
+	public function __construct(bool $newSocket = true, bool $inTerminal = false) {
 		if($inTerminal){
 			$this->dialog = new InTerminalDialog();
 		}
@@ -16,7 +16,9 @@ class Recorder {
 				case Utilities::OS_MAC:
 					MacDialog::checkOSPackages();
 					$this->dialog = new MacDialog();
-					AutocompleteSocket::createSocketThread();
+					if($newSocket){
+						AutocompleteSocket::createSocketThread();
+					}
 					break;
 				case Utilities::OS_LINUX:
 					LinuxDialog::checkOSPackages();
@@ -25,7 +27,9 @@ class Recorder {
 				case Utilities::OS_WIN:
 					WindowsDialog::checkOSPackages();
 					$this->dialog = new WindowsDialog();
-					AutocompleteSocket::createSocketThread();
+					if($newSocket){
+						AutocompleteSocket::createSocketThread();
+					}
 					break;
 				case Utilities::OS_TELEGRAM:
 					TelegramDialog::checkOSPackages();

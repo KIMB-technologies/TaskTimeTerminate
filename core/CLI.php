@@ -82,14 +82,14 @@ class CLI {
 
 	private function record(){
 		if( isset($this->parser->getCommands()[0]) && $this->parser->getCommands()[0] == 'inTerminalDialog' ){
-			(new Recorder(true))->record();
+			(new Recorder(false, true))->record();
 		}
 		else {
 			$this->output->print(array(
 				'Force new record',
 				array('Add command '. CLIOutput::colorString('inTerminalDialog', CLIOutput::BLUE) . ' to do a normal record using the InTerminalDialog.')
 			));
-			(new Recorder())->record(true);
+			(new Recorder(false))->record(true);
 			if( !Config::getRecordStatus(false) ){
 				$this->togglePause(); // make sure to enable
 			}

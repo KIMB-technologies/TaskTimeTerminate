@@ -412,6 +412,30 @@
 			"name" : "Version 1.0.15",
 			"count" : 51,
 			"stable" : true
+		},
+		{
+			"tag" : "v1.0.16",
+			"description" : "Fixes wrong end times occurring on days when the time is changed #36",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v1.0.16.zip",
+			"name" : "Version 1.0.16",
+			"count" : 52,
+			"stable" : true
+		},
+		{
+			"tag" : "v1.1.0",
+			"description" : "Since Version 1.0 (Fixed bugs and many optimisations; PHP 8 support; Apple Silicone Binaries; Offline detection and caching of api responses; Support for Telegram, see https://github.com/KIMB-technologies/TaskTimeTerminateBot)",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v1.1.0.zip",
+			"name" : "Version 1.1",
+			"count" : 53,
+			"stable" : true
+		},
+		{
+			"tag" : "v1.1.1",
+			"description" : "Fix work day in time format",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v1.1.1.zip",
+			"name" : "Version 1.1.1",
+			"count" : 54,
+			"stable" : true
 		}
 	]
 }

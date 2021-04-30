@@ -312,7 +312,7 @@ class Settings {
 		$check = array(
 			'path' => fn(string $p) => is_dir($p) && is_writable($p),
 			'thisname' => fn(string $n) => InputParser::checkDeviceName($n),
-			'uri' => fn(string $u) => @filter_var($u, FILTER_VALIDATE_URL, FILTER_FLAG_HOST_REQUIRED | FILTER_FLAG_SCHEME_REQUIRED),
+			'uri' => fn(string $u) => @filter_var($u, FILTER_VALIDATE_URL),
 			'group' => fn(string $g) => preg_match('/^[A-Za-z0-9]+$/', $g) === 1,
 			'token' => fn(string $t) => preg_match('/^[A-Za-z0-9]+$/', $t) === 1,
 		);

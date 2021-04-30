@@ -436,6 +436,22 @@
 			"name" : "Version 1.1.1",
 			"count" : 54,
 			"stable" : true
+		},
+		{
+			"tag" : "v1.1.2",
+			"description" : "Fix error when adding sync server in PHP 8",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v1.1.2.zip",
+			"name" : "Version 1.1.2",
+			"count" : 55,
+			"stable" : true
+		},
+		{
+			"tag" : "ext-charts-v1.0.5",
+			"description" : "Fix error in Charts extension in some rare cases",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/ext-charts-v1.0.5.zip",
+			"name" : "Version 1.1.2 - Charts Version 1.0.5",
+			"count" : 56,
+			"stable" : true
 		}
 	]
 }

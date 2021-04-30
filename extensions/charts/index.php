@@ -92,7 +92,7 @@ class Charts {
 			$c .= '|' . \str_pad($name, $d - 1, " ", STR_PAD_BOTH);
 			$fullLength += $d < 1 ? 1 : $d;
 		}
-		$c .= \str_repeat(" ", $lineLength - $fullLength) . '|' . PHP_EOL;
+		$c .= \str_repeat(" ", $lineLength > $fullLength ? $lineLength - $fullLength : 0) . ($lineLength >= $fullLength ? '|' : '' ) . PHP_EOL;
 		$c .= \str_repeat("-", $lineLength+1);
 		return $c;
 	}

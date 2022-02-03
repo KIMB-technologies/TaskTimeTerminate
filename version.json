@@ -452,6 +452,14 @@
 			"name" : "Version 1.1.2 - Charts Version 1.0.5",
 			"count" : 56,
 			"stable" : true
+		},
+		{
+			"tag" : "v1.1.3",
+			"description" : "Update PHP path used by homebrew in TTTd.app for Apple Silicone Macs.",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v1.1.3.zip",
+			"name" : "Version 1.1.3",
+			"count" : 57,
+			"stable" : true
 		}
 	]
 }

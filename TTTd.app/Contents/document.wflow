@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>AMApplicationBuild</key>
-	<string>509</string>
+	<string>512</string>
 	<key>AMApplicationVersion</key>
 	<string>2.10</string>
 	<key>AMDocumentVersion</key>
@@ -65,6 +65,7 @@
 curr_time=$(date +"%d.%m.%Y %T")
 daemon_log="/tmp/TaskTimeTerminateDeamon.log"
 search_path=(
+	/opt/homebrew/bin/php
 	/usr/local/Cellar/php@7*/7.4*/bin/php
 	/usr/local/Cellar/php@8*/*/bin/php
 	/usr/local/Cellar/php*/*/bin/php
@@ -205,7 +206,7 @@ echo "Starting with '$php_binary' at $curr_time" &gt;&gt; $daemon_log;
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>309.000000:598.000000</string>
+				<string>309.000000:665.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run Shell Script.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>

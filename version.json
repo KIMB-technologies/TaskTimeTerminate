@@ -460,6 +460,14 @@
 			"name" : "Version 1.1.3",
 			"count" : 57,
 			"stable" : true
+		},
+		{
+			"tag" : "v1.1.4",
+			"description" : "Updates the ranges selectable by ttt s!; Run ttt s --help to see a full description.",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v1.1.4.zip",
+			"name" : "Version 1.1.4",
+			"count" : 58,
+			"stable" : true
 		}
 	]
 }

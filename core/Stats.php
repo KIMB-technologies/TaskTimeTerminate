@@ -18,47 +18,128 @@ class Stats {
 	}
 
 	private function parseCommands(array $commands) : void {
-		$this->output->print(
-			array('Statistics',
-				array(
-					'Use commands ' .
-						CLIOutput::colorString( 'day', CLIOutput::BLUE ) . ', ' .
-						CLIOutput::colorString( 'week', CLIOutput::BLUE ) . ', '.
-						CLIOutput::colorString( 'month', CLIOutput::BLUE ) . ', '.
-						CLIOutput::colorString( 'range', CLIOutput::BLUE ) . ', '.
-						CLIOutput::colorString( 'all', CLIOutput::BLUE ) . ' or '.
-						CLIOutput::colorString( 'today', CLIOutput::BLUE ) . ' (=default).',
-					'Optional add '.CLIOutput::colorString('-cats Hobby,Home', CLIOutput::BLUE) . 
-						', ' . CLIOutput::colorString('-names TTT,Website', CLIOutput::BLUE),
-					'and/or ' . CLIOutput::colorString('-devices Laptop,Desktop', CLIOutput::BLUE).
-						' to filter for',
-					'categories, names and devices (if synced across devices).',
-					'Also '.CLIOutput::colorString('-localOnly', CLIOutput::BLUE) . 
-						' can be added to ignore external devices from syncs.',
-				)
-			));
+		$this->showHelp(in_array( '-h', $commands) || in_array( '--help', $commands));
+		if(in_array('--help', $commands)){
+			return;
+		}
+		
 		switch( $commands[0] ) {
-			case "day":
-				$this->backUntil(time() - 86400, array_slice($commands, 1));
-				break;
 			case "week":
-				$this->backUntil(time() - 604800, array_slice($commands, 1));
+			case "cWeek":
+				$this->backUntil(strtotime("last Monday"), array_slice($commands, 1));
 				break;
 			case "month":
-				$this->backUntil(time() - 2628000, array_slice($commands, 1));
+			case "cMonth":
+				$this->backUntil(strtotime(date("Y-m")."-01"), array_slice($commands, 1));
 				break;
+			case "year":
+			case "cYear":
+				$this->backUntil(strtotime(date("Y")."-01-01"), array_slice($commands, 1));
+				break;
+			
+			case "lWeek":
+				$this->backUntil(time() - 7*24*60*60, array_slice($commands, 1));
+				break;
+			case "lMonth":
+				$this->backUntil(time() - 30*24*60*60, array_slice($commands, 1));
+				break;
+			case "lYear":
+				$this->backUntil(time() - 365*24*60*60, array_slice($commands, 1));
+				break;
+
 			case "all":
 				$this->backUntil(0, array_slice($commands, 1));
 				break;
 			case "range":
 				$this->rangeStats(array_slice($commands, 1));
 				break;
-			case "today":
+			
+			case "day":
+			case "lDay":
+				$this->backUntil(time() - 24*60*60, array_slice($commands, 1));
+				break;
+			case "cDay":
+			case "today": // => also default
 				$commands = array_slice($commands, 1);
 			default:
 				$this->todayview = true;
 				$this->backUntil(strtotime("today"), $commands);
 		}
+	}
+
+	private function showHelp(bool $full = false) : void {
+		$info = array('Statistics', 
+			array(
+				'Use commands ' .
+					CLIOutput::colorString( 'week', CLIOutput::BLUE ) . ', ' .
+					CLIOutput::colorString( 'month', CLIOutput::BLUE ) . ', ' .
+					CLIOutput::colorString( 'range', CLIOutput::BLUE ) . ' or ' .
+					CLIOutput::colorString( 'today', CLIOutput::BLUE ) . ' (=default).',
+				'Optionally add, e.g., '.CLIOutput::colorString('-cats Hobby,Home', CLIOutput::BLUE) . ', to filter for categories.'
+			),
+		);
+
+		if($full) {
+			$info[] = array(
+				'Select time range:',
+					array(
+						'Current day, week, month or year:',
+							array(
+								CLIOutput::colorString('cDay', CLIOutput::BLUE) . ' or ' .
+									CLIOutput::colorString('today', CLIOutput::BLUE) . ' => since last midnight',
+								CLIOutput::colorString('cWeek', CLIOutput::BLUE) . ' or ' .
+									CLIOutput::colorString('week', CLIOutput::BLUE) . ' => since last Monday',
+								CLIOutput::colorString('cMonth', CLIOutput::BLUE) . ' or ' .
+									CLIOutput::colorString('month', CLIOutput::BLUE) . ' => since beginning of current month',
+								CLIOutput::colorString('cYear', CLIOutput::BLUE) . ' or ' .
+									CLIOutput::colorString('year', CLIOutput::BLUE) . ' => since last first of January'	
+							),
+						'Last day, week, month or year:',
+							array(
+								CLIOutput::colorString('lDay', CLIOutput::BLUE) . ' or ' .
+									CLIOutput::colorString('day', CLIOutput::BLUE) . ' => last 24 hours',
+								CLIOutput::colorString('lWeek', CLIOutput::BLUE) . ' => last 7 days',
+								CLIOutput::colorString('lMonth', CLIOutput::BLUE) . ' => last 30 days',
+								CLIOutput::colorString('lYear', CLIOutput::BLUE) . ' => last 365 days'
+							),
+						'Special ranges:',
+							array(
+								CLIOutput::colorString('all', CLIOutput::BLUE) . ' => all time (may load some minutes)',
+								CLIOutput::colorString('range', CLIOutput::BLUE) . ' => range between dates ' . 
+									'(add one or two dates, e.g., ' . CLIOutput::colorString('2015-01-01 2015-01-31', CLIOutput::BLUE) . ')'
+							)
+					),
+				'Optional arguments:',
+					array(
+						'Filter for categories, names and/or devices (if synced across devices) by adding',
+						array(
+							CLIOutput::colorString('-cats Hobby,Home', CLIOutput::BLUE), 
+							CLIOutput::colorString('-names TTT,Website', CLIOutput::BLUE),
+							CLIOutput::colorString('-devices Laptop,Desktop', CLIOutput::BLUE)
+						)
+					),
+					array(
+						'Also '.CLIOutput::colorString('-localOnly', CLIOutput::BLUE) . 
+						' can be added to ignore external devices added via sync.',
+					),
+				'Examples:',
+					array(
+						CLIOutput::colorString( 'ttt s week -localOnly', CLIOutput::BLUE ),
+						CLIOutput::colorString( 'ttt s cMonth -cats Hobby', CLIOutput::BLUE ),
+						CLIOutput::colorString( 'ttt s range 2021-02-03 2021-03-02', CLIOutput::BLUE ),
+						CLIOutput::colorString( 'ttt s all', CLIOutput::BLUE )
+					)
+			);
+		}
+		else {
+			$info[] = array(
+				'Add ' .
+					CLIOutput::colorString( '-h', CLIOutput::BLUE ) .' or ' .
+					CLIOutput::colorString( '--help', CLIOutput::BLUE ) . 
+				' to get more information.'
+			);
+		}	
+		$this->output->print($info);
 	}
 
 	private function rangeStats(array $commands) {

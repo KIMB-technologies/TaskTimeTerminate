@@ -468,6 +468,14 @@
 			"name" : "Version 1.1.4",
 			"count" : 58,
 			"stable" : true
+		},
+		{
+			"tag" : "v1.1.5",
+			"description" : "Custom hours per workday in time format.",
+			"link" : "https://github.com/KIMB-technologies/TaskTimeTerminate/archive/v1.1.5.zip",
+			"name" : "Version 1.1.5",
+			"count" : 59,
+			"stable" : true
 		}
 	]
 }

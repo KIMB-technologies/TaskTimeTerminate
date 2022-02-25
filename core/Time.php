@@ -1,13 +1,14 @@
 <?php
 class Time {
 
+	private const DEFAULT_WORK_DAY_HOURS = 8; // default work day length
 	private const DEFAULT_FORMAT = 'dhm|s';
 	private const ALLOWED_PARTS = array(
 			'y' => 365*24*60*60, // year
 			't' => 30*24*60*60, // month (one of twelve)
 			'w' => 7*24*60*60, // week
 			'd' => 24*60*60, // day
-			'a' => 8*60*60, // work-day (8 hours)
+			'a' => 60*60, // work-day 
 			'h' => 60*60, // hour
 			'm' => 60, // minute
 			's' => 1 // second
@@ -15,8 +16,10 @@ class Time {
 	private const DELIMITER = '|';
 	private const PAD_VALUE = 4;
 
-	private static ?Time $time = null;
 	private string $timeformat = "";
+	private array $timeParts = self::ALLOWED_PARTS;
+
+	private static ?Time $time = null;
 	
 	public function __construct() {
 		// write to config
@@ -25,11 +28,15 @@ class Time {
 			$r->setValue(['timeformat'], self::DEFAULT_FORMAT );
 		}
 		$this->timeformat = $r->getValue(['timeformat']);
+		if( !$r->isValue(['work_day_hours']) ){
+			$r->setValue(['work_day_hours'], self::DEFAULT_WORK_DAY_HOURS );
+		}
+		$this->timeParts['a'] *= is_numeric($r->getValue(['work_day_hours'])) ? $r->getValue(['work_day_hours']) : self::DEFAULT_WORK_DAY_HOURS;
 
 		// check syntax
 		$ok = true;
 		foreach(str_split($this->timeformat) as $char){
-			if( !in_array($char, array_keys(self::ALLOWED_PARTS), true) && $char !== self::DELIMITER ){
+			if( !in_array($char, array_keys($this->timeParts), true) && $char !== self::DELIMITER ){
 				$ok = false;
 			}
 		}
@@ -51,10 +58,10 @@ class Time {
 		$d = array();
 		$notEmpty = false;
 		foreach( str_split($format) as $k => $f ){
-			$c = intval($time / self::ALLOWED_PARTS[$f]);
+			$c = intval($time / $this->timeParts[$f]);
 			if( $c > 0 || $notEmpty){
 				$d[$f] = $c; 
-				$time = intval($time % self::ALLOWED_PARTS[$f]);
+				$time = intval($time % $this->timeParts[$f]);
 				$notEmpty = true;
 			}
 		}
